@@ -1,0 +1,10 @@
+name: __PROJECT__
+
+services:
+  app:
+    image: __PROJECT__
+    container_name: __PROJECT__
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app

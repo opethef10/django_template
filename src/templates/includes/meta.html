@@ -1,0 +1,31 @@
+{% load pwa %}
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<meta name="description"
+      content="">
+<meta name=viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- PWA Meta -->
+{% progressive_web_app_meta %}
+
+<!-- Facebook Meta Tags -->
+<meta property="og:site_name" content="{{ PROJECT_NAME }}">
+<meta property="og:title" content="{{ PROJECT_NAME }}">
+<meta property="og:image" content="{{ PROJECT_URL }}/static/icons/buzzinhornets.jpg">
+<meta property="og:image:secure_url" content="{{ PROJECT_URL }}/static/icons/buzzinhornets.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="650">
+<meta property="og:url" content="{{ PROJECT_URL }}/">
+<meta property="og:description"
+      content="{{ PROJECT_DESCRIPTION }}">
+<meta property="og:type" content="website"/>
+<meta property="og:locale" content="tr_TR"/>
+
+<!-- Twitter Meta Tags -->
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="{{ PROJECT_DOMAIN }}">
+<meta property="twitter:url" content="{{ PROJECT_URL }}">
+<meta name="twitter:title" content="{{ PROJECT_NAME }}">
+<meta name="twitter:description"
+      content="{{ PROJECT_DESCRIPTION }}">
+<meta name="twitter:image" content="{{ PROJECT_URL }}/static/icons/buzzinhornets.jpg">

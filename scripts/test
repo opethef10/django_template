@@ -1,0 +1,2 @@
+#! /usr/bin/bash
+./manage.py test --settings=src.settings.tests

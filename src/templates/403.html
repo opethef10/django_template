@@ -1,0 +1,9 @@
+{% extends "error_base.html" %}
+{% load i18n static %}
+
+{% block title %}403 Forbidden{% endblock %}
+{% block img_url %}{% static 'img/403.jpg' %}{% endblock %}
+{% block error_code %}403{% endblock %}
+{% block error_title %}403 Forbidden{% endblock %}
+{% block error_text %}İzniniz olmayan bir sayfaya erişmeye çalıştınız.
+            Bu sayfa yalnızca yöneticilere veya onların yetkilendirdiği kullanıcılara açıktır.{% endblock %}
