@@ -5,6 +5,14 @@ from django.utils.translation import gettext_lazy as _
 
 PROJECT_DIR = Path(__file__).parent.parent
 BASE_DIR = PROJECT_DIR.parent
+
+PROJECT_SLUG = "__PROJECT__"
+PROJECT_NAME = "__PROJECT_NAME__"
+PROJECT_DESCRIPTION = "__PROJECT_DESCRIPTION__"
+PROJECT_DOMAIN = "example.com"
+PROJECT_URL = f"https://{PROJECT_DOMAIN}"
+EMAIL_SUBJECT_PREFIX = f"[{PROJECT_NAME}] "
+
 ROOT_URLCONF = 'src.urls'
 INTERNAL_IPS = ["127.0.0.1"]
 DEBUG = False
@@ -113,13 +121,12 @@ LOGGING = {
 }
 
 # Internationalization
-LANGUAGE_CODE = "tr"
-TIME_ZONE = "Europe/Istanbul"
+LANGUAGE_CODE = "en"
+TIME_ZONE = "UTC"
 USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 LANGUAGES = (
-    ('tr', _('Turkish')),
     ('en', _('English')),
 )
 LOCALE_PATHS = [
@@ -140,7 +147,6 @@ ADMINS = [
 
 ]
 
-# EMAIL_SUBJECT_PREFIX = "[Placeholder] "
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -153,11 +159,6 @@ MESSAGE_TAGS = {
 # ==============================================================================
 # FIRST-PARTY SETTINGS
 # ==============================================================================
-PROJECT_SLUG = "__PROJECT__"
-PROJECT_NAME = "__PROJECT_NAME__"
-PROJECT_DESCRIPTION = "__PROJECT_DESCRIPTION__"
-PROJECT_DOMAIN = "example.com"
-PROJECT_URL = f"https://{PROJECT_DOMAIN}"
 
 SITE_ID = 1
 

@@ -4,9 +4,7 @@ A Django template designed to provide a foundation for projects with structured 
 
 ## About
 
-This template serves as a starting point for Django projects. It includes models, views, and URL patterns for managing data related to entities such as artists, songs, tunings, and difficulties.
-
-The **Guitar Journal** project is a derivative of this template, tailored for managing a personal guitar practice journal. If you're looking for a starting point for your own Django project, this template is flexible and adaptable to various use cases.
+This template serves as a starting point for Django projects. It includes models, views, and URL patterns for managing data related to entities
 
 ## Features
 
