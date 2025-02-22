@@ -25,7 +25,7 @@
     <div class="container mb-5 footer_pusher">
         {% block crumbarea %}
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb my-4 bg-light">
+                <ol class="breadcrumb my-4 p-3 bg-body-secondary rounded-4">
                     {% block breadcrumb %}
                     {% endblock %}
                 </ol>
@@ -35,9 +35,7 @@
         {% block messages %}
             {% for message in messages %}
                 <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     {{ message }}
                 </div>
             {% endfor %}
