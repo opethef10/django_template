@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import EmailMessage
+from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
 
@@ -15,10 +16,10 @@ class HomeView(TemplateView):
 class ContactView(SuccessMessageMixin, FormView):
     template_name = 'contact.html'
     form_class = ContactForm
-    success_message = "Mesajınız başarıyla gönderildi!"
-    error_message = "Form gönderilemedi, form hatalarını düzelttikten sonra tekrar deneyin!"
+    success_message = _("Your message has been sent successfully!")
+    error_message = _("The form could not be sent, please correct the form errors and try again!")
     success_url = reverse_lazy('contact')
-    subject = "Bize Ulaşın!"
+    subject = _("Contact Us")
 
     def get_initial(self):
         initial = super().get_initial()
