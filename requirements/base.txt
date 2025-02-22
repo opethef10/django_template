@@ -1,13 +1,13 @@
-Django==5.1.4
+Django==5.1.6
 django-allauth[mfa,saml,socialaccount,steam]>=65.0.2
 django_extensions==3.2.3
 django-mdeditor==0.1.20
-django-minify-html==1.11.0
+django-minify-html==1.12.0
 django-mobile-detect==0.1
 django-pwa==2.0.1
 django-recaptcha==4.0.0
 django-widget-tweaks==1.5.0
-IPython==8.30.0
+IPython==8.32.0
 markdown==3.7
 python-decouple==3.7
 python-dotenv==1.0.1
