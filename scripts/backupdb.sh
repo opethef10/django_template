@@ -3,8 +3,8 @@
 # Change to the parent directory of the script (Project root)
 cd "$(dirname "$0")"/.. || exit 1
 
-# Load environment variables from .env file in the project root
-set -a && source .env && set +a
+# Load only the PROJECT_SLUG from the .env file
+export $(grep -v '^#' .env | grep 'PROJECT_SLUG' | xargs)
 
 # Configuration
 BACKUP_FOLDER="$HOME/.backups/"

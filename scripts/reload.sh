@@ -1,10 +1,9 @@
 #! /usr/bin/env bash
 
-# Change to the parent directory of the script (Project root)
 cd "$(dirname "$0")"/.. || exit 1
 
-# Load environment variables from .env file in the project root
-set -a && source .env && set +a
+# Load only the PROJECT_SLUG from the .env file
+export $(grep -v '^#' .env | grep 'PROJECT_SLUG' | xargs)
 
 touch "/var/www/${PROJECT_SLUG}_pythonanywhere_com_wsgi.py"
 for i in {1..3}; do
