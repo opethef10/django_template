@@ -163,3 +163,5 @@ cython_debug
 staticroot
 media
 .python-version
+
+.qodo

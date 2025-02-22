@@ -9,4 +9,6 @@ django-recaptcha==4.0.0
 django-widget-tweaks==1.5.0
 IPython==8.30.0
 markdown==3.7
+python-decouple==3.7
+python-dotenv==1.0.1
 requests==2.32.3

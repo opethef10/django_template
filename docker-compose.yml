@@ -1,9 +1,11 @@
-name: __PROJECT__
+name: ${PROJECT_SLUG}
 
 services:
   app:
-    image: __PROJECT__
-    container_name: __PROJECT__
+    build:
+      context: .
+    image: ${PROJECT_SLUG}
+    container_name: ${PROJECT_SLUG}
     ports:
       - "8000:8000"
     volumes:
