@@ -12,9 +12,9 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown"
-                     aria-haspopup="true" aria-expanded="false">{% translate "Menu" %}</a>
+                     aria-haspopup="true" aria-expanded="false">{% trans "Menu" %}</a>
                   <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                      <a class="dropdown-item" href="#">{% translate "Link" %}</a>
+                      <a class="dropdown-item" href="#">{% trans "Link" %}</a>
                   </div>
               </li>
           </ul>
@@ -42,32 +42,32 @@
         <li>
             {% if email_url_ %}
                 <a href="{% if email_url_ %}{{ email_url_ }}{% endif %}"
-                   class="dropdown-item">{% translate "Change Email"%}</a>
+                   class="dropdown-item">{% trans "Change Email"%}</a>
             {% endif %}
         </li>
             <li>
-                <a class="dropdown-item" href="{% url 'account_change_password' %}">{% translate "Change Password"%}</a>
+                <a class="dropdown-item" href="{% url 'account_change_password' %}">{% trans "Change Password"%}</a>
             </li>
             <li><hr class="dropdown-divider"></li>
             {% if user.is_staff %}
             <li>
-                <a class="dropdown-item" href="{% url 'admin:index' %}">{% translate "Admin Page" %}</a>
+                <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin Page" %}</a>
             </li>
             <li><hr class="dropdown-divider"></li>
             {% endif %}
             <li>
                 <form action="{% url 'account_logout' %}" method="post">
                     {% csrf_token %}
-                    <button class="dropdown-item" type="submit">{% translate "Sign Out" %}</button>
+                    <button class="dropdown-item" type="submit">{% trans "Sign Out" %}</button>
                 </form>
             </li>
         </ul>
     </li>
                 {% else %}
-                    <a href="{% url 'account_login' %}" class="btn btn-outline-light">{% translate "Sign In" %}</a>
+                    <a href="{% url 'account_login' %}" class="btn btn-outline-light">{% trans "Sign In" %}</a>
                     {% url 'account_signup' as signup_url_ %}
                     {% if signup_url_ %}
-                        <a href="{{ signup_url_ }}" class="btn btn-success">{% translate "Sign Up" %}</a>
+                        <a href="{{ signup_url_ }}" class="btn btn-success">{% trans "Sign Up" %}</a>
                     {% endif %}
                 {% endif %}
             </div>
