@@ -1,12 +1,16 @@
 #!/bin/bash
 
+# Change to the parent directory of the script (Project root)
+cd "$(dirname "$0")"/.. || exit 1
+
+# Load environment variables from .env file in the project root
+set -a && source .env && set +a
+
 # Configuration
-HOME_FOLDER="$HOME"
-PROJECT_FOLDER="$HOME_FOLDER/__PROJECT__.pythonanywhere.com/"
-BACKUP_FOLDER="$HOME_FOLDER/.backups/"
-BACKUP_FILE_PREFIX="__PROJECT__.db."
+BACKUP_FOLDER="$HOME/.backups/"
+BACKUP_FILE_PREFIX="$PROJECT_SLUG.db."
 DB_EXTENSION=".sqlite3"
-DB_FILE="$PROJECT_FOLDER/db$DB_EXTENSION"
+DB_FILE="db$DB_EXTENSION"
 
 # Ensure backup folder exists
 mkdir -p "$BACKUP_FOLDER"
