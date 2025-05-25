@@ -1,4 +1,5 @@
 {% load static i18n %}
+{% load menu_tags %}
 
 <footer data-bs-theme="dark">
   <div class="container-fluid bg-dark text-light py-5">
@@ -7,9 +8,13 @@
         <div class="col-sm-12 col-md-3 col-lg-3">
           <h5>Linkler</h5>
             <ul>
-                <li><a class="font-weight-light" href="{% url "contact" %}">{% trans "Contact" %}</a></li>
-                <li><a class="font-weight-light" href="{% url "django.contrib.flatpages.views.flatpage" url="changelog/" %}">{% trans "Changelog" %}</a></li>
-                <li><a class="font-weight-light" href="{% url "django.contrib.flatpages.views.flatpage" url="faq/" %}">{% trans "Frequently Asked Questions" %}</a></li>
+              {% for item in footer_links %}
+                <li>
+                  <a class="font-weight-light" href="{% resolve_url item.url_name item.args item.kwargs %}">
+                    {% trans item.label %}
+                  </a>
+                </li>
+              {% endfor %}
             </ul>
         </div>
         <div class="col-sm-12 col-md-3 col-lg-3"></div>

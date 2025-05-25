@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load menu_tags %}
 <header data-bs-theme="dark">
 <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
     <div class="container">
@@ -10,14 +11,23 @@
 
         <div class="collapse navbar-collapse" id="mainMenu">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item dropdown">
-                  <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown"
-                     aria-haspopup="true" aria-expanded="false">{% trans "Menu" %}</a>
-                  <div class="dropdown-menu dropdown-menu-right" aria-labelledby="userMenu">
-                      <a class="dropdown-item" href="#">{% trans "Link" %}</a>
+              {% for menu in navbar_menus %}
+                <li class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
+                     aria-haspopup="true" aria-expanded="false">
+                    {% trans menu.title %}
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right">
+                    {% for item in menu.items %}
+                      <a class="dropdown-item"
+                         href="{% resolve_url item.url_name item.args item.kwargs %}">
+                        {% trans item.label %}
+                      </a>
+                    {% endfor %}
                   </div>
-              </li>
-          </ul>
+                </li>
+              {% endfor %}
+            </ul>
           <div class="d-lg-flex gap-2 col-lg-3 justify-content-lg-end justify-content-center text-nowrap">
                 <form class="d-flex" method="post" action="{% url 'set_language' %}">
                     {% csrf_token %}

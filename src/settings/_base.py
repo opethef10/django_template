@@ -77,9 +77,11 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.i18n',
                 'src.context_processors.settings_values.project_settings',
+                'src.context_processors.menus.menus',
             ],
             "libraries": {
                 "form_tags": "src.tags.form_tags",
+                "menu_tags": "src.tags.menu_tags",
             },
         },
     },
