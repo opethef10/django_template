@@ -1,11 +1,11 @@
 {% extends 'base.html' %}
-{% load widget_tweaks static %}
+{% load i18n widget_tweaks static %}
 
 {% block title %}Bize Ulaşın{% endblock %}
 
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'home' %}">Ana Sayfa</a></li>
-    <li class="breadcrumb-item">Bize Ulaşın</li>
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans 'Home Page' %}</a></li>
+    <li class="breadcrumb-item">{% trans 'Contact' %}</li>
 {% endblock %}
 
 {% block content %}
@@ -13,13 +13,12 @@
        class="rounded mx-auto my-3 d-block"
        alt="{% block error_code %}{% endblock %}">
   <div class="alert alert-info">
-    Mesajlarınızı bize iletmek için bu formu kullanabilirsiniz. Mesajlarınız yöneticilerimiz tarafından
-    en kısa sürede yanıtlanacaktır.
+      {% trans 'If you have any questions, suggestions, or feedback, feel free to reach out to us using the form below.' %}
   </div>
   <form method="post" novalidate>
     {% csrf_token %}
     {% include 'includes/form.html' %}
-    <button type="submit" class="btn btn-success">Gönder</button>
-    <button type="reset" class="btn btn-primary ms-2" id="deselect">Değişiklikleri Geri Al</button>
+    <button type="submit" class="btn btn-success">{% trans 'Submit' %}</button>
+    <button type="reset" class="btn btn-primary ms-2" id="deselect">{% trans 'Reset' %}</button>
   </form>
 {% endblock %}
