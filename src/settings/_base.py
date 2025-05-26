@@ -172,6 +172,8 @@ SECONDS = 1
 MINUTES = 60 * SECONDS
 HOURS = 60 * MINUTES
 
+RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=True)
+
 # ==============================================================================
 # THIRD-PARTY SETTINGS
 # ==============================================================================
