@@ -172,6 +172,7 @@ SECONDS = 1
 MINUTES = 60 * SECONDS
 HOURS = 60 * MINUTES
 
+EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
 RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=True)
 
 # ==============================================================================

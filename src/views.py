@@ -2,6 +2,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import EmailMessage
+from django.http import Http404
 from django.utils.translation import gettext as _
 from django.urls import reverse_lazy
 from django.views.generic import FormView, TemplateView
@@ -20,6 +21,11 @@ class ContactView(SuccessMessageMixin, FormView):
     error_message = _("The form could not be sent, please correct the form errors and try again!")
     success_url = reverse_lazy('contact')
     subject = _("Contact Us")
+
+    def dispatch(self, request, *args, **kwargs):
+        if not getattr(settings, 'EMAIL_ENABLED', False):
+            raise Http404(_("Contact page is disabled."))
+        return super().dispatch(request, *args, **kwargs)
 
     def get_initial(self):
         initial = super().get_initial()
