@@ -1,5 +1,5 @@
 {% load static %}<!DOCTYPE html>
-<html lang="tr">
+<html lang="{{ LANGUAGE_CODE }}">
 <head>
     {% include 'includes/meta.html' %}
     <title>{% if debug %}[DEV] {% endif %}{% block title %}{% endblock %} • {{ PROJECT_NAME }}</title>
