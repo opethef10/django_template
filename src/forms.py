@@ -12,7 +12,6 @@ class ContactForm(forms.Form):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        print(settings.RECAPTCHA_ENABLED)
         if getattr(settings, 'RECAPTCHA_ENABLED', False):
             # Only add the ReCaptchaField if RECAPTCHA_ENABLED is True
             self.fields['captcha'] = ReCaptchaField(label=_("Captcha"))
