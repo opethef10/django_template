@@ -8,9 +8,9 @@ export $(grep -v '^#' .env | grep 'PROJECT_SLUG' | xargs)
 
 # Configuration
 BACKUP_FOLDER="$HOME/.backups/"
-BACKUP_FILE_PREFIX="$PROJECT_SLUG.db."
+BACKUP_FILE_PREFIX="$PROJECT_SLUG."
 DB_EXTENSION=".sqlite3"
-DB_FILE="db$DB_EXTENSION"
+DB_FILE="$PROJECT_SLUG$DB_EXTENSION"
 
 # Ensure backup folder exists
 mkdir -p "$BACKUP_FOLDER"

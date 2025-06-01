@@ -92,7 +92,7 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / f'{PROJECT_SLUG}.sqlite3',
     }
 }
 
@@ -172,6 +172,9 @@ SECONDS = 1
 MINUTES = 60 * SECONDS
 HOURS = 60 * MINUTES
 
+EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
+RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=True)
+
 # ==============================================================================
 # THIRD-PARTY SETTINGS
 # ==============================================================================
@@ -221,6 +224,9 @@ ACCOUNT_CHANGE_EMAIL = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = True
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
+
+ACCOUNT_ALLOW_SIGNUPS = config("ACCOUNT_ALLOW_SIGNUPS", cast=bool, default=True)
+ACCOUNT_ADAPTER = "src.adapters.CustomAccountAdapter"
 
 # ACCOUNT_LOGIN_BY_CODE_ENABLED = True
 # ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
