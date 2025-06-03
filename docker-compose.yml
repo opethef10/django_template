@@ -1,12 +1,12 @@
 name: ${PROJECT_SLUG}
 
 services:
-  app:
+  django_app:
     build:
       context: .
     image: ${PROJECT_SLUG}
     container_name: ${PROJECT_SLUG}
     ports:
-      - "8000:8000"
+      - "${PROJECT_PORT_NUMBER}:8000"
     volumes:
       - .:/app
