@@ -18,6 +18,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [0.2.2] - 2025-06-03
 ### Added
 - PROJECT_PORT_NUMBER environment variable
+### Changed
+- Docker service name to `django_app`
 ### Security
 - Upgrade libraries
 
