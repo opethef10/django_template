@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## [0.2.3] - 2025-06-17
+### Added
+- .local urls to ALLOWED_HOSTS
+
 ## [0.2.2] - 2025-06-03
 ### Added
 - PROJECT_PORT_NUMBER environment variable
