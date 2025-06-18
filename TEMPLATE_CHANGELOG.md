@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## [0.2.4] - 2025-06-18
+### Changed
+- Simplified PWA logo logic
+
 ## [0.2.3] - 2025-06-17
 ### Added
 - .local urls to ALLOWED_HOSTS
