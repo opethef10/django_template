@@ -10,3 +10,4 @@ services:
       - "${PROJECT_PORT_NUMBER}:8000"
     volumes:
       - .:/app
+    restart: unless-stopped
