@@ -1,34 +1,56 @@
 #!/bin/bash
+set -euo pipefail
 
-# Change to the parent directory of the script (Project root)
-cd "$(dirname "$0")"/.. || exit 1
+# --- CONFIG / ENV -------------------------------------------------------------
 
-# Load only the PROJECT_SLUG from the .env file
-export $(grep -v '^#' .env | grep 'PROJECT_SLUG' | xargs)
+# Get the absolute path of the script
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$SCRIPT_DIR/.."
+PROJECT_ROOT="$(cd "$PROJECT_ROOT" && pwd)"  # resolve absolute
 
-# Configuration
-BACKUP_FOLDER="$HOME/.backups/"
+echo "[INFO] Project root: $PROJECT_ROOT"
+
+# Load only the PROJECT_SLUG from the .env file (absolute path)
+ENV_FILE="$PROJECT_ROOT/.env"
+if [[ ! -f "$ENV_FILE" ]]; then
+    echo "[ERROR] .env file not found at $ENV_FILE"
+    exit 1
+fi
+
+export $(grep -v '^#' "$ENV_FILE" | grep 'PROJECT_SLUG' | xargs)
+echo "[INFO] PROJECT_SLUG: ${PROJECT_SLUG:-<not set>}"
+
+# Absolute paths for backup folder and DB
+BACKUP_FOLDER="$HOME/.backups"
+mkdir -p "$BACKUP_FOLDER"
+BACKUP_FOLDER="$(cd "$BACKUP_FOLDER" && pwd)"
+
+DB_FILE="$PROJECT_ROOT/$PROJECT_SLUG.sqlite3"
 BACKUP_FILE_PREFIX="$PROJECT_SLUG."
 DB_EXTENSION=".sqlite3"
-DB_FILE="$PROJECT_SLUG$DB_EXTENSION"
 
-# Ensure backup folder exists
-mkdir -p "$BACKUP_FOLDER"
+echo "[INFO] Backup folder: $BACKUP_FOLDER"
+echo "[INFO] Database file: $DB_FILE"
 
-# Function to get modification time of a file (formatted)
-get_file_mtime_formatted() {
-    date -r "$1" +"%Y%m%d_%H%M%S"
-}
+# --- FUNCTIONS ----------------------------------------------------------------
 
-# Function to get modification time of a file (epoch timestamp)
-get_file_mtime_epoch() {
-    date -r "$1" +"%s"
-}
+get_file_mtime_formatted() { date -r "$1" +"%Y%m%d_%H%M%S"; }
+get_file_mtime_epoch()     { date -r "$1" +"%s"; }
 
-# Find the latest backup file
-latest_backup=$(ls -1 "$BACKUP_FOLDER" | grep "$BACKUP_FILE_PREFIX" | grep ".gz" | tail -n 1)
+# --- FIND LATEST BACKUP --------------------------------------------------------
 
-# Check if the database needs to be backed up
+latest_backup=$(ls -1t "$BACKUP_FOLDER" \
+    | grep "^${BACKUP_FILE_PREFIX}.*\.gz$" \
+    | head -n 1 || true)
+
+if [[ -n "$latest_backup" ]]; then
+    echo "[DEBUG] Latest backup candidate: $BACKUP_FOLDER/$latest_backup"
+else
+    echo "[DEBUG] Latest backup candidate: <none>"
+fi
+
+# --- DECIDE IF BACKUP NEEDED ---------------------------------------------------
+
 should_copy=true
 db_mtime_epoch=$(get_file_mtime_epoch "$DB_FILE")
 
@@ -41,20 +63,19 @@ if [[ -n "$latest_backup" ]]; then
     fi
 fi
 
-# Backup and compress the database
+# --- BACKUP --------------------------------------------------------------------
+
 if $should_copy; then
-    # Use the database's last modified timestamp as the backup name
     DATETIME_FORMAT=$(get_file_mtime_formatted "$DB_FILE")
     BACKUP_FILE="$BACKUP_FOLDER/$BACKUP_FILE_PREFIX$DATETIME_FORMAT$DB_EXTENSION"
 
-    echo "Creating a vacuumed backup..."
+    echo "[INFO] Creating a vacuumed backup..."
+    echo "[INFO] Destination: $BACKUP_FILE.gz"
 
-    # Step 1: Perform VACUUM INTO to create the backup
     sqlite3 "$DB_FILE" "VACUUM INTO '$BACKUP_FILE'"
-
-    # Step 2: Compress the backup file using gzip
     gzip "$BACKUP_FILE"
-    echo "Backup successfully created and compressed: $BACKUP_FILE.gz"
+
+    echo "[INFO] Backup successfully created and compressed."
 else
-    echo "No need to update the backup, as the database has not been modified."
+    echo "[INFO] No new backup needed - database not modified since last backup."
 fi

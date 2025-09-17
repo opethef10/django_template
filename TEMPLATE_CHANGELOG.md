@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## [0.2.6] - 2025-09-17
+### Fixed
+- Database backup script bug
+
+## [0.2.5] - 2025-06-20
+### Changed
+- docker-compose change restart policy
+
 ## [0.2.4] - 2025-06-18
 ### Changed
 - Simplified PWA logo logic
