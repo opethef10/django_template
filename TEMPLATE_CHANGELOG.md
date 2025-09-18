@@ -15,6 +15,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## [0.2.7] - 2025-09-18
+### Changed
+- Deprecated allauth fields
+
 ## [0.2.6] - 2025-09-17
 ### Fixed
 - Database backup script bug

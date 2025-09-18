@@ -217,13 +217,18 @@ MDEDITOR_CONFIGS = {
 # ALLAUTH SETTINGS
 # ==============================================================================
 AUTHENTICATION_BACKENDS = ("allauth.account.auth_backends.AuthenticationBackend",)
-ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_LOGIN_METHODS = {"username", "email"}
+
+ACCOUNT_SIGNUP_FIELDS = [
+    "username*",
+    "email*",
+    "password1*",
+    "password2*",
+]
 ACCOUNT_EMAIL_VERIFICATION = "none"
-ACCOUNT_AUTHENTICATION_METHOD = "username_email"
 ACCOUNT_CHANGE_EMAIL = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = True
-ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = True
 
 ACCOUNT_ALLOW_SIGNUPS = config("ACCOUNT_ALLOW_SIGNUPS", cast=bool, default=True)
 ACCOUNT_ADAPTER = "src.adapters.CustomAccountAdapter"
