@@ -15,6 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## [0.3.0] - 2025-10-17
+### Added
+- Social links in footer
+### Changed
+- ALLOWED_HOSTS to accept all hosts in development
+- Template text to English
+
 ## [0.2.7] - 2025-09-18
 ### Changed
 - Deprecated allauth fields
