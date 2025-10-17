@@ -8,7 +8,7 @@ SECRET_KEY = "INSECURE_DJANGO_SECRET_KEY_TO_BE_USED_AT_LOCAL_ENV"
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["localhost", "127.0.0.1", "[::1]", f"{PROJECT_SLUG}.local"]
+ALLOWED_HOSTS = ["*"]
 # CSRF_TRUSTED_ORIGINS = config('DJANGO_CSRF_TRUSTED_ORIGINS', cast=Csv())
 # CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
@@ -20,7 +20,9 @@ INTERNAL_IPS = type(
     str("c"), (), {"__contains__": lambda *a: True, "copy": lambda self: self}
 )()
 
-SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
+SILENCED_SYSTEM_CHECKS = [
+    'django_recaptcha.recaptcha_test_key_error',
+]
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
