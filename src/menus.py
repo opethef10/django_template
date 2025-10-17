@@ -1,4 +1,6 @@
-NAVBAR_MENUS = []
+NAVBAR_MENUS = [
+
+]
 
 FOOTER_LINKS = [
     {
@@ -15,4 +17,8 @@ FOOTER_LINKS = [
         "url_name": "django.contrib.flatpages.views.flatpage",
         "kwargs": {"url": "faq/"},
     },
+]
+
+SOCIAL_LINKS = [
+
 ]

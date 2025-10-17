@@ -4,9 +4,9 @@
 {% block title %}Çevrimdışısınız{% endblock %}
 {% block img_url %}{% static 'img/offline.jpg' %}{% endblock %}
 {% block error_code %}offline{% endblock %}
-{% block error_title %}Çevrimdışısınız{% endblock %}
-{% block error_text %}İnternet bağlantınız yok. Bağlantıyı kurduktan sonra yeniden deneyin.
+{% block error_title %}You are offline{% endblock %}
+{% block error_text %}You have no internet connection. Please try again after reconnecting.
 <div class="row justify-content-center">
-    <button class="btn btn-primary ms-2" onclick="window.location.reload();">Yeniden Dene</button>
+    <button class="btn btn-primary ms-2" onclick="window.location.reload();">Retry</button>
 </div>
 {% endblock %}
