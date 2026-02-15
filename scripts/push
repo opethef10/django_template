@@ -1,0 +1,38 @@
+#! /usr/bin/env bash
+set -e
+
+# Get current branch
+CURRENT_BRANCH=$(git branch --show-current)
+
+# Parse type and version
+if [[ "$CURRENT_BRANCH" =~ ^hotfix/(.+)$ ]]; then
+    TYPE="hotfix"
+    VERSION="${BASH_REMATCH[1]}"
+elif [[ "$CURRENT_BRANCH" =~ ^release/(.+)$ ]]; then
+    TYPE="release"
+    VERSION="${BASH_REMATCH[1]}"
+else
+    echo "Current branch is not a hotfix/* or release/* branch. Exiting."
+    exit 1
+fi
+
+echo "Detected $TYPE branch with version: $VERSION"
+echo "----------------------------------------"
+
+echo "Running tests..."
+scripts/test
+echo "✅ Tests passed"
+
+echo "Finishing Git $TYPE branch..."
+git "${TYPE}-finish" "$VERSION"
+echo "✅ Branch finished successfully"
+
+echo "----------------------------------------"
+echo "Summary:"
+echo "Branch: $CURRENT_BRANCH"
+echo "Type:   $TYPE"
+echo "Version:$VERSION"
+echo "Tests:  passed"
+echo "Command executed: git ${TYPE}-finish $VERSION"
+echo "----------------------------------------"
+echo "All done! 🎉"
