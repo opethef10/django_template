@@ -9,10 +9,10 @@ SILENCED_SYSTEM_CHECKS = ['django_recaptcha.recaptcha_test_key_error']
 
 
 class DisableMigrations:
-    def __contains__(self, item):
+    def __contains__(self, _):
         return True
 
-    def __getitem__(self, item):
+    def __getitem__(self, _):
         return None
 
 
