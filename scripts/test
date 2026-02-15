@@ -1,2 +1,9 @@
 #! /usr/bin/bash
-./manage.py test --settings=src.settings.tests
+
+if [ $# -gt 0 ]; then
+    # If any arguments exist, run tests only for those apps
+    ./manage.py test "$@" --settings=src.settings.tests
+else
+    # Otherwise, run all tests
+    ./manage.py test --settings=src.settings.tests
+fi
