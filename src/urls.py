@@ -18,7 +18,6 @@ from django.urls import path, include
 from django.conf import settings
 
 from .views import HomeView, ContactView
-# from .urlresolvers import solid_i18n_patterns
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -34,8 +33,3 @@ urlpatterns = [
 
 if settings.DEBUG:
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))
-
-# urlpatterns = [
-#     path("i18n/", include("django.conf.urls.i18n"))
-# ]
-# urlpatterns += solid_i18n_patterns(*patterns)

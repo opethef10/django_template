@@ -1,4 +1,4 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONIOENCODING=utf8
@@ -11,7 +11,7 @@ WORKDIR /app
 
 COPY requirements/base.txt requirements/development.txt ./requirements/
 
-RUN pip install -r ./requirements/development.txt
+RUN pip install --no-cache-dir -r ./requirements/development.txt
 
 COPY . .
 

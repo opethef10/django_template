@@ -15,6 +15,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## [0.3.1] - 2026-02-15
+
+### Added
+
+- Push script
+
+### Changed
+
+- Test script
+- SelectRelatedModelAdmin to utils
+- Dockerfile --no-cache-dir flag for pip
+- Upgrade docker python to 3.13
+- Library upgrades
+
+### Removed
+
+- urlresolvers
+- Unused form tags
+
 ## [0.3.0] - 2025-10-17
 ### Added
 - Social links in footer
