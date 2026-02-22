@@ -14,6 +14,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 ### Security
 -->
+## [0.4.0] - 2026-02-15
+
+### Added
+
+- Allauth honeypot field
+- PWA install button
+- Flatpage edit button for admins
+
+### Changed
+
+- Session cookie age to 1 year
+- Don't send email to password reset users if email is not registered
+- Locale to en_US
+
+### Removed
+
+- python-dotenv library
+- LocaleMiddleware
 
 ## [0.3.1] - 2026-02-15
 

@@ -23,7 +23,7 @@
 {% block base_body %}
     {% include 'includes/navbar.html' %}
 
-    <div class="container mb-5 footer_pusher">
+    <div class="container mb-5 flex-grow-1">
         {% block crumbarea %}
             <nav aria-label="breadcrumb">
                 <ol class="breadcrumb my-4 p-3 bg-body-secondary rounded-4">
@@ -54,6 +54,7 @@
 <script src="https://cdn.datatables.net/plug-ins/2.1.8/sorting/absolute.js"></script>
 <script src="{% static 'js/tablink.js' %}"></script>
 <script src="{% static 'js/jquery-colorize.js' %}"></script>
+<script src="{% static 'js/pwa.js' %}"></script>
 {% block javascript %}{% endblock %}
 </body>
 </html>

@@ -55,7 +55,6 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
     "django_minify_html.middleware.MinifyHtmlMiddleware",
     'django.middleware.csrf.CsrfViewMiddleware',
-    "django.middleware.locale.LocaleMiddleware",
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -171,6 +170,9 @@ SITE_ID = 1
 SECONDS = 1
 MINUTES = 60 * SECONDS
 HOURS = 60 * MINUTES
+DAYS = 24 * HOURS
+WEEKS = 7 * DAYS
+YEARS = 365 * DAYS
 
 EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
 RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=True)
@@ -229,6 +231,10 @@ ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_CHANGE_EMAIL = True
 ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 ACCOUNT_SESSION_REMEMBER = True
+ACCOUNT_SIGNUP_FORM_HONEYPOT_FIELD = "phone_number"
+SESSION_COOKIE_AGE = 1 * YEARS
+
+ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
 
 ACCOUNT_ALLOW_SIGNUPS = config("ACCOUNT_ALLOW_SIGNUPS", cast=bool, default=True)
 ACCOUNT_ADAPTER = "src.adapters.CustomAccountAdapter"
