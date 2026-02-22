@@ -13,5 +13,8 @@
 {% endblock %}
 
 {% block content %}
+{% if request.user.is_superuser %}
+  <a href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" class="btn btn-secondary mb-3">Düzenle</a>
+{% endif %}
     {{ flatpage.content|render_markdown }}
 {% endblock %}

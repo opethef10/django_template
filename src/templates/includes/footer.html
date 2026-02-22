@@ -2,7 +2,7 @@
 {% load menu_tags %}
 
 <footer data-bs-theme="dark">
-  <div class="container-fluid bg-dark text-light py-5">
+  <div class="container-fluid bg-dark text-light pt-5 pb-3">
     <div class="container">
       <div class="row">
         <div class="col-sm-12 col-md-3 col-lg-3">
@@ -35,6 +35,9 @@
           <h5>
             <img src="{% static "logo.png" %}" width="30" height="30" alt="logo">
             {{ PROJECT_NAME }}
+            <button id="installBtn" class="btn btn-primary ms-2" hidden><i class="fa-solid fa-cloud-arrow-down"></i>
+                {% trans "Install App" %}
+            </button>
           </h5>
           <p>{{ PROJECT_DESCRIPTION }}</p>
         </div>
