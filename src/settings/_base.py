@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     # "allauth.socialaccount",
     # "allauth.socialaccount.providers.facebook",
     # "allauth.socialaccount.providers.google",
-    "allauth.usersessions",
     "src.apps.example",
     "django_minify_html",
     "django_extensions",
