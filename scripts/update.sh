@@ -7,6 +7,8 @@ if [ -z "$VIRTUAL_ENV" ]; then
     exit 1
 fi
 
+export DJANGO_SETTINGS_MODULE=src.settings.production
+
 scripts/backupdb.sh
 git pull
 pip install -r requirements/production.txt
