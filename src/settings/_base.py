@@ -238,18 +238,8 @@ ACCOUNT_EMAIL_UNKNOWN_ACCOUNTS = False
 ACCOUNT_ALLOW_SIGNUPS = config("ACCOUNT_ALLOW_SIGNUPS", cast=bool, default=True)
 ACCOUNT_ADAPTER = "src.adapters.CustomAccountAdapter"
 
-# ACCOUNT_LOGIN_BY_CODE_ENABLED = True
-# ACCOUNT_EMAIL_VERIFICATION_BY_CODE_ENABLED = True
-
-# MFA_SUPPORTED_TYPES = [
-#     "webauthn",
-#     "totp",
-#     "recovery_codes",
-# ]
-# MFA_PASSKEY_LOGIN_ENABLED = True
-# MFA_PASSKEY_SIGNUP_ENABLED = True
-
-# SOCIALACCOUNT_AUTO_SIGNUP = False
+SOCIALACCOUNT_EMAIL_AUTHENTICATION = True
+SOCIALACCOUNT_EMAIL_AUTHENTICATION_AUTO_CONNECT = True
 
 # ==============================================================================
 # PWA SETTINGS
