@@ -5,7 +5,7 @@
 }
 
 .table {
-    --bs-table-bg: #f8f9fa;
+    --bs-table-bg: var(--bs-light-bg-subtle);
 }
 
 a {
@@ -18,10 +18,6 @@ body {
 
 .navbar-brand {
     font-family: 'Peralta', cursive;
-}
-
-.footer_pusher {
-    min-height: calc(100vh - 320px);
 }
 
 .container {
