@@ -78,3 +78,24 @@ body {
     a { text-decoration: none !important; }
 }
 
+#searchModal .modal-dialog {
+  max-width: 85% !important;
+}
+
+@media (min-width: 1200px) {
+  #searchModal .modal-dialog {
+    max-width: 70% !important;
+  }
+}
+
+@media (max-width: 991.98px) {
+  #searchModal .modal-dialog {
+    margin-top: 1rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  /* Bootstrap applies display:flex to center; we override it */
+  #searchModal .modal-dialog.modal-dialog-centered {
+    display: block !important;
+  }
+}
