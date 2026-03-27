@@ -1,0 +1,12 @@
+{% extends 'allauth/layouts/manage.html' %}
+{% load i18n %}
+
+{% block title %}{% trans "Profile" %}{% endblock %}
+{% block nav_class_profile %}{{ block.super }} active{% endblock %}
+
+{% block crumbarea %}
+{% endblock %}
+
+{% block content %}
+{% include 'user_profile.html' %}
+{% endblock %}

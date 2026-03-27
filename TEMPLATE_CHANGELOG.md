@@ -15,6 +15,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.5.0 - 2026-03-27
+
+### Added
+
+- Accounts app
+- Subscriptions app
+- Dark mode
+- Modal with fuzzy search
+- compilemessages support for update script
+
+### Changed
+
+- Language selection menu in navbar
+- User dropdown menu
+- Allauth profile menus on the top
+
+### Fixed
+
+- Mobiledetect error in tests
+
 ## 0.4.4 - 2026-03-10
 
 ### Added

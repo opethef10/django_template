@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% trans "Send Email" %}{% endblock %}
+
+{% block breadcrumb %}
+    <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
+    <li class="breadcrumb-item">{% trans "Subscriptions" %}</li>
+    <li class="breadcrumb-item">{% trans "Send Mail" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-10">
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.media }}
+            {% include 'includes/form.html' %}
+            <button type="submit" class="btn btn-success">{% trans "Send" %}</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
