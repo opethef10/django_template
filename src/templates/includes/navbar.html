@@ -44,46 +44,41 @@
                         {% endfor %}
                     </select>
                 </form>
-                {% if request.user.is_authenticated %}
-                    {% url 'account_email' as email_url_ %}
-    <li class="nav-item dropdown d-flex justify-content-center" style="list-style: none;">
-        <a class="nav-link dropdown-toggle text-light" href="#" id="userMenuRight" data-bs-toggle="dropdown"
-           aria-haspopup="true" aria-expanded="false">
-            {{ user.username }}
-        </a>
-        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenuRight">
-        <li>
-            {% if email_url_ %}
-                <a href="{% if email_url_ %}{{ email_url_ }}{% endif %}"
-                   class="dropdown-item">{% trans "Change Email"%}</a>
-            {% endif %}
-        </li>
-            <li>
-                <a class="dropdown-item" href="{% url 'account_change_password' %}">{% trans "Change Password"%}</a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            {% if user.is_staff %}
-            <li>
-                <a class="dropdown-item" href="{% url 'admin:index' %}">{% trans "Admin Page" %}</a>
-            </li>
-            <li><hr class="dropdown-divider"></li>
-            {% endif %}
-            <li>
-                <form action="{% url 'account_logout' %}" method="post">
-                    {% csrf_token %}
-                    <button class="dropdown-item" type="submit">{% trans "Sign Out" %}</button>
-                </form>
-            </li>
-        </ul>
-    </li>
-                {% else %}
+                {% endif %}
+
+<div class="d-flex align-items-center">
+    <i id="themeToggle" class="fa-solid fa-sun text-light" style="cursor:pointer;"></i>
+</div>
+
+            {% if user.is_authenticated %}
+                <ul class="navbar-nav">
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="userMenu" data-bs-toggle="dropdown"
+                           aria-haspopup="true" aria-expanded="false">
+                            {{ user.username }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="userMenu">
+                            <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-regular fa-user me-2"></i>{% trans "Profile" %}</a>
+                            <div class="dropdown-divider"></div>
+                            {% if user.is_staff %}
+                            <a class="dropdown-item" href="{% url 'admin:index' %}"><i class="fa-solid fa-user-shield me-2"></i>{% trans "Admin Page" %}</a>
+                                <div class="dropdown-divider"></div>
+                            {% endif %}
+                            <form action="{% url 'account_logout' %}" method="post">
+                                {% csrf_token %}
+                                <button class="dropdown-item" type="submit"><i class="fa-solid fa-arrow-right-from-bracket me-2"></i>{% trans "Sign Out" %}</button>
+                            </form>
+                        </div>
+                    </li>
+                </ul>
+            {% else %}
                     <a href="{% url 'account_login' %}" class="btn btn-outline-light">{% trans "Sign In" %}</a>
                     {% url 'account_signup' as signup_url_ %}
                     {% if signup_url_ %}
-                        <a href="{{ signup_url_ }}" class="btn btn-success">{% trans "Sign Up" %}</a>
+                        <a href="{{ signup_url_ }}" class="btn btn-primary">{% trans "Sign Up" %}</a>
                     {% endif %}
-                {% endif %}
-            </div>
+            {% endif %}
+        </div>
         </div>
     </div>
 </nav>
