@@ -22,6 +22,7 @@ from .views import HomeView, ContactView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
+    path("accounts/", include("src.apps.accounts.urls")),
     path("contact/", ContactView.as_view(), name='contact'),
     path("pages/", include("django.contrib.flatpages.urls")),
     path('mdeditor/', include('mdeditor.urls')),
