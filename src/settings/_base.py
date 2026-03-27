@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     # "allauth.socialaccount.providers.facebook",
     # "allauth.socialaccount.providers.google",
     "src.apps.accounts",
+    "src.apps.subscriptions",
     "src.apps.example",
     "django_minify_html",
     "django_extensions",
@@ -133,6 +134,7 @@ USE_L10N = True
 USE_TZ = True
 LANGUAGES = (
     ('en', _('English')),
+    ('tr', _('Turkish')),
 )
 LOCALE_PATHS = [
     PROJECT_DIR / 'locale/',

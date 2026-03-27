@@ -9,8 +9,15 @@
     <div class="flex-grow-1">
         <div class="nav nav-pills d-flex flex-wrap gap-1 p-1 text-bg-dark mb-3 justify-content-center small">
             {% url 'profile' as profile_url %}
+            {% if profile_url %}
             <a class="{% block nav_class_profile %}nav-link text-white text-center{% endblock %}"
                href="{{ profile_url }}">{% trans "Profile" %}</a>
+            {% endif %}
+            {% url 'subscriptions:update' as subscriptions_url %}
+            {% if subscriptions_url %}
+            <a class="{% block nav_class_subscriptions %}nav-link text-white text-center{% endblock %}"
+                href="{{ subscriptions_url }}">{% trans "Subscriptions" %}</a>
+            {% endif %}
             {% url 'account_email' as email_url_ %}
             {% if email_url_ %}
                 <a class="{% block nav_class_email %}nav-link text-white text-center{% endblock %}"
