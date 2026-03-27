@@ -10,7 +10,7 @@
             },
             min: undefined,
             max: undefined,
-            readable: false,
+            readable: true,
             themes: {
                 "default": {
                     color_min: "#E67C73",
@@ -55,6 +55,7 @@
         this.each(function() {
             var value = $(this).data('colorize');
             var ratio = (settings.center - value) / adj;
+            if (isNaN(ratio)) return;
             var color1, color2;
 
             if (!settings.percent && value <= settings.min) {
