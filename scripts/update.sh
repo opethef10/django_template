@@ -14,5 +14,6 @@ git pull
 pip install -r requirements/production.txt
 python manage.py collectstatic --noinput
 python manage.py migrate
+python manage.py compilemessages
 python manage.py test --settings=src.settings.tests
 scripts/reload.sh
