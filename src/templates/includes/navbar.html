@@ -27,19 +27,20 @@
                 </li>
               {% endfor %}
             </ul>
-          <div class="d-flex flex-column flex-sm-row gap-2 col-lg-3 justify-content-lg-end text-nowrap">
-                <form class="d-flex" method="post" action="{% url 'set_language' %}">
+                      <div class="ms-auto d-flex gap-2 justify-content-end text-nowrap">
           <button id="navbarSearchTrigger" type="button" class="btn btn-outline-light d-flex align-items-center">
               <i class="fa fa-search me-1"></i><span class="small d-none d-lg-inline">{% trans "Search" %} (Ctrl+K)</span>
 </button>
+                {% get_available_languages as LANGUAGES %}
+                {% if LANGUAGES|length > 1 %}
+                <form class="d-flex align-items-center" method="post" action="{% url 'set_language' %}">
                     {% csrf_token %}
-                    {% get_available_languages as LANGUAGES %}
-                    {% get_current_language as LANGUAGE_CODE %}
-                    <select name="language" onchange="this.form.submit()">
+                    {% get_current_language as LANG_CODE %}
+                    <select class="form-select" name="language" onchange="this.form.submit()">
                         {% get_language_info_list for LANGUAGES as languages %}
                         {% for lang in languages %}
-                            <option {% if lang.code == LANGUAGE_CODE %}selected{% endif %}
-                                    value="{{ lang.code }}">{{ lang.name_local }}</option>
+                            <option {% if lang.code == LANG_CODE %}selected{% endif %}
+                                    value="{{ lang.code }}">{{ lang.code|upper }}</option>
                         {% endfor %}
                     </select>
                 </form>
