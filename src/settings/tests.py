@@ -18,5 +18,3 @@ class DisableMigrations:
 
 MIGRATION_MODULES = DisableMigrations()
 logging.disable(logging.CRITICAL)
-
-MIDDLEWARE.remove('mobiledetect.middleware.DetectMiddleware')
