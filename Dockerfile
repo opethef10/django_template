@@ -1,5 +1,7 @@
 FROM python:3.13-slim
 
+RUN useradd --create-home --shell /bin/bash appuser
+
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONIOENCODING=utf8
 ENV PYTHONUTF8=1
@@ -14,6 +16,10 @@ COPY requirements/base.txt requirements/development.txt ./requirements/
 RUN pip install --no-cache-dir -r ./requirements/development.txt
 
 COPY . .
+
+RUN chown -R appuser:appuser /app
+
+USER appuser
 
 EXPOSE 8000
 
