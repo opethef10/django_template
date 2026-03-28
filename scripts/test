@@ -1,4 +1,7 @@
 #! /usr/bin/bash
+set -eo pipefail
+
+cd "$(dirname "$0")"/.. || exit 1
 
 if [ $# -gt 0 ]; then
     # If any arguments exist, run tests only for those apps

@@ -1,11 +1,22 @@
 #! /usr/bin/env bash
+set -euo pipefail
 
-cd "$(dirname "$0")"/.. || exit 1
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
+cd "$PROJECT_ROOT"
 
 # Load only the PROJECT_SLUG from the .env file
 export $(grep -v '^#' .env | grep 'PROJECT_SLUG' | xargs)
 
-touch "/var/www/${PROJECT_SLUG}_pythonanywhere_com_wsgi.py"
+WSGI_PATH="/var/www/${PROJECT_SLUG}_pythonanywhere_com_wsgi.py"
+
+if [[ ! -f "$WSGI_PATH" ]]; then
+    echo "Error: WSGI file not found at $WSGI_PATH"
+    echo "Are you running on PythonAnywhere?"
+    exit 1
+fi
+
+touch "$WSGI_PATH"
 for i in {1..3}; do
   echo -n "."
   sleep 1
