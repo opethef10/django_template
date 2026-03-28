@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     "django.contrib.redirects",
     "widget_tweaks",
     "pwa",
-    "mobiledetect",
     "django_recaptcha",
     "mdeditor"
 ]
@@ -60,7 +59,6 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
-    'mobiledetect.middleware.DetectMiddleware',
     "allauth.account.middleware.AccountMiddleware",
 ]
 
