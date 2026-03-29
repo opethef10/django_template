@@ -1,19 +1,21 @@
+from django.utils.translation import gettext_lazy as _
+
 NAVBAR_MENUS = [
 
 ]
 
 FOOTER_LINKS = [
     {
-        "label": "Contact",
+        "label": _("Contact"),
         "url_name": "contact",
     },
     {
-        "label": "Changelog",
+        "label": _("Changelog"),
         "url_name": "django.contrib.flatpages.views.flatpage",
         "kwargs": {"url": "changelog/"},
     },
     {
-        "label": "Frequently Asked Questions",
+        "label": _("Frequently Asked Questions"),
         "url_name": "django.contrib.flatpages.views.flatpage",
         "kwargs": {"url": "faq/"},
     },
