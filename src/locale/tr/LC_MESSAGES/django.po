@@ -1,0 +1,191 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-03-29 08:14+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: src/apps/accounts/templates/my_account.html:4
+#: src/templates/allauth/layouts/manage.html:14
+#: src/templates/includes/navbar.html:61
+msgid "Profile"
+msgstr ""
+
+#: src/forms.py:8
+msgid "Name"
+msgstr "Ad"
+
+#: src/forms.py:9
+msgid "Surname"
+msgstr "Soyad"
+
+#: src/forms.py:10
+msgid "Email Address"
+msgstr "E-posta Adresi"
+
+#: src/forms.py:11
+msgid "Message"
+msgstr "Mesaj"
+
+#: src/forms.py:17
+msgid "Captcha"
+msgstr "Doğrulama"
+
+#: src/menus.py:9 src/templates/contact.html:4 src/templates/contact.html:8
+msgid "Contact"
+msgstr "Bize Ulaşın"
+
+#: src/menus.py:13
+msgid "Changelog"
+msgstr "Değişiklik Güncesi"
+
+#: src/menus.py:18
+msgid "Frequently Asked Questions"
+msgstr "Sık Sorulan Sorular"
+
+#: src/settings/_base.py:134
+msgid "English"
+msgstr "İngilizce"
+
+#: src/settings/_base.py:135
+msgid "Turkish"
+msgstr "Türkçe"
+
+#: src/templates/404.html:4 src/templates/404.html:7
+msgid "Page not found"
+msgstr "Sayfa bulunamadı"
+
+#: src/templates/500.html:4
+msgid "Server error (500)"
+msgstr "Sunucu hatası (500)"
+
+#: src/templates/500.html:7
+msgid "Server Error <em>(500)</em>"
+msgstr "Sunucu Hatası <em>(500)</em>"
+
+#: src/templates/allauth/layouts/manage.html:19
+msgid "Subscriptions"
+msgstr "Abonelikler"
+
+#: src/templates/allauth/layouts/manage.html:24
+msgid "Change Email"
+msgstr ""
+
+#: src/templates/allauth/layouts/manage.html:29
+msgid "Change Password"
+msgstr ""
+
+#: src/templates/allauth/layouts/manage.html:34
+msgid "Social Accounts"
+msgstr ""
+
+#: src/templates/allauth/layouts/manage.html:39
+msgid "Two-Factor Authentication"
+msgstr ""
+
+#: src/templates/allauth/layouts/manage.html:44
+msgid "Sessions"
+msgstr ""
+
+#: src/templates/contact.html:7
+msgid "Home Page"
+msgstr "Ana Sayfa"
+
+#: src/templates/contact.html:16
+msgid ""
+"If you have any questions, suggestions, or feedback, feel free to reach out "
+"to us using the form below."
+msgstr "Herhangi bir sorunuz, öneriniz veya geri bildiriminiz varsa, lütfen aşağıdaki formu kullanarak bizimle iletişime geçin."
+
+#: src/templates/contact.html:21
+msgid "Submit"
+msgstr "Gönder"
+
+#: src/templates/contact.html:22
+msgid "Reset"
+msgstr "Değişiklikleri Geri Al"
+
+#: src/templates/includes/footer.html:10
+msgid "Links"
+msgstr "Bağlantılar"
+
+#: src/templates/includes/footer.html:24
+msgid "Social Links"
+msgstr "Sosyal Medya"
+
+#: src/templates/includes/footer.html:39
+msgid "Install App"
+msgstr "Uygulamayı Kur"
+
+#: src/templates/includes/modal.html:6 src/templates/includes/modal.html:14
+#: src/templates/includes/navbar.html:32
+msgid "Search"
+msgstr "Ara"
+
+#: src/templates/includes/modal.html:7
+msgid "Close"
+msgstr "Kapat"
+
+#: src/templates/includes/navbar.html:64
+msgid "Admin Page"
+msgstr "Yönetici Sayfası"
+
+#: src/templates/includes/navbar.html:69
+msgid "Sign Out"
+msgstr ""
+
+#: src/templates/includes/navbar.html:75
+msgid "Sign In"
+msgstr ""
+
+#: src/templates/includes/navbar.html:78
+msgid "Sign Up"
+msgstr ""
+
+#: src/templates/includes/pagination.html:6
+#: src/templates/includes/pagination.html:10
+msgid "First"
+msgstr "İlk"
+
+#: src/templates/includes/pagination.html:16
+#: src/templates/includes/pagination.html:20
+msgid "Previous"
+msgstr "Önceki"
+
+#: src/templates/includes/pagination.html:41
+#: src/templates/includes/pagination.html:45
+msgid "Next"
+msgstr "Sonraki"
+
+#: src/templates/includes/pagination.html:51
+#: src/templates/includes/pagination.html:55
+msgid "Last"
+msgstr "Son"
+
+#: src/views.py:20
+msgid "Your message has been sent successfully!"
+msgstr "Mesajınız başarıyla gönderildi!"
+
+#: src/views.py:22
+msgid "The form could not be sent, please correct the form errors and try again!"
+msgstr "Form gönderilemedi, lütfen form hatalarını düzeltin ve tekrar deneyin!"
+
+#: src/views.py:25
+msgid "Contact Us"
+msgstr "Bize Ulaşın"
+
+#: src/views.py:29
+msgid "Contact page is disabled."
+msgstr ""
