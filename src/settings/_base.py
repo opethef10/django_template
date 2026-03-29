@@ -220,7 +220,7 @@ MDEDITOR_CONFIGS = {
 # ==============================================================================
 AUTHENTICATION_BACKENDS = ("allauth.account.auth_backends.AuthenticationBackend",)
 ACCOUNT_LOGIN_METHODS = {"username", "email"}
-
+ACCOUNT_FORMS = {'signup': 'src.forms.CustomSignupForm'}
 ACCOUNT_SIGNUP_FIELDS = [
     "username*",
     "email*",
