@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Project Structure" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Structure" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#overview">{% translate "Directory Overview" %}</a></li>
+                <li class="list-group-item"><a href="#apps-structure">{% translate "App Structure" %}</a></li>
+                <li class="list-group-item"><a href="#adding-app">{% translate "Adding New App" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Project Structure" %}</h1>
+        <p class="lead">{% translate "This template uses a non-traditional structure where" %} <code>src/</code> {% translate "is the project root." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="overview" class="h3 mb-3">{% translate "Directory Overview" %}</h2>
+        <pre class="bg-dark text-light p-3 rounded"><code>{{ PROJECT_SLUG }}/                    # Repository root
+├── manage.py                 # Django management script
+├── .env                      # Environment variables (not in git!)
+├── .env.example              # Template for .env
+├── requirements/
+│   ├── base.txt              # All environments
+│   ├── development.txt       # Development (+ base.txt)
+│   └── production.txt        # Production (base.txt only)
+├── scripts/
+│   ├── test                  # Run tests
+│   ├── update.sh             # Full deployment update
+│   ├── reload.sh             # Touch WSGI to reload
+│   ├── backupdb.sh           # Database backup
+│   └── create_wsgi.sh        # Generate PythonAnywhere WSGI
+├── src/                      # PROJECT ROOT (not repository root!)
+│   ├── __init__.py
+│   ├── urls.py               # Root URL configuration
+│   ├── views.py              # Home and Contact views
+│   ├── forms.py              # Custom forms
+│   ├── adapters.py           # Allauth adapter
+│   ├── menus.py              # Navigation menus
+│   ├── settings/             # Environment-specific settings
+│   │   ├── _base.py          # Shared configuration
+│   │   ├── development.py    # Local development
+│   │   ├── production.py     # Production server
+│   │   └── tests.py          # Fast test execution
+│   ├── apps/                 # Django applications
+│   │   ├── accounts/         # User profile management
+│   │   ├── subscriptions/    # Notification subscriptions
+│   │   └── example/          # Example app (this app)
+│   ├── static/               # Project-level static files
+│   │   ├── css/
+│   │   └── js/
+│   ├── templates/            # Project-level templates
+│   │   ├── base.html
+│   │   ├── home.html
+│   │   └── account/
+│   ├── tags/                 # Custom template tags
+│   ├── context_processors/   # Template context processors
+│   └── locale/               # Translation files
+└── README.md</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="apps-structure" class="h3 mb-3">{% translate "App Structure" %}</h2>
+        <p>{% translate "Each app in" %} <code>src/apps/</code> {% translate "follows this pattern:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>src/apps/&lt;app_name&gt;/
+├── __init__.py
+├── apps.py                   # AppConfig class
+├── models.py                 # Database models
+├── views.py                  # Class-based views
+├── urls.py                   # App URLs (with app_name)
+├── admin.py                  # Django admin registration
+├── forms.py                  # Form classes
+├── signals.py                # Django signals (optional)
+├── utils.py                  # Helper functions (optional)
+├── templates/&lt;app_name&gt;/    # App-specific templates
+│   └── *.html
+├── static/&lt;app_name&gt;/        # App-specific static files
+├── migrations/               # Database migrations
+│   ├── __init__.py
+│   └── 0*.py
+└── tests/                    # Test files
+    ├── __init__.py
+    └── test_*.py</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="adding-app" class="h3 mb-3">{% translate "Adding a New App" %}</h2>
+        
+        <h4 class="h6">{% translate "1. Create the app directory" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>mkdir -p src/apps/myapp</code></pre>
+
+        <h4 class="h6 mt-3">{% translate "2. Create the required files" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code># __init__.py (empty)
+# apps.py
+from django.apps import AppConfig
+
+class MyappConfig(AppConfig):
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "src.apps.myapp"
+
+# urls.py
+from django.urls import path
+
+app_name = "myapp"
+urlpatterns = [
+    path("", TemplateView.as_view(template_name="myapp/index.html"), name="index"),
+]</code></pre>
+
+        <h4 class="h6 mt-3">{% translate "3. Register in settings" %}</h4>
+        <p>{% translate "Add to" %} <code>INSTALLED_APPS</code> {% translate "in" %} <code>settings/_base.py</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>INSTALLED_APPS = [
+    # ...
+    "src.apps.myapp",
+]</code></pre>
+
+        <h4 class="h6 mt-3">{% translate "4. Include URLs in root" %}</h4>
+        <p>{% translate "Add to" %} <code>src/urls.py</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>path("myapp/", include("src.apps.myapp.urls"))</code></pre>
+
+        <h4 class="h6 mt-3">{% translate "5. Create templates" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>mkdir -p src/apps/myapp/templates/myapp</code></pre>
+    </div>
+</div>
+{% endblock %}

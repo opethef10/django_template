@@ -1,0 +1,142 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Deployment" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Deployment" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#pythonanywhere">{% translate "PythonAnywhere" %}</a></li>
+                <li class="list-group-item"><a href="#requirements">{% translate "Requirements Files" %}</a></li>
+                <li class="list-group-item"><a href="#environment-prod">{% translate "Environment Variables" %}</a></li>
+                <li class="list-group-item"><a href="#deployment-checklist">{% translate "Deployment Checklist" %}</a></li>
+                <li class="list-group-item"><a href="#scripts">{% translate "Deployment Scripts" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Deployment" %}</h1>
+        <p class="lead">{% translate "This template is optimized for deployment on various platforms." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="pythonanywhere" class="h3 mb-4">
+            <i class="fa-brands fa-python text-primary"></i> 
+            {% translate "PythonAnywhere" %}
+            <a href="{% url 'example:pythonanywhere' %}" class="btn btn-sm btn-outline-primary ms-2">{% translate "Detailed Guide" %}</a>
+        </h2>
+        <p>{% translate "This template is specifically designed for PythonAnywhere with optimized scripts and configurations." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="requirements" class="h3 mb-3">{% translate "Requirements Files" %}</h2>
+        <div class="table-responsive mb-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% translate "File" %}</th>
+                        <th>{% translate "Use Case" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>requirements/base.txt</code></td>
+                        <td>{% translate "All environments (Django, allauth, PWA, etc.)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>requirements/development.txt</code></td>
+                        <td>{% translate "Local development (+ debug toolbar)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>requirements/production.txt</code></td>
+                        <td>{% translate "Production server (base.txt only)" %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="environment-prod" class="h3 mb-3">{% translate "Production Environment Variables" %}</h2>
+        <pre class="bg-dark text-light p-3 rounded"><code># Essential for Production
+DJANGO_SECRET_KEY=your-very-long-random-secret-key
+DJANGO_ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
+
+# Email (optional)
+DJANGO_EMAIL_ENABLED=True
+DJANGO_SERVER_EMAIL=noreply@yourdomain.com
+DJANGO_EMAIL_HOST_USER=smtp@gmail.com
+DJANGO_EMAIL_HOST_PASSWORD=your-app-password
+
+# Disable public registration if needed
+ACCOUNT_ALLOW_SIGNUPS=False
+
+# reCAPTCHA (optional)
+RECAPTCHA_ENABLED=False</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="deployment-checklist" class="h3 mb-3">{% translate "Deployment Checklist" %}</h2>
+        <ul class="list-group mb-4">
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Set" %} <code>DEBUG=False</code> {% translate "in production settings" %}</li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Configure" %} <code>DJANGO_SECRET_KEY</code></li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Set" %} <code>ALLOWED_HOSTS</code></li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Collect static files:" %} <code>python manage.py collectstatic</code></li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Run migrations:" %} <code>python manage.py migrate</code></li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Configure email settings" %}</li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Set up HTTPS (handled by hosting provider)" %}</li>
+            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Backup database regularly" %}</li>
+        </ul>
+
+        <hr class="my-5">
+
+        <h2 id="scripts" class="h3 mb-3">{% translate "Deployment Scripts" %}</h2>
+        <p>{% translate "Located in" %} <code>scripts/</code>:</p>
+        <div class="table-responsive mb-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% translate "Script" %}</th>
+                        <th>{% translate "Purpose" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>update.sh</code></td>
+                        <td>{% translate "Full deployment update (backup, pull, install, migrate, collectstatic, reload)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>reload.sh</code></td>
+                        <td>{% translate "Touch WSGI file to reload server" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>backupdb.sh</code></td>
+                        <td>{% translate "Database backup" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>create_wsgi.sh</code></td>
+                        <td>{% translate "Generate PythonAnywhere WSGI file" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>test</code></td>
+                        <td>{% translate "Run tests with test settings" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>push</code></td>
+                        <td>{% translate "Push to remote with submodule updates" %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

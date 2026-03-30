@@ -1,0 +1,251 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Features" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Features" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#frontend">{% translate "Frontend" %}</a></li>
+                <li class="list-group-item"><a href="#backend">{% translate "Backend" %}</a></li>
+                <li class="list-group-item"><a href="#pwa">{% translate "PWA" %}</a></li>
+                <li class="list-group-item"><a href="#i18n">{% translate "Internationalization" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Built-in Features" %}</h1>
+        <p class="lead">{% translate "This template includes production-ready features out of the box." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="frontend" class="h3 mb-4">{% translate "Frontend" %}</h2>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-brands fa-bootstrap text-purple"></i> Bootstrap 5.3</h3>
+                <p>{% translate "Latest Bootstrap included with all components ready to use. Custom styles go in" %} <code>src/static/css/</code>.</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-table text-success"></i> DataTables</h3>
+                <p>{% translate "Interactive tables with built-in sorting, searching, and pagination." %}</p>
+                <p>{% translate "Example table:" %}</p>
+                <table id="exampleTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011-04-25</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                            <td>2011-07-25</td>
+                        </tr>
+                        <tr>
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td>66</td>
+                            <td>2009-01-12</td>
+                        </tr>
+                        <tr>
+                            <td>Cedric Kelly</td>
+                            <td>Senior Developer</td>
+                            <td>Edinburgh</td>
+                            <td>22</td>
+                            <td>2012-03-29</td>
+                        </tr>
+                        <tr>
+                            <td>Airi Satou</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>33</td>
+                            <td>2008-11-28</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;table id="myTable" class="display"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Column 1&lt;/th&gt;
+            &lt;th&gt;Column 2&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+new DataTable('#myTable');
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-mobile-screen text-primary"></i> Mobile Responsive</h3>
+                <p>{% translate "Your site works great on all devices - phones, tablets, and desktops." %}</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-moon text-dark"></i> Dark Mode</h3>
+                <p>{% translate "Built-in dark mode support via Bootstrap 5. Toggle it using the moon/sun icon in the navbar (top right)." %}</p>
+                <div class="d-flex align-items-center gap-3 mt-3">
+                    <span>{% translate "Demo toggle:" %}</span>
+                    <button id="demoThemeToggle" class="btn btn-outline-secondary btn-sm">
+                        <i id="demoThemeIcon" class="fa-solid fa-moon"></i>
+                        <span class="ms-2">{% translate "Toggle Theme" %}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-font-awesome text-info"></i> Font Awesome 7</h3>
+                <p>{% translate "Thousands of icons ready to use." %}</p>
+                <p class="mb-2">{% translate "Solid icons:" %}</p>
+                <div class="d-flex gap-3 flex-wrap mb-3">
+                    <i class="fa-solid fa-house fa-xl"></i>
+                    <i class="fa-solid fa-user fa-xl"></i>
+                    <i class="fa-solid fa-envelope fa-xl"></i>
+                    <i class="fa-solid fa-gear fa-xl"></i>
+                    <i class="fa-solid fa-search fa-xl"></i>
+                    <i class="fa-solid fa-star fa-xl"></i>
+                </div>
+                <p class="mb-2">{% translate "Brand icons:" %}</p>
+                <div class="d-flex gap-3 flex-wrap mb-3">
+                    <i class="fa-brands fa-github fa-xl"></i>
+                    <i class="fa-brands fa-twitter fa-xl"></i>
+                    <i class="fa-brands fa-facebook fa-xl"></i>
+                    <i class="fa-brands fa-instagram fa-xl"></i>
+                    <i class="fa-brands fa-python fa-xl"></i>
+                </div>
+                <p class="mb-2">{% translate "In buttons:" %}</p>
+                <button class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>{% translate "New Item" %}</button>
+                <button class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>{% translate "Delete" %}</button>
+                <button class="btn btn-success"><i class="fa-solid fa-check me-2"></i>{% translate "Confirm" %}</button>
+                <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;i class="fa-solid fa-user"&gt;&lt;/i&gt;
+&lt;i class="fa-brands fa-github"&gt;&lt;/i&gt;
+&lt;button class="btn btn-primary"&gt;
+    &lt;i class="fa-solid fa-plus"&gt;&lt;/i&gt; Button
+&lt;/button&gt;</code></pre>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="backend" class="h3 mb-4">{% translate "Backend" %}</h2>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-lock text-danger"></i> Authentication</h3>
+                <p>{% translate "Complete authentication system out of the box:" %}</p>
+                <ul>
+                    <li>{% translate "Login with username or email" %}</li>
+                    <li>{% translate "Signup with spam protection" %}</li>
+                    <li>{% translate "Password reset and change" %}</li>
+                    <li>{% translate "Social login (Google, Facebook) - ready to enable" %}</li>
+                    <li>{% translate "1-year session duration" %}</li>
+                    <li>{% translate "Disable public registration via" %} <code>ACCOUNT_ALLOW_SIGNUPS=False</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-file-lines text-warning"></i> Flatpages</h3>
+                <p>{% translate "Create static pages easily at" %} <code>/pages/&lt;url&gt;/</code>.</p>
+                <p>{% translate "Just add a page in Django Admin under" %} <strong>Flatpages</strong> {% translate "section." %}</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-pen text-secondary"></i> Markdown Editor</h3>
+                <p>{% translate "Rich text editor for content pages. Access via" %} <code>/admin/</code>.</p>
+            </div>
+        </div>
+
+        <div class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-shield text-success"></i> reCAPTCHA</h3>
+                <p>{% translate "Automatic spam protection for signup form." %}</p>
+                <p>{% translate "Enable in" %} <code>.env</code>:</p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>RECAPTCHA_ENABLED=True
+RECAPTCHA_PUBLIC_KEY=your-site-key
+RECAPTCHA_PRIVATE_KEY=your-secret-key</code></pre>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="pwa" class="h3 mb-4">{% translate "Progressive Web App" %}</h2>
+        <p>{% translate "Users can install your site on their phone or desktop like a native app." %}</p>
+        <ul>
+            <li>{% translate "Works offline" %}</li>
+            <li>{% translate "Add to home screen" %}</li>
+            <li>{% translate "Customizable app icon" %}</li>
+        </ul>
+        <p>{% translate "Replace" %} <code>src/static/logo.png</code> {% translate "with your icon and update settings in" %} <code>PWA_APP_*</code>.</p>
+
+        <hr class="my-5">
+
+        <h2 id="i18n" class="h3 mb-4">{% translate "Internationalization" %}</h2>
+        <p>{% translate "Ready for multiple languages - English and Turkish included." %}</p>
+        <p>{% translate "Language switcher is in the navbar." %}</p>
+        <p>{% translate "To add a new language, update" %} <code>LANGUAGES</code> {% translate "in" %} <code>settings/_base.py</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded mb-0"><code>LANGUAGES = (
+    ('en', _('English')),
+    ('tr', _('Turkish')),
+    ('es', _('Spanish')),
+)</code></pre>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+new DataTable('#exampleTable', {
+    pageLength: 3,
+    lengthMenu: [[3, 5, 10, 25], [3, 5, 10, 25]]
+});
+
+document.getElementById('demoThemeToggle').addEventListener('click', function() {
+    const html = document.documentElement;
+    const icon = document.getElementById('demoThemeIcon');
+    const newTheme = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-bs-theme', newTheme);
+    icon.classList.replace(newTheme === 'dark' ? 'fa-moon' : 'fa-sun', newTheme === 'dark' ? 'fa-sun' : 'fa-moon');
+});
+</script>
+{% endblock %}

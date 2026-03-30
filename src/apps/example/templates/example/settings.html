@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Settings & Configuration" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Settings" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#architecture">{% translate "Architecture" %}</a></li>
+                <li class="list-group-item"><a href="#environment">{% translate "Environment Variables" %}</a></li>
+                <li class="list-group-item"><a href="#development">{% translate "Development" %}</a></li>
+                <li class="list-group-item"><a href="#production">{% translate "Production" %}</a></li>
+                <li class="list-group-item"><a href="#menu-config">{% translate "Menu Configuration" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Settings & Configuration" %}</h1>
+        <p class="lead">{% translate "This template uses a layered settings architecture for different environments." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="architecture" class="h3 mb-3">{% translate "Settings Architecture" %}</h2>
+        <div class="table-responsive mb-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% translate "File" %}</th>
+                        <th>{% translate "Purpose" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>settings/_base.py</code></td>
+                        <td>{% translate "Shared configuration (installed apps, middleware, templates)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/development.py</code></td>
+                        <td>{% translate "Local development (DEBUG=True, console email, debug toolbar)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/production.py</code></td>
+                        <td>{% translate "Production (env vars, file logging, real email)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/tests.py</code></td>
+                        <td>{% translate "Fast test execution (MD5 hasher, no migrations)" %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="environment" class="h3 mb-3">{% translate "Environment Variables" %}</h2>
+        <p>{% translate "All sensitive configuration is managed via environment variables using" %} <code>python-decouple</code>.</p>
+
+        <h4 class="h6 mt-4">{% translate "Required Variables" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code># Project Identity
+PROJECT_SLUG=myproject
+PROJECT_NAME=My Project
+PROJECT_DESCRIPTION=A brief description of my project
+PROJECT_DOMAIN=myproject.com
+PROJECT_ADMIN_NAME=Admin
+PROJECT_ADMIN_EMAIL=admin@myproject.com
+DJANGO_SECRET_KEY=your-very-long-random-secret-key</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "Optional Variables" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code># Email (for contact form and notifications)
+DJANGO_EMAIL_ENABLED=True
+DJANGO_SERVER_EMAIL=noreply@myproject.com
+DJANGO_EMAIL_HOST_USER=smtp@gmail.com
+DJANGO_EMAIL_HOST_PASSWORD=your-app-password
+
+# Security
+DJANGO_ALLOWED_HOSTS=myproject.com,www.myproject.com
+
+# Account Settings
+ACCOUNT_ALLOW_SIGNUPS=True  # Set to False to disable public registration
+
+# reCAPTCHA (for signup spam protection)
+RECAPTCHA_ENABLED=True
+RECAPTCHA_PUBLIC_KEY=your-recaptcha-site-key
+RECAPTCHA_PRIVATE_KEY=your-recaptcha-secret-key</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="development" class="h3 mb-3">{% translate "Development Settings" %}</h2>
+        <p>{% translate "When running locally, the following are automatically enabled:" %}</p>
+        <ul>
+            <li><code>DEBUG = True</code></li>
+            <li><code>ALLOWED_HOSTS = ["*"]</code></li>
+            <li><strong>Debug Toolbar</strong> - Available at <code>/__debug__/</code></li>
+            <li><strong>Console Email Backend</strong> - Emails printed to terminal instead of sent</li>
+            <li><strong>Dummy Cache</strong> - No actual caching</li>
+        </ul>
+
+        <hr class="my-5">
+
+        <h2 id="production" class="h3 mb-3">{% translate "Production Settings" %}</h2>
+        <ul>
+            <li><code>DEBUG = False</code></li>
+            <li><code>ALLOWED_HOSTS</code> from environment variable</li>
+            <li><strong>File Logging</strong> - Logs to <code>/var/www/proj.log</code></li>
+            <li><strong>Static/Media</strong> - Served from <code>/var/www/static</code> and <code>/var/www/media</code></li>
+            <li><strong>Real SMTP</strong> - Only if <code>DJANGO_EMAIL_ENABLED=True</code></li>
+        </ul>
+
+        <hr class="my-5">
+
+        <h2 id="menu-config" class="h3 mb-3">{% translate "Menu Configuration" %}</h2>
+        <p>{% translate "Navigation menus are configured in" %} <code>src/menus.py</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded"><code># NAVBAR_MENUS - Main navigation
+NAVBAR_MENUS = [
+    {"label": _("Home"), "url_name": "home"},
+    {"label": _("About"), "url_name": "django.contrib.flatpages.views.flatpage", "kwargs": {"url": "/about/"}},
+]
+
+# FOOTER_LINKS - Footer links
+FOOTER_LINKS = [
+    {"label": _("Contact"), "url_name": "contact"},
+    {"label": _("Privacy"), "url_name": "django.contrib.flatpages.views.flatpage", "kwargs": {"url": "/privacy/"}},
+]
+
+# SOCIAL_LINKS - Social media links
+SOCIAL_LINKS = [
+    {"label": "GitHub", "icon": "fa-github", "url": "https://github.com/..."},
+]</code></pre>
+    </div>
+</div>
+{% endblock %}

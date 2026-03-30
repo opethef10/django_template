@@ -1,0 +1,190 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Setup Guide" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Setup" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#docker">{% translate "Docker (Recommended)" %}</a></li>
+                <li class="list-group-item"><a href="#manual">{% translate "Manual Setup" %}</a></li>
+                <li class="list-group-item"><a href="#next-steps">{% translate "Next Steps" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Setup Guide" %}</h1>
+        <p class="lead">{% translate "Get your development environment ready in minutes." %}</p>
+
+        <div class="alert alert-info">
+            <i class="fa-solid fa-circle-info"></i>
+            <strong>{% translate "Development Only:" %}</strong> {% translate "This setup is for local development. See" %} <a href="{% url 'example:deployment' %}">{% translate "Deployment Guide" %}</a> {% translate "for production." %}
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="docker" class="h3 mb-3"><i class="fa-brands fa-docker text-primary"></i> {% translate "Docker (Recommended)" %}</h2>
+        <p>{% translate "Docker handles all dependencies and keeps your system clean. Perfect for local development." %}</p>
+
+        <h4 class="h6">{% translate "1. Create Your Repository" %}</h4>
+        <p>{% translate "Click the" %} <strong>{% translate "Use this template" %}</strong> {% translate "button on" %} <a href="https://github.com/opethef10/django_template" target="_blank">{% translate "GitHub" %}</a> {% translate "to create your own repository." %}</p>
+
+        <h4 class="h6 mt-4">{% translate "2. Clone Your Repo" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>git clone https://github.com/YOUR_USERNAME/YOUR_PROJECT.git
+cd YOUR_PROJECT</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "3. Install Docker" %}</h4>
+        <p><a href="https://docs.docker.com/desktop/" target="_blank">{% translate "Docker Desktop" %}</a> {% translate "(or any Docker runtime)" %}</p>
+        <p class="text-muted small">{% translate "For nerds:" %} <a href="https://github.com/jesseduffield/lazydocker" target="_blank">Lazydocker</a> {% translate "- terminal UI for Docker (optional but awesome)" %}</p>
+
+        <h4 class="h6 mt-4">{% translate "4. Create .env file" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>cp .env.example .env</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "5. Edit .env" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>PROJECT_SLUG=myproject
+PROJECT_NAME=My Project
+PROJECT_DESCRIPTION=A brief description
+PROJECT_DOMAIN=localhost
+PROJECT_ADMIN_NAME=Admin
+PROJECT_ADMIN_EMAIL=admin@example.com
+DJANGO_SECRET_KEY=dev-secret-key</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "6. Start the app" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose up -d</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "7. Run migrations" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose exec django_app python manage.py migrate</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "8. Create admin user" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose exec django_app python manage.py createsuperuser</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "9. Open the app" %}</h4>
+        <p>{% translate "App:" %} <a href="http://localhost:8000">http://localhost:8000</a> | {% translate "Admin:" %} <a href="http://localhost:8000/admin">http://localhost:8000/admin</a></p>
+        <p class="text-muted small">{% translate "Note: If you changed PROJECT_PORT_NUMBER in .env, use that port instead of 8000." %}</p>
+
+        <details class="border border-success border-opacity-25 rounded-3 p-3 my-3 bg-success bg-opacity-10">
+            <summary class="cursor-pointer user-select-none">
+                <strong>{% translate "For nerds:" %}</strong> <a href="https://github.com/peterldowns/localias" target="_blank">Localias</a> {% translate "- real HTTPS domains for local dev" %}
+            </summary>
+            <div class="ps-2 pt-2">
+                <p class="small">{% translate "Get real HTTPS domains like" %} <code>myproject.local</code> {% translate "instead of localhost:8000. No need to remember port numbers!" %}</p>
+                <ul class="small">
+                    <li>{% translate "Test cookies and sessions like in production" %}</li>
+                    <li>{% translate "No more CORS issues when calling APIs" %}</li>
+                    <li>{% translate "Test HTTPS-only features locally" %}</li>
+                    <li>{% translate "Share your local site with others on the same Wi-Fi" %}</li>
+                </ul>
+                
+                <h5 class="h6">{% translate "1. Install" %}</h5>
+                <pre class="bg-dark text-light p-3 rounded"><code>brew install peterldowns/tap/localias  # macOS</code></pre>
+                <p class="small text-muted">{% translate "Other platforms:" %} <a href="https://github.com/peterldowns/localias/releases" target="_blank">https://github.com/peterldowns/localias/releases</a></p>
+
+                <h5 class="h6 mt-3">{% translate "2. Add alias and start" %}</h5>
+                <pre class="bg-dark text-light p-3 rounded"><code>localias set myproject.local 8000
+localias start</code></pre>
+                <p class="small text-muted">{% translate "Replace myproject with your PROJECT_SLUG and 8000 with your PROJECT_PORT_NUMBER" %}</p>
+
+                <h5 class="h6 mt-3">{% translate "3. Open" %}</h5>
+                <p class="small text-muted">{% translate "Visit" %} <a href="https://myproject.local">https://myproject.local</a></p>
+            </div>
+        </details>
+
+        <h4 class="h6 mt-4">{% translate "Useful Commands" %}</h4>
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>{% translate "Command" %}</th>
+                        <th>{% translate "Description" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>docker compose logs -f</code></td>
+                        <td>{% translate "View logs" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>docker compose down</code></td>
+                        <td>{% translate "Stop containers" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>docker compose up --build -d</code></td>
+                        <td>{% translate "Rebuild after code changes" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>docker compose exec django_app &lt;command&gt;</code></td>
+                        <td>{% translate "Run management commands" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>docker compose exec django_app python manage.py migrate</code></td>
+                        <td>{% translate "Run migrations" %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="manual" class="h3 mb-3"><i class="fa-solid fa-terminal text-success"></i> {% translate "Manual Setup" %}</h2>
+
+        <h4 class="h6">{% translate "Prerequisites" %}</h4>
+        <ul class="mb-4">
+            <li>Python 3.10+</li>
+            <li>pip</li>
+            <li>Git</li>
+        </ul>
+        
+        <h4 class="h6">{% translate "1. Create Your Repository" %}</h4>
+        <p>{% translate "Click" %} <strong>{% translate "Use this template" %}</strong> {% translate "on" %} <a href="https://github.com/opethef10/django_template" target="_blank">{% translate "GitHub" %}</a> {% translate "to create your own repo." %}</p>
+
+        <h4 class="h6 mt-4">{% translate "2. Clone" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>git clone &lt;repository-url&gt; &lt;project-name&gt;
+cd &lt;project-name&gt;</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "3. Create .env" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>cp .env.example .env</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "4. Edit .env" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>PROJECT_SLUG=myproject
+PROJECT_NAME=My Project
+PROJECT_DOMAIN=localhost
+PROJECT_ADMIN_EMAIL=admin@example.com
+DJANGO_SECRET_KEY=dev-secret-key</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "5. Create venv and install" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>python -m venv venv
+source venv/bin/activate  # Linux/Mac
+# venv\Scripts\activate  # Windows
+pip install -r requirements/development.txt</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "6. Migrate" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>python manage.py migrate</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "7. Create admin user" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>python manage.py createsuperuser</code></pre>
+
+        <h4 class="h6 mt-4">{% translate "8. Run and open" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>python manage.py runserver</code></pre>
+        <p>{% translate "Open" %} <a href="http://127.0.0.1:8000">http://127.0.0.1:8000</a> | {% translate "Admin:" %} <a href="http://127.0.0.1:8000/admin">http://127.0.0.1:8000/admin</a></p>
+
+        <hr class="my-5">
+
+        <h2 id="next-steps" class="h3 mb-3">{% translate "Next Steps" %}</h2>
+        <ul>
+            <li><a href="{% url 'example:structure' %}">{% translate "Understand the project structure" %}</a></li>
+            <li><a href="{% url 'example:settings' %}">{% translate "Configure settings" %}</a></li>
+            <li><a href="{% url 'example:features' %}">{% translate "Explore built-in features" %}</a></li>
+            <li><a href="{% url 'example:deployment' %}">{% translate "Deploy to production" %}</a></li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
