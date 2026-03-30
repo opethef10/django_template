@@ -24,3 +24,11 @@ def create_default_subscriptions(sender, instance, created, **kwargs):
     ]
 
     UserTopicSubscription.objects.bulk_create(subscriptions_to_create, ignore_conflicts=True)
+
+
+@receiver(post_save, sender=User)
+def remove_subscriptions_on_deactivation(sender, instance, created, **kwargs):
+    if created:
+        return
+    if not instance.is_active:
+        UserTopicSubscription.objects.filter(user=instance).delete()
