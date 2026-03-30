@@ -51,9 +51,9 @@ class SendTopicMailView(UserPassesTestMixin, SuccessMessageMixin, FormView):
         subject = form.cleaned_data["subject"].strip()
         message = form.cleaned_data["message"].strip()
 
-        # Get emails of all subscribers
+        # Get emails of all active subscribers
         subscriber_emails = list(
-            UserTopicSubscription.objects.filter(topic=topic)
+            UserTopicSubscription.objects.filter(topic=topic, user__is_active=True)
             .select_related("user")
             .values_list("user__email", flat=True)
         )
