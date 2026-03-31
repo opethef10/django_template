@@ -15,9 +15,9 @@
             <div class="card-header">{% translate "On This Page" %}</div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="#architecture">{% translate "Architecture" %}</a></li>
-                <li class="list-group-item"><a href="#environment">{% translate "Environment Variables" %}</a></li>
                 <li class="list-group-item"><a href="#development">{% translate "Development" %}</a></li>
                 <li class="list-group-item"><a href="#production">{% translate "Production" %}</a></li>
+                <li class="list-group-item"><a href="#tests">{% translate "Tests" %}</a></li>
                 <li class="list-group-item"><a href="#menu-config">{% translate "Menu Configuration" %}</a></li>
             </ul>
         </div>
@@ -45,15 +45,15 @@
                     </tr>
                     <tr>
                         <td><code>settings/development.py</code></td>
-                        <td>{% translate "Local development (DEBUG=True, console email, debug toolbar)" %}</td>
+                        <td>{% translate "Local development (DEBUG, easy debugging, no external services)" %}</td>
                     </tr>
                     <tr>
                         <td><code>settings/production.py</code></td>
-                        <td>{% translate "Production (env vars, file logging, real email)" %}</td>
+                        <td>{% translate "Production (secure, logged, real email)" %}</td>
                     </tr>
                     <tr>
                         <td><code>settings/tests.py</code></td>
-                        <td>{% translate "Fast test execution (MD5 hasher, no migrations)" %}</td>
+                        <td>{% translate "Fast test execution (fast hashing, no migrations)" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -61,59 +61,57 @@
 
         <hr class="my-5">
 
-        <h2 id="environment" class="h3 mb-3">{% translate "Environment Variables" %}</h2>
-        <p>{% translate "All sensitive configuration is managed via environment variables using" %} <code>python-decouple</code>.</p>
-
-        <h4 class="h6 mt-4">{% translate "Required Variables" %}</h4>
-        <pre class="bg-dark text-light p-3 rounded"><code># Project Identity
-PROJECT_SLUG=myproject
-PROJECT_NAME=My Project
-PROJECT_DESCRIPTION=A brief description of my project
-PROJECT_DOMAIN=myproject.com
-PROJECT_ADMIN_NAME=Admin
-PROJECT_ADMIN_EMAIL=admin@myproject.com
-DJANGO_SECRET_KEY=your-very-long-random-secret-key</code></pre>
-
-        <h4 class="h6 mt-4">{% translate "Optional Variables" %}</h4>
-        <pre class="bg-dark text-light p-3 rounded"><code># Email (for contact form and notifications)
-DJANGO_EMAIL_ENABLED=True
-DJANGO_SERVER_EMAIL=noreply@myproject.com
-DJANGO_EMAIL_HOST_USER=smtp@gmail.com
-DJANGO_EMAIL_HOST_PASSWORD=your-app-password
-
-# Security
-DJANGO_ALLOWED_HOSTS=myproject.com,www.myproject.com
-
-# Account Settings
-ACCOUNT_ALLOW_SIGNUPS=True  # Set to False to disable public registration
-
-# reCAPTCHA (for signup spam protection)
-RECAPTCHA_ENABLED=True
-RECAPTCHA_PUBLIC_KEY=your-recaptcha-site-key
-RECAPTCHA_PRIVATE_KEY=your-recaptcha-secret-key</code></pre>
-
-        <hr class="my-5">
-
         <h2 id="development" class="h3 mb-3">{% translate "Development Settings" %}</h2>
-        <p>{% translate "When running locally, the following are automatically enabled:" %}</p>
-        <ul>
-            <li><code>DEBUG = True</code></li>
-            <li><code>ALLOWED_HOSTS = ["*"]</code></li>
-            <li><strong>Debug Toolbar</strong> - Available at <code>/__debug__/</code></li>
-            <li><strong>Console Email Backend</strong> - Emails printed to terminal instead of sent</li>
-            <li><strong>Dummy Cache</strong> - No actual caching</li>
-        </ul>
+        <p>{% translate "When you're working on your local machine, you need settings that make development easy and fast. The development settings are designed to give you as much information as possible when something goes wrong, and to avoid accidentally affecting real users." %}</p>
+
+        <h4 class="mt-4">{% translate "DEBUG = True" %}</h4>
+        <p>{% translate "When DEBUG is True, Django shows detailed error pages whenever something goes wrong. Instead of just seeing 'Something went wrong', you'll see exactly which line of code caused the problem, what the error is, and the full stack trace. This makes fixing bugs much easier. In production, this would be a security risk because attackers could learn about your server setup, but locally it's incredibly helpful." %}</p>
+
+        <h4 class="mt-4">{% translate "ALLOWED_HOSTS = ['*']" %}</h4>
+        <p>{% translate "ALLOWED_HOSTS is a security feature that tells Django which domain names are allowed to access your site. When developing locally, you access your site through various addresses like localhost, 127.0.0.1, or maybe a custom hostname. Instead of configuring this every time, we use '*' which means 'allow everything'. This is fine for local development but would be dangerous in production." %}</p>
+
+        <h4 class="mt-4">{% translate "Debug Toolbar" %}</h4>
+        <p>{% translate "The debug toolbar is a powerful tool that appears on the right side of your pages when you're developing. It shows you lots of useful information: how long the page took to load, what database queries were made (and how long each took), what template variables are available, and more. This helps you understand how your code is performing and what's happening behind the scenes. It's only available in development because it reveals too much information about your server to be safe in production." %}</p>
+
+        <h4 class="mt-4">{% translate "Console Email Backend" %}</h4>
+        <p>{% translate "When your code sends an email (like when someone signs up and needs to confirm their email), Django needs to know how to deliver it. In development, we don't want to actually send emails - we want to see what would have been sent. The console email backend prints all emails to your terminal instead of sending them. This way, you can test email-related features without worrying about accidentally emailing real users or needing to set up a real email server." %}</p>
+
+        <h4 class="mt-4">{% translate "Dummy Cache" %}</h4>
+        <p>{% translate "Caching is a technique where Django stores frequently-used data in memory so it can be retrieved faster. For example, instead of querying the database every time someone visits a page, Django can save the result and serve it instantly. In production, you typically use a cache server like Redis or Memcached. However, setting up a cache server adds complexity to your local development environment. The dummy cache pretends to cache things but doesn't actually store anything - this keeps your development setup simple while still allowing code that uses caching to work without errors." %}</p>
 
         <hr class="my-5">
 
         <h2 id="production" class="h3 mb-3">{% translate "Production Settings" %}</h2>
-        <ul>
-            <li><code>DEBUG = False</code></li>
-            <li><code>ALLOWED_HOSTS</code> from environment variable</li>
-            <li><strong>File Logging</strong> - Logs to <code>/var/www/proj.log</code></li>
-            <li><strong>Static/Media</strong> - Served from <code>/var/www/static</code> and <code>/var/www/media</code></li>
-            <li><strong>Real SMTP</strong> - Only if <code>DJANGO_EMAIL_ENABLED=True</code></li>
-        </ul>
+        <p>{% translate "When you deploy your website to a live server, you need completely different settings. Production is about security, performance, and reliability. You don't need helpful error messages anymore - instead, you need to protect your users' data and keep your server running smoothly." %}</p>
+
+        <h4 class="mt-4">{% translate "DEBUG = False" %}</h4>
+        <p>{% translate "When DEBUG is False, Django hides all error details from users. Instead of seeing a helpful error page with the exact problem, users just see a generic 'Something went wrong' message. This might seem unhelpful, but it's actually important for security. If a hacker tries to break into your site and sees detailed error messages, they can learn about your server setup, what databases you're using, and where your code might have weaknesses. By hiding this information, you make it much harder for attackers to find vulnerabilities." %}</p>
+
+        <h4 class="mt-4">{% translate "ALLOWED_HOSTS" %}</h4>
+        <p>{% translate "In production, you should only allow access from your actual domain name(s). This prevents a type of attack called 'host header injection' where an attacker tries to use your server for malicious purposes by sending requests with fake host names. By specifying exactly which domains are allowed, you ensure that only legitimate traffic reaches your application." %}</p>
+
+        <h4 class="mt-4">{% translate "File Logging" %}</h4>
+        <p>{% translate "When something goes wrong in production, you can't just look at the error page on your screen - users are seeing the site, not you. That's where logging comes in. Every time something important happens (an error, a user signing up, a payment being processed), Django writes a record to a log file. This log file lives at /var/www/proj.log on your server. When something breaks, you can check this file to see what happened. Logging is essential for troubleshooting problems that you can't see directly." %}</p>
+
+        <h4 class="mt-4">{% translate "Static and Media Files" %}</h4>
+        <p>{% translate "Static files are things like CSS, JavaScript, and images that don't change - they're the same for all users. Media files are uploads like profile pictures or documents that users send to your site. In development, Django serves these files directly. In production, it's much more efficient to let your web server (Nginx) serve these files directly, bypassing Django entirely. This makes your site much faster because static files can be cached by browsers and served from CDNs. We configure Django to look for these files in /var/www/static and /var/www/media." %}</p>
+
+        <h4 class="mt-4">{% translate "Real SMTP Email" %}</h4>
+        <p>{% translate "In production, when users sign up, request password resets, or contact you through forms, they need to actually receive those emails. This requires a real email server (SMTP). We use Gmail's SMTP server as a simple option, but you can use any email provider. The email is only enabled if DJANGO_EMAIL_ENABLED=True - this allows you to disable email completely if needed without changing code." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="tests" class="h3 mb-3">{% translate "Test Settings" %}</h2>
+        <p>{% translate "When you run automated tests, you need settings that make tests run as fast as possible. Tests that take minutes to run get annoying and people stop running them. The test settings are optimized for speed, not security or accuracy." %}</p>
+
+        <h4 class="mt-4">{% translate "MD5 Password Hasher" %}</h4>
+        <p>{% translate "Password hashing is the process of turning a password into a scrambled version that can't be reversed. When users create accounts, their passwords are hashed and the hash is stored. When they log in, their password is hashed again and compared to the stored hash. This is secure because even if someone steals the database, they can't see the actual passwords. However, secure hashing algorithms like bcrypt are designed to be slow - that's intentional because it makes brute force attacks harder. The problem is, in tests, you're constantly creating users and checking passwords. Using MD5 (which is fast but not very secure) makes tests run much faster. Since tests run in an isolated environment, this security trade-off is acceptable." %}</p>
+
+        <h4 class="mt-4">{% translate "Disable Migrations" %}</h4>
+        <p>{% translate "Normally, before running tests, Django creates a fresh test database and runs all your migrations to set up the tables. This can take a long time if you have many migrations. The test settings use a trick: instead of running migrations, Django creates the tables directly from your model definitions. This skips a lot of the overhead and makes test setup much faster." %}</p>
+
+        <h4 class="mt-4">{% translate "Disable Logging" %}</h4>
+        <p>{% translate "Every time Django logs something, there's overhead involved - formatting the message, checking log levels, and actually writing it somewhere. During tests, this logging output isn't useful (you're not watching the test run for errors), so we disable it entirely to speed things up." %}</p>
 
         <hr class="my-5">
 

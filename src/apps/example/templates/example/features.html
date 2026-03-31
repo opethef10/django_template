@@ -18,6 +18,7 @@
                 <li class="list-group-item"><a href="#backend">{% translate "Backend" %}</a></li>
                 <li class="list-group-item"><a href="#pwa">{% translate "PWA" %}</a></li>
                 <li class="list-group-item"><a href="#i18n">{% translate "Internationalization" %}</a></li>
+                <li class="list-group-item"><a href="#colorize">{% translate "jQuery Colorize" %}</a></li>
             </ul>
         </div>
     </div>
@@ -32,15 +33,16 @@
 
         <div class="card mb-4">
             <div class="card-body">
-                <h3 class="h5"><i class="fa-brands fa-bootstrap text-purple"></i> Bootstrap 5.3</h3>
-                <p>{% translate "Latest Bootstrap included with all components ready to use. Custom styles go in" %} <code>src/static/css/</code>.</p>
+                <h3 class="h5"><i class="fa-brands fa-bootstrap text-purple"></i> <a href="https://getbootstrap.com/" target="_blank">Bootstrap 5.3</a></h3>
+                <p>{% translate "Bootstrap is the world's most popular CSS framework for building responsive, mobile-first sites. Includes pre-built components like navbars, cards, modals, forms, and more." %}</p>
+                <p>{% translate "You can customize your app styles in" %} <code>src/static/css/app.css</code>.</p>
             </div>
         </div>
 
         <div class="card mb-4">
             <div class="card-body">
-                <h3 class="h5"><i class="fa-solid fa-table text-success"></i> DataTables</h3>
-                <p>{% translate "Interactive tables with built-in sorting, searching, and pagination." %}</p>
+                <h3 class="h5"><i class="fa-solid fa-table text-success"></i> <a href="https://datatables.net/" target="_blank">DataTables</a></h3>
+                <p>{% translate "DataTables is a powerful jQuery plugin that adds instant sorting, searching, pagination, and more to HTML tables. Perfect for displaying database records and admin panels." %}</p>
                 <p>{% translate "Example table:" %}</p>
                 <table id="exampleTable" class="display" style="width:100%">
                     <thead>
@@ -91,17 +93,138 @@
                     </tbody>
                 </table>
                 <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
-                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;table id="myTable" class="display"&gt;
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;table id="exampleTable" class="display" style="width:100%"&gt;
     &lt;thead&gt;
         &lt;tr&gt;
-            &lt;th&gt;Column 1&lt;/th&gt;
-            &lt;th&gt;Column 2&lt;/th&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Position&lt;/th&gt;
+            &lt;th&gt;Office&lt;/th&gt;
+            &lt;th&gt;Age&lt;/th&gt;
+            &lt;th&gt;Start Date&lt;/th&gt;
         &lt;/tr&gt;
     &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Tiger Nixon&lt;/td&gt;
+            &lt;td&gt;System Architect&lt;/td&gt;
+            &lt;td&gt;Edinburgh&lt;/td&gt;
+            &lt;td&gt;61&lt;/td&gt;
+            &lt;td&gt;2011-04-25&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
 &lt;/table&gt;
 
 &lt;script&gt;
-new DataTable('#myTable');
+new DataTable('#exampleTable');
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div id="colorize" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-palette text-warning"></i> <a href="https://github.com/ijansch/jQuery-Colorize" target="_blank">jQuery Colorize</a></h3>
+                <p>{% translate "Colorize numbers in tables with a gradient from red to green based on value. Perfect for ratings, scores, and votes." %}</p>
+                <p>{% translate "Example - The Office episode ratings:" %}</p>
+                <table id="officeTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Season 1</th>
+                            <th>Season 2</th>
+                            <th>Season 3</th>
+                            <th>Season 4</th>
+                            <th>Season 5</th>
+                            <th>Season 6</th>
+                            <th>Season 7</th>
+                            <th>Season 8</th>
+                            <th>Season 9</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Michael Scott</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="10">10</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td></td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="7">7</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Jim Halpert</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="6">6</td>
+                        </tr>
+                        <tr>
+                            <td>Pam Beesly</td>
+                            <td data-colorize="6">6</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td></td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="7">7</td>
+                        </tr>
+                        <tr>
+                            <td>Dwight Schrute</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="10">10</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="10">10</td>
+                        </tr>
+                        <tr>
+                            <td>Ryan Howard</td>
+                            <td data-colorize="3">3</td>
+                            <td></td>
+                            <td data-colorize="4">4</td>
+                            <td data-colorize="2">2</td>
+                            <td data-colorize="1">1</td>
+                            <td></td>
+                            <td></td>
+                            <td data-colorize="2">2</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;table id="officeTable"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Season 1&lt;/th&gt;
+            &lt;th&gt;Season 2&lt;/th&gt;
+            &lt;th&gt;Season 3&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Michael Scott&lt;/td&gt;
+            &lt;td data-colorize="9"&gt;9&lt;/td&gt;
+            &lt;td data-colorize="10"&gt;10&lt;/td&gt;
+            &lt;td data-colorize="8"&gt;8&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+$('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
 &lt;/script&gt;</code></pre>
             </div>
         </div>
@@ -129,8 +252,8 @@ new DataTable('#myTable');
 
         <div class="card mb-4">
             <div class="card-body">
-                <h3 class="h5"><i class="fa-solid fa-font-awesome text-info"></i> Font Awesome 7</h3>
-                <p>{% translate "Thousands of icons ready to use." %}</p>
+                <h3 class="h5"><i class="fa-solid fa-font-awesome text-info"></i> <a href="https://fontawesome.com/" target="_blank">Font Awesome 7</a></h3>
+                <p>{% translate "The internet's most popular icon set with thousands of free icons in solid, regular, and brand styles. Use them standalone or inside buttons, forms, and navigation." %}</p>
                 <p class="mb-2">{% translate "Solid icons:" %}</p>
                 <div class="d-flex gap-3 flex-wrap mb-3">
                     <i class="fa-solid fa-house fa-xl"></i>
@@ -149,9 +272,11 @@ new DataTable('#myTable');
                     <i class="fa-brands fa-python fa-xl"></i>
                 </div>
                 <p class="mb-2">{% translate "In buttons:" %}</p>
-                <button class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>{% translate "New Item" %}</button>
-                <button class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>{% translate "Delete" %}</button>
-                <button class="btn btn-success"><i class="fa-solid fa-check me-2"></i>{% translate "Confirm" %}</button>
+                <div class="d-flex gap-2 flex-wrap mb-3">
+                    <button class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>{% translate "New Item" %}</button>
+                    <button class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>{% translate "Delete" %}</button>
+                    <button class="btn btn-success"><i class="fa-solid fa-check me-2"></i>{% translate "Confirm" %}</button>
+                </div>
                 <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
                 <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;i class="fa-solid fa-user"&gt;&lt;/i&gt;
 &lt;i class="fa-brands fa-github"&gt;&lt;/i&gt;
@@ -239,6 +364,13 @@ new DataTable('#exampleTable', {
     pageLength: 3,
     lengthMenu: [[3, 5, 10, 25], [3, 5, 10, 25]]
 });
+
+new DataTable('#officeTable', {
+    pageLength: 5,
+    lengthMenu: [[5, 10, 25], [5, 10, 25]]
+});
+
+$('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
 
 document.getElementById('demoThemeToggle').addEventListener('click', function() {
     const html = document.documentElement;

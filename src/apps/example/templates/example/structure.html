@@ -25,84 +25,146 @@
         <h1 class="mb-4">{% translate "Project Structure" %}</h1>
         <p class="lead">{% translate "This template uses a non-traditional structure where" %} <code>src/</code> {% translate "is the project root." %}</p>
 
+        <div class="alert alert-info">
+            <i class="fa-solid fa-circle-info"></i>
+            <strong>{% translate "What's Different?" %}</strong><br>
+            {% translate "In a normal Django project, the repository root IS the project. In this template, the project lives inside" %} <code>src/</code>. <br>
+            {% translate "This keeps your project files separate from repository files like" %} <code>.git/</code>, <code>README.md</code>, {% translate "and deployment scripts." %}
+        </div>
+
         <hr class="my-5">
 
-        <h2 id="overview" class="h3 mb-3">{% translate "Directory Overview" %}</h2>
-        <pre class="bg-dark text-light p-3 rounded"><code>{{ PROJECT_SLUG }}/                    # Repository root
-├── manage.py                 # Django management script
-├── .env                      # Environment variables (not in git!)
-├── .env.example              # Template for .env
+        <h2 id="overview" class="mb-3">{% translate "Directory Overview" %}</h2>
+        <p>{% translate "This template separates repository files from Django project files. Everything at the root level (scripts, requirements, README) is for the repository. Everything inside" %} <code>src/</code> {% translate "is your Django project." %}</p>
+
+        <h4 class="mt-4">{% translate "Why Separate Settings by Environment?" %}</h4>
+        <p>{% translate "Your local machine and production server need different settings. For example:" %}</p>
+        <ul>
+            <li>{% translate "Local: Show errors on screen, use dummy email" %}</li>
+            <li>{% translate "Production: Hide errors, send real emails, use secure cookies" %}</li>
+        </ul>
+        <p>{% translate "Instead of changing settings every time you deploy, we keep them in separate files: _base.py (shared), development.py (local), production.py (live). This way, you don't accidentally break your live site while working locally." %}</p>
+
+        <h4 class="mt-4">{% translate "Why Separate Requirements?" %}</h4>
+        <p>{% translate "Production doesn't need development tools (like debug toolbar). By keeping them separate, your live server is faster and more secure. Less code on production means less potential security issues." %}</p>
+
+        <h4 class="mt-4">{% translate "Why Separate .env and .env.example?" %}</h4>
+        <p>{% translate "Your .env contains secrets (passwords, API keys) that should NEVER be committed to git. The .env.example is a template showing what variables are needed - it's safe to commit because it has no real values. When someone clones your repo, they copy .env.example to .env and fill in their own values." %}</p>
+
+        <h4 class="mt-4">{% translate "Why Do We Need Scripts?" %}</h4>
+        <p>{% translate "Deployment involves many steps (pull code, install dependencies, run migrations, collect static files). Doing these manually is error-prone. The scripts folder automates these tasks so you can deploy with one command. We provide scripts specifically for PythonAnywhere since that's our recommended host, but you can adapt them for any server." %}</p>
+
+        <h4 class="mt-4">{% translate "What's Inside src/?" %}</h4>
+        <p>{% translate "This is where your actual Django project lives. Think of it as the heart of your application:" %}</p>
+        <ul>
+            <li><strong>settings/</strong> - {% translate "All configuration files (database, installed apps, security, etc.)" %}</li>
+            <li><strong>apps/</strong> - {% translate "Your Django apps (accounts, subscriptions, blog, shop - whatever you build)" %}</li>
+            <li><strong>static/</strong> - {% translate "CSS, JavaScript, images that don't change" %}</li>
+            <li><strong>templates/</strong> - {% translate "Django HTML templates shared across the whole project" %}</li>
+            <li><strong>locale/</strong> - {% translate "Translation files so you can support multiple languages" %}</li>
+            <li><strong>tags/</strong> - {% translate "Custom Django template tags" %}</li>
+            <li><strong>context_processors/</strong> - {% translate "Variables that are automatically available in all templates" %}</li>
+        </ul>
+        <p>{% translate "You'll also see files like urls.py, views.py, forms.py at the src/ level - these handle the main pages of your site (home, contact) that don't belong to a specific app." %}</p>
+
+        <h4 class="mt-4">{% translate "What About __init__.py?" %}</h4>
+        <p>{% translate "This empty file tells Python that a folder is a Python package. Without it, Python can't import from that folder. You'll see it in many places - it's just Django's way of organizing code." %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>{{ PROJECT_SLUG }}/                    # Your project folder
+├── manage.py                 # Run Django commands (migrate, runserver, etc.)
+├── .env                      # Your local settings (never commit to git!)
+├── .env.example              # Template for local development
+├── .production.env.example   # Template for production server
 ├── requirements/
-│   ├── base.txt              # All environments
-│   ├── development.txt       # Development (+ base.txt)
-│   └── production.txt        # Production (base.txt only)
+│   ├── base.txt              # Core dependencies (Django, allauth, etc.)
+│   ├── development.txt      # Development tools (+ base.txt)
+│   └── production.txt        # Production needs (just base.txt)
 ├── scripts/
 │   ├── test                  # Run tests
-│   ├── update.sh             # Full deployment update
-│   ├── reload.sh             # Touch WSGI to reload
-│   ├── backupdb.sh           # Database backup
-│   └── create_wsgi.sh        # Generate PythonAnywhere WSGI
-├── src/                      # PROJECT ROOT (not repository root!)
-│   ├── __init__.py
-│   ├── urls.py               # Root URL configuration
-│   ├── views.py              # Home and Contact views
-│   ├── forms.py              # Custom forms
-│   ├── adapters.py           # Allauth adapter
-│   ├── menus.py              # Navigation menus
-│   ├── settings/             # Environment-specific settings
-│   │   ├── _base.py          # Shared configuration
-│   │   ├── development.py    # Local development
-│   │   ├── production.py     # Production server
-│   │   └── tests.py          # Fast test execution
-│   ├── apps/                 # Django applications
-│   │   ├── accounts/         # User profile management
-│   │   ├── subscriptions/    # Notification subscriptions
-│   │   └── example/          # Example app (this app)
-│   ├── static/               # Project-level static files
+│   ├── update.sh             # Deploy to server
+│   ├── reload.sh             # Restart the server
+│   ├── backupdb.sh           # Backup your database
+│   └── create_wsgi.sh        # Setup for PythonAnywhere
+├── src/                      # WHERE YOUR CODE LIVES (the real project)
+│   ├── __init__.py           # Makes this a Python package
+│   ├── urls.py               # Connects URLs to views
+│   ├── views.py              # Your home and contact pages
+│   ├── forms.py              # Custom forms (signup, contact, etc.)
+│   ├── adapters.py           # Customizes user authentication
+│   ├── menus.py              # Navigation menu configuration
+│   ├── settings/             # Different configs for different environments
+│   │   ├── _base.py          # Shared settings (most stuff)
+│   │   ├── development.py    # Your local machine settings
+│   │   ├── production.py     # Live server settings
+│   │   └── tests.py          # Fast settings for running tests
+│   ├── apps/                 # Django apps (features/modules)
+│   │   ├── accounts/         # User profiles and authentication
+│   │   ├── subscriptions/   # Email notifications
+│   │   └── example/         # This documentation app
+│   ├── static/               # CSS, JS, images (served to everyone)
 │   │   ├── css/
 │   │   └── js/
-│   ├── templates/            # Project-level templates
+│   ├── templates/            # Templates shared across the whole project
 │   │   ├── base.html
 │   │   ├── home.html
 │   │   └── account/
-│   ├── tags/                 # Custom template tags
-│   ├── context_processors/   # Template context processors
-│   └── locale/               # Translation files
+│   ├── tags/                 # Custom template shortcuts
+│   ├── context_processors/   # Variables available in all templates
+│   └── locale/              # Translations (English, Turkish, etc.)
 └── README.md</code></pre>
 
         <hr class="my-5">
 
-        <h2 id="apps-structure" class="h3 mb-3">{% translate "App Structure" %}</h2>
-        <p>{% translate "Each app in" %} <code>src/apps/</code> {% translate "follows this pattern:" %}</p>
-        <pre class="bg-dark text-light p-3 rounded"><code>src/apps/&lt;app_name&gt;/
-├── __init__.py
-├── apps.py                   # AppConfig class
-├── models.py                 # Database models
-├── views.py                  # Class-based views
-├── urls.py                   # App URLs (with app_name)
-├── admin.py                  # Django admin registration
-├── forms.py                  # Form classes
-├── signals.py                # Django signals (optional)
-├── utils.py                  # Helper functions (optional)
-├── templates/&lt;app_name&gt;/    # App-specific templates
+        <h2 id="apps-structure" class="mb-3">{% translate "App Structure" %}</h2>
+        <p>{% translate "Django apps are like modules or packages that add features to your project. Each app in" %} <code>src/apps/</code> {% translate "handles a specific feature (e.g., blog, shop, user profiles). You can have many apps, or just one - it's up to you." %}</p>
+
+        <h4 class="mt-4">{% translate "Why So Many Files?" %}</h4>
+        <p>{% translate "Each file has one job. Don't worry if you don't need all of them yet:" %}</p>
+        <ul>
+            <li><strong>models.py</strong> - {% translate "Your database tables (what data you store - users, posts, products, etc.)" %}</li>
+            <li><strong>views.py</strong> - {% translate "Handle requests and return responses (what happens when someone visits a URL)" %}</li>
+            <li><strong>urls.py</strong> - {% translate "Connect URLs to views (e.g., /about → about page)" %}</li>
+            <li><strong>admin.py</strong> - {% translate "Configure the admin panel to manage your data" %}</li>
+            <li><strong>forms.py</strong> - {% translate "Define form fields and validation rules" %}</li>
+            <li><strong>signals.py</strong> - {% translate "Event handlers that react to actions (e.g., create a user profile after signup)" %}</li>
+            <li><strong>utils.py</strong> - {% translate "Shared helper functions used across the app" %}</li>
+            <li><strong>templates/&lt;app_name&gt;/</strong> - {% translate "HTML templates specific to this app" %}</li>
+            <li><strong>static/&lt;app_name&gt;/</strong> - {% translate "CSS and JavaScript files for this app" %}</li>
+            <li><strong>migrations/</strong> - {% translate "Tracks changes to your database schema over time" %}</li>
+            <li><strong>tests/</strong> - {% translate "Automated tests to verify your code works correctly" %}</li>
+        </ul>
+        <p>{% translate "Start simple. You'll add more files as your app grows." %}</p>
+<pre class="bg-dark text-light p-3 rounded"><code>src/apps/&lt;app_name&gt;/
+├── __init__.py               # Makes this a Python package (just leave empty)
+├── apps.py                   # Tells Django about your app (name, settings)
+├── models.py                 # Your database tables (users, posts, etc.)
+├── views.py                  # Handle requests and return responses
+├── urls.py                   # Connect URLs to views (e.g., /about → about view)
+├── admin.py                  # Configure the admin panel to manage your data
+├── forms.py                  # Define form fields and validation rules
+├── signals.py                # Event handlers that react to actions (optional)
+├── utils.py                  # Shared helper functions (optional)
+├── templates/&lt;app_name&gt;/    # HTML files specific to this app
 │   └── *.html
-├── static/&lt;app_name&gt;/        # App-specific static files
-├── migrations/               # Database migrations
+├── static/&lt;app_name&gt;/        # CSS/JS specific to this app
+├── migrations/               # Tracks changes to your database
 │   ├── __init__.py
 │   └── 0*.py
-└── tests/                    # Test files
+└── tests/                    # Automated tests (optional but recommended)
     ├── __init__.py
     └── test_*.py</code></pre>
 
         <hr class="my-5">
 
-        <h2 id="adding-app" class="h3 mb-3">{% translate "Adding a New App" %}</h2>
-        
+        <h2 id="adding-app" class="mb-3">{% translate "Adding a New App" %}</h2>
+
         <h4 class="h6">{% translate "1. Create the app directory" %}</h4>
         <pre class="bg-dark text-light p-3 rounded"><code>mkdir -p src/apps/myapp</code></pre>
 
-        <h4 class="h6 mt-3">{% translate "2. Create the required files" %}</h4>
-        <pre class="bg-dark text-light p-3 rounded"><code># __init__.py (empty)
+        <h4 class="mt-3">{% translate "2. Create the required files" %}</h4>
+        <p>{% translate "Create these files inside" %} <code>src/apps/myapp/</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded"><code># __init__.py
+# (leave this file empty - it just tells Python this is a package)
+
 # apps.py
 from django.apps import AppConfig
 
@@ -116,21 +178,29 @@ from django.urls import path
 app_name = "myapp"
 urlpatterns = [
     path("", TemplateView.as_view(template_name="myapp/index.html"), name="index"),
-]</code></pre>
+]
 
-        <h4 class="h6 mt-3">{% translate "3. Register in settings" %}</h4>
+# views.py
+from django.views.generic import TemplateView
+
+# admin.py (empty for now - add models later to register them)
+# models.py (empty for now - add tables later)
+# forms.py (empty for now)</code></pre>
+
+        <h4 class="mt-3">{% translate "3. Register in settings" %}</h4>
         <p>{% translate "Add to" %} <code>INSTALLED_APPS</code> {% translate "in" %} <code>settings/_base.py</code>:</p>
         <pre class="bg-dark text-light p-3 rounded"><code>INSTALLED_APPS = [
     # ...
     "src.apps.myapp",
 ]</code></pre>
 
-        <h4 class="h6 mt-3">{% translate "4. Include URLs in root" %}</h4>
-        <p>{% translate "Add to" %} <code>src/urls.py</code>:</p>
+        <h4 class="mt-3">{% translate "4. Include URLs in root" %}</h4>
+        <p>{% translate "Add to" %} <code>src/urls.py</code> {% translate "so users can visit your app:" %}</p>
         <pre class="bg-dark text-light p-3 rounded"><code>path("myapp/", include("src.apps.myapp.urls"))</code></pre>
 
-        <h4 class="h6 mt-3">{% translate "5. Create templates" %}</h4>
+        <h4 class="mt-3">{% translate "5. Create templates" %}</h4>
         <pre class="bg-dark text-light p-3 rounded"><code>mkdir -p src/apps/myapp/templates/myapp</code></pre>
+        <p>{% translate "Then create" %} <code>index.html</code> {% translate "in that folder." %}</p>
     </div>
 </div>
 {% endblock %}
