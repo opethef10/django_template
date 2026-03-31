@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from decouple import config
+from decouple import config, Csv
 from django.contrib.messages import constants as messages
 from django.utils.translation import gettext_lazy as _
 
@@ -11,8 +11,6 @@ PROJECT_SLUG = config("PROJECT_SLUG")
 PROJECT_NAME = config("PROJECT_NAME")
 PROJECT_DESCRIPTION = config("PROJECT_DESCRIPTION")
 PROJECT_DOMAIN = config("PROJECT_DOMAIN")
-PROJECT_ADMIN_NAME = config("PROJECT_ADMIN_NAME")
-PROJECT_ADMIN_EMAIL = config("PROJECT_ADMIN_EMAIL")
 
 PROJECT_URL = f"https://{PROJECT_DOMAIN}"
 EMAIL_SUBJECT_PREFIX = f"[{PROJECT_NAME}] "
@@ -148,10 +146,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-ADMINS = [
-    (PROJECT_NAME, PROJECT_ADMIN_EMAIL),
-]
-
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 MESSAGE_TAGS = {
     messages.DEBUG: 'alert-info',
@@ -173,9 +168,6 @@ HOURS = 60 * MINUTES
 DAYS = 24 * HOURS
 WEEKS = 7 * DAYS
 YEARS = 365 * DAYS
-
-EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
-RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=True)
 
 # ==============================================================================
 # THIRD-PARTY SETTINGS

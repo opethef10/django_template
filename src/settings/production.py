@@ -15,16 +15,19 @@ STATIC_ROOT = VAR_DIR / "static"
 MEDIA_ROOT = VAR_DIR / "media"
 LOG_PATH = VAR_DIR / "proj.log"
 
+EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
 if EMAIL_ENABLED:
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
     EMAIL_HOST = "smtp.gmail.com"
     EMAIL_PORT = 587
     EMAIL_USE_TLS = True
     SERVER_EMAIL = config("DJANGO_SERVER_EMAIL")
     EMAIL_HOST_USER = config("DJANGO_EMAIL_HOST_USER")
     EMAIL_HOST_PASSWORD = config("DJANGO_EMAIL_HOST_PASSWORD")
-else:
-    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+    PROJECT_ADMIN_EMAILS = config("PROJECT_ADMIN_EMAILS", cast=Csv())
+    ADMINS = [("", email) for email in PROJECT_ADMIN_EMAILS]
 
+RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=False)
 if RECAPTCHA_ENABLED:
     RECAPTCHA_PUBLIC_KEY = config("RECAPTCHA_PUBLIC_KEY")
     RECAPTCHA_PRIVATE_KEY = config("RECAPTCHA_PRIVATE_KEY")

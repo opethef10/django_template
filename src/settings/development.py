@@ -24,8 +24,6 @@ SILENCED_SYSTEM_CHECKS = [
     'django_recaptcha.recaptcha_test_key_error',
 ]
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-
 INSTALLED_APPS.extend(
     [
         "debug_toolbar",

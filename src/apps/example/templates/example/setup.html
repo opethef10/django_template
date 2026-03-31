@@ -50,13 +50,19 @@ cd YOUR_PROJECT</code></pre>
         <pre class="bg-dark text-light p-3 rounded"><code>cp .env.example .env</code></pre>
 
         <h4 class="h6 mt-4">{% translate "5. Edit .env" %}</h4>
+        <p>{% translate "Edit the .env file with your project details. The required fields are:" %}</p>
+        <ul>
+            <li><strong>PROJECT_SLUG</strong> - {% translate "Project slug for docker, lowercase, no spaces" %}</li>
+            <li><strong>PROJECT_NAME</strong> - {% translate "Project Name displayed in navbar" %}</li>
+            <li><strong>PROJECT_DESCRIPTION</strong> - {% translate "Project Description for footer and SEO" %}</li>
+            <li><strong>PROJECT_DOMAIN</strong> - {% translate "Project Domain for URL and emails (use localhost for dev)" %}</li>
+            <li><strong>PROJECT_PORT_NUMBER</strong> - {% translate "Port number for local development (default 8000)" %}</li>
+        </ul>
         <pre class="bg-dark text-light p-3 rounded"><code>PROJECT_SLUG=myproject
 PROJECT_NAME=My Project
 PROJECT_DESCRIPTION=A brief description
 PROJECT_DOMAIN=localhost
-PROJECT_ADMIN_NAME=Admin
-PROJECT_ADMIN_EMAIL=admin@example.com
-DJANGO_SECRET_KEY=dev-secret-key</code></pre>
+PROJECT_PORT_NUMBER=8000</code></pre>
 
         <h4 class="h6 mt-4">{% translate "6. Start the app" %}</h4>
         <pre class="bg-dark text-light p-3 rounded"><code>docker compose up -d</code></pre>
@@ -83,7 +89,7 @@ DJANGO_SECRET_KEY=dev-secret-key</code></pre>
                     <li>{% translate "Test HTTPS-only features locally" %}</li>
                     <li>{% translate "Share your local site with others on the same Wi-Fi" %}</li>
                 </ul>
-                
+
                 <h5 class="h6">{% translate "1. Install" %}</h5>
                 <pre class="bg-dark text-light p-3 rounded"><code>brew install peterldowns/tap/localias  # macOS</code></pre>
                 <p class="small text-muted">{% translate "Other platforms:" %} <a href="https://github.com/peterldowns/localias/releases" target="_blank">https://github.com/peterldowns/localias/releases</a></p>
@@ -142,7 +148,7 @@ localias start</code></pre>
             <li>pip</li>
             <li>Git</li>
         </ul>
-        
+
         <h4 class="h6">{% translate "1. Create Your Repository" %}</h4>
         <p>{% translate "Click" %} <strong>{% translate "Use this template" %}</strong> {% translate "on" %} <a href="https://github.com/opethef10/django_template" target="_blank">{% translate "GitHub" %}</a> {% translate "to create your own repo." %}</p>
 
@@ -154,11 +160,19 @@ cd &lt;project-name&gt;</code></pre>
         <pre class="bg-dark text-light p-3 rounded"><code>cp .env.example .env</code></pre>
 
         <h4 class="h6 mt-4">{% translate "4. Edit .env" %}</h4>
+        <p>{% translate "Edit the .env file with your project details. The required fields are:" %}</p>
+        <ul>
+            <li><strong>PROJECT_SLUG</strong> - {% translate "Project slug for docker, lowercase, no spaces" %}</li>
+            <li><strong>PROJECT_NAME</strong> - {% translate "Project Name displayed in navbar" %}</li>
+            <li><strong>PROJECT_DESCRIPTION</strong> - {% translate "Project Description for footer and SEO" %}</li>
+            <li><strong>PROJECT_DOMAIN</strong> - {% translate "Project Domain for URL and emails (use localhost for dev)" %}</li>
+            <li><strong>PROJECT_PORT_NUMBER</strong> - {% translate "Port number for local development (default 8000)" %}</li>
+        </ul>
         <pre class="bg-dark text-light p-3 rounded"><code>PROJECT_SLUG=myproject
 PROJECT_NAME=My Project
+PROJECT_DESCRIPTION=A brief description
 PROJECT_DOMAIN=localhost
-PROJECT_ADMIN_EMAIL=admin@example.com
-DJANGO_SECRET_KEY=dev-secret-key</code></pre>
+PROJECT_PORT_NUMBER=8000</code></pre>
 
         <h4 class="h6 mt-4">{% translate "5. Create venv and install" %}</h4>
         <pre class="bg-dark text-light p-3 rounded"><code>python -m venv venv
