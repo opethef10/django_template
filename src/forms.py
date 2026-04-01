@@ -28,3 +28,9 @@ class CustomSignupForm(SignupForm):
         user.last_name = self.cleaned_data['last_name']
         user.save()
         return user
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        if getattr(settings, 'RECAPTCHA_ENABLED', False):
+            # Only add the ReCaptchaField if RECAPTCHA_ENABLED is True
+            self.fields['captcha'] = ReCaptchaField(label=_("Captcha"))
