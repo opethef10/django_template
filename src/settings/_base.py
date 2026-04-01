@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from decouple import config, Csv
+from decouple import config
 from django.contrib.messages import constants as messages
 from django.utils.translation import gettext_lazy as _
 

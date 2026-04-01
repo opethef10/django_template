@@ -25,8 +25,9 @@ class ContactView(SuccessMessageMixin, FormView):
     subject = _("Contact Us")
 
     def dispatch(self, request, *args, **kwargs):
-        if not getattr(settings, 'EMAIL_ENABLED', False):
-            raise Http404(_("Contact page is disabled."))
+        if not getattr(settings, 'DEBUG', False):
+            if not getattr(settings, 'EMAIL_ENABLED', False):
+                raise Http404(_("Contact page is disabled."))
         return super().dispatch(request, *args, **kwargs)
 
     def get_initial(self):
