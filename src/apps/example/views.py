@@ -45,8 +45,33 @@ SEARCH_RESULTS = {
             "category": "Documentation",
             "sub_links": [
                 {"url": "/settings/#architecture", "label": "Architecture"},
-                {"url": "/settings/#environment", "label": "Environment"},
+                {"url": "/settings/#installed-apps", "label": "Installed Apps"},
+                {"url": "/settings/#captcha", "label": "Captcha"},
                 {"url": "/settings/#menu-config", "label": "Menus"},
+            ]
+        },
+        {
+            "url": "/features/captcha/",
+            "search_text": "Captcha Setup Guide",
+            "search_tokens": ["captcha", "recaptcha", "spam", "protection", "google", "api key", "bot"],
+            "category": "Documentation",
+            "sub_links": [
+                {"url": "/features/captcha/#overview", "label": "Overview"},
+                {"url": "/features/captcha/#getting-keys", "label": "Getting Keys"},
+                {"url": "/features/captcha/#setup", "label": "Setup"},
+                {"url": "/features/captcha/#how-it-works", "label": "How It Works"},
+            ]
+        },
+        {
+            "url": "/features/email/",
+            "search_text": "Email Setup Guide",
+            "search_tokens": ["email", "gmail", "smtp", "app password", "notifications", "password reset"],
+            "category": "Documentation",
+            "sub_links": [
+                {"url": "/features/email/#overview", "label": "Overview"},
+                {"url": "/features/email/#gmail-setup", "label": "Gmail Setup"},
+                {"url": "/features/email/#project-settings", "label": "Project Settings"},
+                {"url": "/features/email/#testing", "label": "Testing"},
             ]
         },
         {
@@ -112,6 +137,14 @@ class DocumentationStructureView(TemplateView):
 
 class DocumentationSettingsView(TemplateView):
     template_name = "example/settings.html"
+
+
+class DocumentationCaptchaView(TemplateView):
+    template_name = "example/captcha.html"
+
+
+class DocumentationEmailView(TemplateView):
+    template_name = "example/email.html"
 
 
 class DocumentationFeaturesView(TemplateView):

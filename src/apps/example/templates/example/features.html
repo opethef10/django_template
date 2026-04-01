@@ -15,10 +15,20 @@
             <div class="card-header">{% translate "On This Page" %}</div>
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="#frontend">{% translate "Frontend" %}</a></li>
+                <li class="list-group-item"><a href="#bootstrap">{% translate "Bootstrap" %}</a></li>
+                <li class="list-group-item"><a href="#datatables">{% translate "DataTables" %}</a></li>
+                <li class="list-group-item"><a href="#colorize">{% translate "jQuery Colorize" %}</a></li>
+                <li class="list-group-item"><a href="#mobile">{% translate "Mobile Responsive" %}</a></li>
+                <li class="list-group-item"><a href="#dark-mode">{% translate "Dark Mode" %}</a></li>
+                <li class="list-group-item"><a href="#font-awesome">{% translate "Font Awesome" %}</a></li>
                 <li class="list-group-item"><a href="#backend">{% translate "Backend" %}</a></li>
+                <li class="list-group-item"><a href="#authentication">{% translate "Authentication" %}</a></li>
+                <li class="list-group-item"><a href="#flatpages">{% translate "Flatpages" %}</a></li>
+                <li class="list-group-item"><a href="#markdown">{% translate "Markdown Editor" %}</a></li>
+                <li class="list-group-item"><a href="#recaptcha">{% translate "reCAPTCHA" %}</a></li>
+                <li class="list-group-item"><a href="#email">{% translate "Email" %}</a></li>
                 <li class="list-group-item"><a href="#pwa">{% translate "PWA" %}</a></li>
                 <li class="list-group-item"><a href="#i18n">{% translate "Internationalization" %}</a></li>
-                <li class="list-group-item"><a href="#colorize">{% translate "jQuery Colorize" %}</a></li>
             </ul>
         </div>
     </div>
@@ -31,7 +41,7 @@
 
         <h2 id="frontend" class="h3 mb-4">{% translate "Frontend" %}</h2>
 
-        <div class="card mb-4">
+        <div id="bootstrap" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-brands fa-bootstrap text-purple"></i> <a href="https://getbootstrap.com/" target="_blank">Bootstrap 5.3</a></h3>
                 <p>{% translate "Bootstrap is the world's most popular CSS framework for building responsive, mobile-first sites. Includes pre-built components like navbars, cards, modals, forms, and more." %}</p>
@@ -39,7 +49,7 @@
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="datatables" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-table text-success"></i> <a href="https://datatables.net/" target="_blank">DataTables</a></h3>
                 <p>{% translate "DataTables is a powerful jQuery plugin that adds instant sorting, searching, pagination, and more to HTML tables. Perfect for displaying database records and admin panels." %}</p>
@@ -122,7 +132,7 @@ new DataTable('#exampleTable');
 
         <div id="colorize" class="card mb-4">
             <div class="card-body">
-                <h3 class="h5"><i class="fa-solid fa-palette text-warning"></i> <a href="https://github.com/ijansch/jQuery-Colorize" target="_blank">jQuery Colorize</a></h3>
+                <h3 class="h5"><i class="fa-solid fa-palette text-warning"></i> <a href="https://github.com/gryevns/jquery-colorize" target="_blank">jQuery Colorize</a></h3>
                 <p>{% translate "Colorize numbers in tables with a gradient from red to green based on value. Perfect for ratings, scores, and votes." %}</p>
                 <p>{% translate "Example - The Office episode ratings:" %}</p>
                 <table id="officeTable" class="display" style="width:100%">
@@ -229,14 +239,14 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="mobile" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-mobile-screen text-primary"></i> Mobile Responsive</h3>
                 <p>{% translate "Your site works great on all devices - phones, tablets, and desktops." %}</p>
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="dark-mode" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-moon text-dark"></i> Dark Mode</h3>
                 <p>{% translate "Built-in dark mode support via Bootstrap 5. Toggle it using the moon/sun icon in the navbar (top right)." %}</p>
@@ -250,7 +260,7 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="font-awesome" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-font-awesome text-info"></i> <a href="https://fontawesome.com/" target="_blank">Font Awesome 7</a></h3>
                 <p>{% translate "The internet's most popular icon set with thousands of free icons in solid, regular, and brand styles. Use them standalone or inside buttons, forms, and navigation." %}</p>
@@ -290,7 +300,7 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
 
         <h2 id="backend" class="h3 mb-4">{% translate "Backend" %}</h2>
 
-        <div class="card mb-4">
+        <div id="authentication" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-lock text-danger"></i> Authentication</h3>
                 <p>{% translate "Complete authentication system out of the box:" %}</p>
@@ -305,7 +315,7 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="flatpages" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-file-lines text-warning"></i> Flatpages</h3>
                 <p>{% translate "Create static pages easily at" %} <code>/pages/&lt;url&gt;/</code>.</p>
@@ -313,21 +323,26 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="markdown" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-pen text-secondary"></i> Markdown Editor</h3>
                 <p>{% translate "Rich text editor for content pages. Access via" %} <code>/admin/</code>.</p>
             </div>
         </div>
 
-        <div class="card mb-4">
+        <div id="recaptcha" class="card mb-4">
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-shield text-success"></i> reCAPTCHA</h3>
-                <p>{% translate "Automatic spam protection for signup form." %}</p>
-                <p>{% translate "Enable in" %} <code>.env</code>:</p>
-                <pre class="bg-dark text-light p-3 rounded mb-0"><code>RECAPTCHA_ENABLED=True
-RECAPTCHA_PUBLIC_KEY=your-site-key
-RECAPTCHA_PRIVATE_KEY=your-secret-key</code></pre>
+                <p>{% translate "Automatic spam protection for signup and contact forms." %}</p>
+                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
+            </div>
+        </div>
+
+        <div id="email" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-envelope text-primary"></i> Email</h3>
+                <p>{% translate "Email notifications for password resets, contact forms, and user notifications (production only)." %}</p>
+                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'example:email' %}">{% translate "Email Guide" %}</a>.</p>
             </div>
         </div>
 
