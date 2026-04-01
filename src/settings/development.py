@@ -2,10 +2,6 @@ import mimetypes
 
 from ._base import *
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "INSECURE_DJANGO_SECRET_KEY_TO_BE_USED_AT_LOCAL_ENV"
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
