@@ -15,6 +15,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.7.0 - 2026-04-01
+
+### Added
+
+- Template documentation
+- ReCAPTCHA support for signup form
+- Generate script for Django secret key
+- AGENTS.md
+
+### Changed
+
+- Default port for docker-compose.yml
+
 ## 0.6.4 - 2026-03-29
 
 ### Changed

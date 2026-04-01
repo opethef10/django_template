@@ -1,0 +1,398 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Features" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Features" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#frontend">{% translate "Frontend" %}</a></li>
+                <li class="list-group-item"><a href="#bootstrap">{% translate "Bootstrap" %}</a></li>
+                <li class="list-group-item"><a href="#datatables">{% translate "DataTables" %}</a></li>
+                <li class="list-group-item"><a href="#colorize">{% translate "jQuery Colorize" %}</a></li>
+                <li class="list-group-item"><a href="#mobile">{% translate "Mobile Responsive" %}</a></li>
+                <li class="list-group-item"><a href="#dark-mode">{% translate "Dark Mode" %}</a></li>
+                <li class="list-group-item"><a href="#font-awesome">{% translate "Font Awesome" %}</a></li>
+                <li class="list-group-item"><a href="#backend">{% translate "Backend" %}</a></li>
+                <li class="list-group-item"><a href="#authentication">{% translate "Authentication" %}</a></li>
+                <li class="list-group-item"><a href="#flatpages">{% translate "Flatpages" %}</a></li>
+                <li class="list-group-item"><a href="#markdown">{% translate "Markdown Editor" %}</a></li>
+                <li class="list-group-item"><a href="#recaptcha">{% translate "reCAPTCHA" %}</a></li>
+                <li class="list-group-item"><a href="#email">{% translate "Email" %}</a></li>
+                <li class="list-group-item"><a href="#pwa">{% translate "PWA" %}</a></li>
+                <li class="list-group-item"><a href="#i18n">{% translate "Internationalization" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Built-in Features" %}</h1>
+        <p class="lead">{% translate "This template includes production-ready features out of the box." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="frontend" class="h3 mb-4">{% translate "Frontend" %}</h2>
+
+        <div id="bootstrap" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-brands fa-bootstrap text-purple"></i> <a href="https://getbootstrap.com/" target="_blank">Bootstrap 5.3</a></h3>
+                <p>{% translate "Bootstrap is the world's most popular CSS framework for building responsive, mobile-first sites. Includes pre-built components like navbars, cards, modals, forms, and more." %}</p>
+                <p>{% translate "You can customize your app styles in" %} <code>src/static/css/app.css</code>.</p>
+            </div>
+        </div>
+
+        <div id="datatables" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-table text-success"></i> <a href="https://datatables.net/" target="_blank">DataTables</a></h3>
+                <p>{% translate "DataTables is a powerful jQuery plugin that adds instant sorting, searching, pagination, and more to HTML tables. Perfect for displaying database records and admin panels." %}</p>
+                <p>{% translate "Example table:" %}</p>
+                <table id="exampleTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Position</th>
+                            <th>Office</th>
+                            <th>Age</th>
+                            <th>Start Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Tiger Nixon</td>
+                            <td>System Architect</td>
+                            <td>Edinburgh</td>
+                            <td>61</td>
+                            <td>2011-04-25</td>
+                        </tr>
+                        <tr>
+                            <td>Garrett Winters</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>63</td>
+                            <td>2011-07-25</td>
+                        </tr>
+                        <tr>
+                            <td>Ashton Cox</td>
+                            <td>Junior Technical Author</td>
+                            <td>San Francisco</td>
+                            <td>66</td>
+                            <td>2009-01-12</td>
+                        </tr>
+                        <tr>
+                            <td>Cedric Kelly</td>
+                            <td>Senior Developer</td>
+                            <td>Edinburgh</td>
+                            <td>22</td>
+                            <td>2012-03-29</td>
+                        </tr>
+                        <tr>
+                            <td>Airi Satou</td>
+                            <td>Accountant</td>
+                            <td>Tokyo</td>
+                            <td>33</td>
+                            <td>2008-11-28</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;table id="exampleTable" class="display" style="width:100%"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Position&lt;/th&gt;
+            &lt;th&gt;Office&lt;/th&gt;
+            &lt;th&gt;Age&lt;/th&gt;
+            &lt;th&gt;Start Date&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Tiger Nixon&lt;/td&gt;
+            &lt;td&gt;System Architect&lt;/td&gt;
+            &lt;td&gt;Edinburgh&lt;/td&gt;
+            &lt;td&gt;61&lt;/td&gt;
+            &lt;td&gt;2011-04-25&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+new DataTable('#exampleTable');
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div id="colorize" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-palette text-warning"></i> <a href="https://github.com/gryevns/jquery-colorize" target="_blank">jQuery Colorize</a></h3>
+                <p>{% translate "Colorize numbers in tables with a gradient from red to green based on value. Perfect for ratings, scores, and votes." %}</p>
+                <p>{% translate "Example - The Office episode ratings:" %}</p>
+                <table id="officeTable" class="display" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Season 1</th>
+                            <th>Season 2</th>
+                            <th>Season 3</th>
+                            <th>Season 4</th>
+                            <th>Season 5</th>
+                            <th>Season 6</th>
+                            <th>Season 7</th>
+                            <th>Season 8</th>
+                            <th>Season 9</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Michael Scott</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="10">10</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td></td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="7">7</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Jim Halpert</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="6">6</td>
+                        </tr>
+                        <tr>
+                            <td>Pam Beesly</td>
+                            <td data-colorize="6">6</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td></td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="7">7</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="7">7</td>
+                        </tr>
+                        <tr>
+                            <td>Dwight Schrute</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="10">10</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="8">8</td>
+                            <td data-colorize="9">9</td>
+                            <td data-colorize="10">10</td>
+                        </tr>
+                        <tr>
+                            <td>Ryan Howard</td>
+                            <td data-colorize="3">3</td>
+                            <td></td>
+                            <td data-colorize="4">4</td>
+                            <td data-colorize="2">2</td>
+                            <td data-colorize="1">1</td>
+                            <td></td>
+                            <td></td>
+                            <td data-colorize="2">2</td>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;table id="officeTable"&gt;
+    &lt;thead&gt;
+        &lt;tr&gt;
+            &lt;th&gt;Name&lt;/th&gt;
+            &lt;th&gt;Season 1&lt;/th&gt;
+            &lt;th&gt;Season 2&lt;/th&gt;
+            &lt;th&gt;Season 3&lt;/th&gt;
+        &lt;/tr&gt;
+    &lt;/thead&gt;
+    &lt;tbody&gt;
+        &lt;tr&gt;
+            &lt;td&gt;Michael Scott&lt;/td&gt;
+            &lt;td data-colorize="9"&gt;9&lt;/td&gt;
+            &lt;td data-colorize="10"&gt;10&lt;/td&gt;
+            &lt;td data-colorize="8"&gt;8&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;script&gt;
+$('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
+&lt;/script&gt;</code></pre>
+            </div>
+        </div>
+
+        <div id="mobile" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-mobile-screen text-primary"></i> Mobile Responsive</h3>
+                <p>{% translate "Your site works great on all devices - phones, tablets, and desktops." %}</p>
+            </div>
+        </div>
+
+        <div id="dark-mode" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-moon text-dark"></i> Dark Mode</h3>
+                <p>{% translate "Built-in dark mode support via Bootstrap 5. Toggle it using the moon/sun icon in the navbar (top right)." %}</p>
+                <div class="d-flex align-items-center gap-3 mt-3">
+                    <span>{% translate "Demo toggle:" %}</span>
+                    <button id="demoThemeToggle" class="btn btn-outline-secondary btn-sm">
+                        <i id="demoThemeIcon" class="fa-solid fa-moon"></i>
+                        <span class="ms-2">{% translate "Toggle Theme" %}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="font-awesome" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-font-awesome text-info"></i> <a href="https://fontawesome.com/" target="_blank">Font Awesome 7</a></h3>
+                <p>{% translate "The internet's most popular icon set with thousands of free icons in solid, regular, and brand styles. Use them standalone or inside buttons, forms, and navigation." %}</p>
+                <p class="mb-2">{% translate "Solid icons:" %}</p>
+                <div class="d-flex gap-3 flex-wrap mb-3">
+                    <i class="fa-solid fa-house fa-xl"></i>
+                    <i class="fa-solid fa-user fa-xl"></i>
+                    <i class="fa-solid fa-envelope fa-xl"></i>
+                    <i class="fa-solid fa-gear fa-xl"></i>
+                    <i class="fa-solid fa-search fa-xl"></i>
+                    <i class="fa-solid fa-star fa-xl"></i>
+                </div>
+                <p class="mb-2">{% translate "Brand icons:" %}</p>
+                <div class="d-flex gap-3 flex-wrap mb-3">
+                    <i class="fa-brands fa-github fa-xl"></i>
+                    <i class="fa-brands fa-twitter fa-xl"></i>
+                    <i class="fa-brands fa-facebook fa-xl"></i>
+                    <i class="fa-brands fa-instagram fa-xl"></i>
+                    <i class="fa-brands fa-python fa-xl"></i>
+                </div>
+                <p class="mb-2">{% translate "In buttons:" %}</p>
+                <div class="d-flex gap-2 flex-wrap mb-3">
+                    <button class="btn btn-primary"><i class="fa-solid fa-plus me-2"></i>{% translate "New Item" %}</button>
+                    <button class="btn btn-danger"><i class="fa-solid fa-trash me-2"></i>{% translate "Delete" %}</button>
+                    <button class="btn btn-success"><i class="fa-solid fa-check me-2"></i>{% translate "Confirm" %}</button>
+                </div>
+                <p class="mt-3 mb-0"><strong>{% translate "Usage:" %}</strong></p>
+                <pre class="bg-dark text-light p-3 rounded mb-0"><code>&lt;i class="fa-solid fa-user"&gt;&lt;/i&gt;
+&lt;i class="fa-brands fa-github"&gt;&lt;/i&gt;
+&lt;button class="btn btn-primary"&gt;
+    &lt;i class="fa-solid fa-plus"&gt;&lt;/i&gt; Button
+&lt;/button&gt;</code></pre>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="backend" class="h3 mb-4">{% translate "Backend" %}</h2>
+
+        <div id="authentication" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-lock text-danger"></i> Authentication</h3>
+                <p>{% translate "Complete authentication system out of the box:" %}</p>
+                <ul>
+                    <li>{% translate "Login with username or email" %}</li>
+                    <li>{% translate "Signup with spam protection" %}</li>
+                    <li>{% translate "Password reset and change" %}</li>
+                    <li>{% translate "Social login (Google, Facebook) - ready to enable" %}</li>
+                    <li>{% translate "1-year session duration" %}</li>
+                    <li>{% translate "Disable public registration via" %} <code>ACCOUNT_ALLOW_SIGNUPS=False</code></li>
+                </ul>
+            </div>
+        </div>
+
+        <div id="flatpages" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-file-lines text-warning"></i> Flatpages</h3>
+                <p>{% translate "Create static pages easily at" %} <code>/pages/&lt;url&gt;/</code>.</p>
+                <p>{% translate "Just add a page in Django Admin under" %} <strong>Flatpages</strong> {% translate "section." %}</p>
+            </div>
+        </div>
+
+        <div id="markdown" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-pen text-secondary"></i> Markdown Editor</h3>
+                <p>{% translate "Rich text editor for content pages. Access via" %} <code>/admin/</code>.</p>
+            </div>
+        </div>
+
+        <div id="recaptcha" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-shield text-success"></i> reCAPTCHA</h3>
+                <p>{% translate "Automatic spam protection for signup and contact forms." %}</p>
+                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
+            </div>
+        </div>
+
+        <div id="email" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-envelope text-primary"></i> Email</h3>
+                <p>{% translate "Email notifications for password resets, contact forms, and user notifications (production only)." %}</p>
+                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'example:email' %}">{% translate "Email Guide" %}</a>.</p>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="pwa" class="h3 mb-4">{% translate "Progressive Web App" %}</h2>
+        <p>{% translate "Users can install your site on their phone or desktop like a native app." %}</p>
+        <ul>
+            <li>{% translate "Works offline" %}</li>
+            <li>{% translate "Add to home screen" %}</li>
+            <li>{% translate "Customizable app icon" %}</li>
+        </ul>
+        <p>{% translate "Replace" %} <code>src/static/logo.png</code> {% translate "with your icon and update settings in" %} <code>PWA_APP_*</code>.</p>
+
+        <hr class="my-5">
+
+        <h2 id="i18n" class="h3 mb-4">{% translate "Internationalization" %}</h2>
+        <p>{% translate "Ready for multiple languages - English and Turkish included." %}</p>
+        <p>{% translate "Language switcher is in the navbar." %}</p>
+        <p>{% translate "To add a new language, update" %} <code>LANGUAGES</code> {% translate "in" %} <code>settings/_base.py</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded mb-0"><code>LANGUAGES = (
+    ('en', _('English')),
+    ('tr', _('Turkish')),
+    ('es', _('Spanish')),
+)</code></pre>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+{{ block.super }}
+<script>
+new DataTable('#exampleTable', {
+    pageLength: 3,
+    lengthMenu: [[3, 5, 10, 25], [3, 5, 10, 25]]
+});
+
+new DataTable('#officeTable', {
+    pageLength: 5,
+    lengthMenu: [[5, 10, 25], [5, 10, 25]]
+});
+
+$('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
+
+document.getElementById('demoThemeToggle').addEventListener('click', function() {
+    const html = document.documentElement;
+    const icon = document.getElementById('demoThemeIcon');
+    const newTheme = html.getAttribute('data-bs-theme') === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-bs-theme', newTheme);
+    icon.classList.replace(newTheme === 'dark' ? 'fa-moon' : 'fa-sun', newTheme === 'dark' ? 'fa-sun' : 'fa-moon');
+});
+</script>
+{% endblock %}

@@ -1,0 +1,295 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Settings & Configuration" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Settings" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#architecture">{% translate "Architecture" %}</a></li>
+                <li class="list-group-item"><a href="#what-to-change">{% translate "What Can Be Changed" %}</a></li>
+                <li class="list-group-item"><a href="#installed-apps">{% translate "Installed Apps" %}</a></li>
+                <li class="list-group-item"><a href="#middleware">{% translate "Middleware" %}</a></li>
+                <li class="list-group-item"><a href="#internationalization">{% translate "Internationalization" %}</a></li>
+                <li class="list-group-item"><a href="#development">{% translate "Development Settings" %}</a></li>
+                <li class="list-group-item"><a href="#production">{% translate "Production Settings" %}</a></li>
+                <li class="list-group-item"><a href="#tests">{% translate "Test Settings" %}</a></li>
+                <li class="list-group-item"><a href="#menu-config">{% translate "Menu Configuration" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Settings & Configuration" %}</h1>
+        <p class="lead">{% translate "This template uses a layered settings architecture for different environments." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="architecture" class="h3 mb-3">{% translate "Settings Architecture" %}</h2>
+        <p>{% translate "Settings are split into multiple files to keep development and production configurations separate:" %}</p>
+        <div class="table-responsive mb-4">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>{% translate "File" %}</th>
+                        <th>{% translate "Purpose" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>settings/_base.py</code></td>
+                        <td>{% translate "Shared configuration (installed apps, middleware, templates)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/development.py</code></td>
+                        <td>{% translate "Local development (DEBUG, easy debugging, no external services)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/production.py</code></td>
+                        <td>{% translate "Production (secure, logged, real email)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/tests.py</code></td>
+                        <td>{% translate "Fast test execution (fast hashing, no migrations)" %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="what-to-change" class="h3 mb-3">{% translate "What Can Be Changed" %}</h2>
+        <p>{% translate "When you start building your project, you'll mainly need to modify three areas:" %}</p>
+        <ul>
+            <li>{% translate "<strong>INSTALLED_APPS</strong> - Add new apps as you create them" %}</li>
+            <li>{% translate "<strong>MIDDLEWARE</strong> - Rarely changed, but needed for certain features" %}</li>
+            <li>{% translate "<strong>Internationalization</strong> - Language and timezone settings" %}</li>
+        </ul>
+        <p>{% translate "Other settings like PROJECT_DIR, DATABASES, and TEMPLATES are set up automatically and rarely need to be changed." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="installed-apps" class="h3 mb-3">{% translate "Installed Apps" %}</h2>
+        <p>{% translate "INSTALLED_APPS tells Django which apps are active in your project. Each app adds specific functionality. When you create a new app, you must add it here to use it." %}</p>
+
+        <h4 class="mt-4">{% translate "Built-in Django Apps" %}</h4>
+        <p>{% translate "These come with Django and provide core features:" %}</p>
+        <ul>
+            <li><code>django.contrib.admin</code> - {% translate "The admin panel where you can manage your data" %}</li>
+            <li><code>django.contrib.auth</code> - {% translate "User authentication system (login, logout, passwords)" %}</li>
+            <li><code>django.contrib.contenttypes</code> - {% translate "Framework for working with content types" %}</li>
+            <li><code>django.contrib.sessions</code> - {% translate "Session management (temporary user data across requests)" %}</li>
+            <li><code>django.contrib.messages</code> - {% translate "Flash messages (one-time notifications to users)" %}</li>
+            <li><code>django.contrib.staticfiles</code> - {% translate "Serving CSS, JavaScript, and images" %}</li>
+            <li><code>django.contrib.sites</code> - {% translate "Multi-site support (useful for one site, essential for multiple)" %}</li>
+            <li><code>django.contrib.flatpages</code> - {% translate "Simple static pages (like About, Privacy Policy)" %}</li>
+            <li><code>django.contrib.humanize</code> - {% translate "Template filters for human-friendly numbers (e.g., '1,000' → '1 thousand')" %}</li>
+            <li><code>django.contrib.redirects</code> - {% translate "URL redirects" %}</li>
+        </ul>
+
+        <h4 class="mt-4">{% translate "Third-Party Apps" %}</h4>
+        <p>{% translate "These add extra features to your project:" %}</p>
+        <ul>
+            <li><code>allauth</code> - {% translate "User registration and authentication with social login support" %}</li>
+            <li><code>pwa</code> - {% translate "Progressive Web App support (makes your site installable)" %}</li>
+            <li><code>django_recaptcha</code> - <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a></li>
+            <li><code>widget_tweaks</code> - {% translate "Easy form field styling in templates" %}</li>
+            <li><code>django_minify_html</code> - {% translate "Minifies HTML to make pages load faster" %}</li>
+            <li><code>django_extensions</code> - {% translate "Helpful extras like additional management commands" %}</li>
+            <li><code>mdeditor</code> - {% translate "Markdown editor for rich text content" %}</li>
+        </ul>
+
+        <h4 class="mt-4">{% translate "Your Own Apps" %}</h4>
+        <p>{% translate "These are the apps you create. In this template:" %}</p>
+        <ul>
+            <li><code>src.apps.accounts</code> - {% translate "User profiles and extended user data" %}</li>
+            <li><code>src.apps.subscriptions</code> - {% translate "Email notifications and subscriptions" %}</li>
+            <li><code>src.apps.example</code> - {% translate "This documentation app" %}</li>
+        </ul>
+
+        <hr class="my-5">
+
+        <h2 id="middleware" class="h3 mb-3">{% translate "Middleware" %}</h2>
+        <p>{% translate "Middleware is like a chain of filters that every request passes through. Each middleware can modify the request or response, or perform actions before/after the view is called. The order matters - they're processed top to bottom on the way in, and bottom to top on the way out." %}</p>
+
+        <h4 class="mt-4">{% translate "Security Middleware" %}</h4>
+        <ul>
+            <li><code>SecurityMiddleware</code> - {% translate "Adds various security headers (HTTPS enforcement, HSTS, etc.)" %}</li>
+        </ul>
+
+        <h4 class="mt-4">{% translate "Functionality Middleware" %}</h4>
+        <ul>
+            <li><code>SessionMiddleware</code> - {% translate "Manages user sessions (lets you use request.session)" %}</li>
+            <li><code>LocaleMiddleware</code> - {% translate "Handles language switching based on user preferences" %}</li>
+            <li><code>CommonMiddleware</code> - {% translate "Common tasks like URL canonicalization and ETags" %}</li>
+            <li><code>CsrfViewMiddleware</code> - {% translate "Protects against cross-site request forgery attacks" %}</li>
+            <li><code>AuthenticationMiddleware</code> - {% translate "Attaches the current user to every request" %}</li>
+            <li><code>MessageMiddleware</code> - {% translate "Enables flash messages" %}</li>
+            <li><code>XFrameOptionsMiddleware</code> - {% translate "Prevents your site from being embedded in iframes (clickjacking protection)" %}</li>
+            <li><code>RedirectFallbackMiddleware</code> - {% translate "Handles redirects from django.contrib.redirects" %}</li>
+            <li><code>AccountMiddleware</code> - {% translate "Allauth-specific request handling" %}</li>
+        </ul>
+
+        <p class="mt-3">{% translate "<strong>Tip:</strong> You usually won't need to change middleware. Only add new middleware if you're adding a feature that requires it (like adding caching or CORS support)." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="internationalization" class="h3 mb-3">{% translate "Internationalization" %}</h2>
+        <p>{% translate "Internationalization (i18n) lets your site support multiple languages. This template comes with English and Turkish by default." %}</p>
+
+        <h4 class="mt-4">{% translate "Key Settings" %}</h4>
+        <ul>
+            <li><code>LANGUAGE_CODE = "en"</code> - {% translate "The default language of your site" %}</li>
+            <li><code>TIME_ZONE = "UTC"</code> - {% translate "The timezone for displaying dates and times" %}</li>
+            <li><code>USE_I18N = True</code> - {% translate "Enables Django's translation system" %}</li>
+            <li><code>USE_L10N = True</code> - {% translate "Enables localized formatting of dates and numbers" %}</li>
+            <li><code>USE_TZ = True</code> - {% translate "Uses timezone-aware datetime objects" %}</li>
+        </ul>
+
+        <h4 class="mt-4">{% translate "Adding Languages" %}</h4>
+        <p>{% translate "To add more languages, modify the LANGUAGES tuple:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>LANGUAGES = (
+    ('en', _('English')),
+    ('tr', _('Turkish')),
+    ('es', _('Spanish')),  # Add more languages here
+    ('fr', _('French')),
+)</code></pre>
+
+        <p class="mt-3">{% translate "After adding a language, run" %} <code>python manage.py compilemessages</code> {% translate "to generate the translation files. Then create .po files in the locale/ folder to add your translations." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="development" class="h3 mb-3">{% translate "Development Settings" %}</h2>
+        <p>{% translate "When you're working on your local machine, you need settings that make development easy and fast. The development settings are designed to give you as much information as possible when something goes wrong, and to avoid accidentally affecting real users." %}</p>
+
+        <h4 class="mt-4">{% translate "DEBUG = True" %}</h4>
+        <p>{% translate "When DEBUG is True, Django shows detailed error pages whenever something goes wrong. Instead of just seeing 'Something went wrong', you'll see exactly which line of code caused the problem, what the error is, and the full stack trace. This makes fixing bugs much easier. In production, this would be a security risk because attackers could learn about your server setup, but locally it's incredibly helpful." %}</p>
+
+        <h4 class="mt-4">{% translate "ALLOWED_HOSTS = ['*']" %}</h4>
+        <p>{% translate "ALLOWED_HOSTS is a security feature that tells Django which domain names are allowed to access your site. When developing locally, you access your site through various addresses like localhost, 127.0.0.1, or maybe a custom hostname. Instead of configuring this every time, we use '*' which means 'allow everything'. This is fine for local development but would be dangerous in production." %}</p>
+
+        <h4 class="mt-4">{% translate "Debug Toolbar" %}</h4>
+        <p>{% translate "The debug toolbar is a powerful tool that appears on the right side of your pages when you're developing. It shows you lots of useful information: how long the page took to load, what database queries were made (and how long each took), what template variables are available, and more. This helps you understand how your code is performing and what's happening behind the scenes. It's only available in development because it reveals too much information about your server to be safe in production." %}</p>
+
+        <h4 class="mt-4">{% translate "Console Email Backend" %}</h4>
+        <p>{% translate "When your code sends an email (like when someone signs up and needs to confirm their email), Django needs to know how to deliver it. In development, we don't want to actually send emails - we want to see what would have been sent. The console email backend prints all emails to your terminal instead of sending them. This way, you can test email-related features without worrying about accidentally emailing real users or needing to set up a real email server." %}</p>
+
+        <h4 class="mt-4">{% translate "Dummy Cache" %}</h4>
+        <p>{% translate "Caching is a technique where Django stores frequently-used data in memory so it can be retrieved faster. For example, instead of querying the database every time someone visits a page, Django can save the result and serve it instantly. In production, you typically use a cache server like Redis or Memcached. However, setting up a cache server adds complexity to your local development environment. The dummy cache pretends to cache things but doesn't actually store anything - this keeps your development setup simple while still allowing code that uses caching to work without errors." %}</p>
+
+        <h4 class="mt-4">{% translate "reCAPTCHA" %}</h4>
+        <p>{% translate "reCAPTCHA protects your forms from spam bots. In development, you can disable it by setting RECAPTCHA_ENABLED=False in your .env file. For a complete guide, see the" %} <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
+
+        <hr class="my-5">
+
+        <h2 id="production" class="h3 mb-3">{% translate "Production Settings" %}</h2>
+        <p>{% translate "When you deploy your website to a live server, you need completely different settings. Production is about security, performance, and reliability. You don't need helpful error messages anymore - instead, you need to protect your users' data and keep your server running smoothly." %}</p>
+
+        <h4 class="mt-4">{% translate "DEBUG = False" %}</h4>
+        <p>{% translate "When DEBUG is False, Django hides all error details from users. Instead of seeing a helpful error page with the exact problem, users just see a generic 'Something went wrong' message. This might seem unhelpful, but it's actually important for security. If a hacker tries to break into your site and sees detailed error messages, they can learn about your server setup, what databases you're using, and where your code might have weaknesses. By hiding this information, you make it much harder for attackers to find vulnerabilities." %}</p>
+
+        <h4 class="mt-4">{% translate "ALLOWED_HOSTS" %}</h4>
+        <p>{% translate "In production, you should only allow access from your actual domain name(s). This prevents a type of attack called 'host header injection' where an attacker tries to use your server for malicious purposes by sending requests with fake host names. By specifying exactly which domains are allowed, you ensure that only legitimate traffic reaches your application." %}</p>
+
+        <h4 class="mt-4">{% translate "File Logging" %}</h4>
+        <p>{% translate "When something goes wrong in production, you can't just look at the error page on your screen - users are seeing the site, not you. That's where logging comes in. Every time something important happens (an error, a user signing up, a payment being processed), Django writes a record to a log file. This log file lives at /var/www/proj.log on your server. When something breaks, you can check this file to see what happened. Logging is essential for troubleshooting problems that you can't see directly." %}</p>
+
+        <h4 class="mt-4">{% translate "Static and Media Files" %}</h4>
+        <p>{% translate "Static files are things like CSS, JavaScript, and images that don't change - they're the same for all users. Media files are uploads like profile pictures or documents that users send to your site. In development, Django serves these files directly. In production, it's much more efficient to let your web server (Nginx) serve these files directly, bypassing Django entirely. This makes your site much faster because static files can be cached by browsers and served from CDNs. We configure Django to look for these files in /var/www/static and /var/www/media." %}</p>
+
+        <h4 class="mt-4">{% translate "Real SMTP Email" %}</h4>
+        <p>{% translate "In production, when users sign up, request password resets, or contact you through forms, they need to actually receive those emails. This requires a real email server (SMTP). We use Gmail's SMTP server as a simple option, but you can use any email provider. The email is only enabled if DJANGO_EMAIL_ENABLED=True - this allows you to disable email completely if needed without changing code." %}</p>
+        <p>{% translate "For a complete guide on setting up Gmail with App Passwords for production, see" %} <a href="{% url 'example:email' %}">{% translate "Email Guide" %}</a>.</p>
+
+        <hr class="my-5">
+
+        <h2 id="tests" class="h3 mb-3">{% translate "Test Settings" %}</h2>
+        <p>{% translate "When you run automated tests, you need settings that make tests run as fast as possible. Tests that take minutes to run get annoying and people stop running them. The test settings are optimized for speed, not security or accuracy." %}</p>
+
+        <h4 class="mt-4">{% translate "MD5 Password Hasher" %}</h4>
+        <p>{% translate "Password hashing is the process of turning a password into a scrambled version that can't be reversed. When users create accounts, their passwords are hashed and the hash is stored. When they log in, their password is hashed again and compared to the stored hash. This is secure because even if someone steals the database, they can't see the actual passwords. However, secure hashing algorithms like bcrypt are designed to be slow - that's intentional because it makes brute force attacks harder. The problem is, in tests, you're constantly creating users and checking passwords. Using MD5 (which is fast but not very secure) makes tests run much faster. Since tests run in an isolated environment, this security trade-off is acceptable." %}</p>
+
+        <h4 class="mt-4">{% translate "Disable Migrations" %}</h4>
+        <p>{% translate "Normally, before running tests, Django creates a fresh test database and runs all your migrations to set up the tables. This can take a long time if you have many migrations. The test settings use a trick: instead of running migrations, Django creates the tables directly from your model definitions. This skips a lot of the overhead and makes test setup much faster." %}</p>
+
+        <h4 class="mt-4">{% translate "Disable Logging" %}</h4>
+        <p>{% translate "Every time Django logs something, there's overhead involved - formatting the message, checking log levels, and actually writing it somewhere. During tests, this logging output isn't useful (you're not watching the test run for errors), so we disable it entirely to speed things up." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="menu-config" class="h3 mb-3">{% translate "Menu Configuration" %}</h2>
+        <p>{% translate "Navigation menus are configured in" %} <code>src/menus.py</code>. {% translate "There are three types of menus, each serving a different purpose." %}</p>
+
+        <h4 class="mt-4">{% translate "NAVBAR_MENUS - Top Navigation" %}</h4>
+        <p>{% translate "Creates dropdown menus in the navbar. Each menu has a title and a list of items:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>NAVBAR_MENUS = [
+    {
+        "title": _("Menu Title"),  # Dropdown header
+        "items": [
+            {
+                "label": _("Link Label"),  # Text shown to user
+                "url_name": "home",       # Django URL name
+                "args": [],               # Optional positional args
+                "kwargs": {},              # Optional keyword args
+            },
+        ]
+    },
+]</code></pre>
+        <p>{% translate "Example for a flatpage:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>{
+    "label": _("About"),
+    "url_name": "django.contrib.flatpages.views.flatpage",
+    "kwargs": {"url": "/about/"},
+}</code></pre>
+
+        <h4 class="mt-4">{% translate "FOOTER_LINKS - Footer Links" %}</h4>
+        <p>{% translate "Simple list of links at the bottom of the page:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>FOOTER_LINKS = [
+    {
+        "label": _("Contact"),
+        "url_name": "contact",
+    },
+    {
+        "label": _("Privacy"),
+        "url_name": "django.contrib.flatpages.views.flatpage",
+        "kwargs": {"url": "/privacy/"},
+    },
+]</code></pre>
+
+        <h4 class="mt-4">{% translate "SOCIAL_LINKS - Social Media Buttons" %}</h4>
+        <p>{% translate "Uses Bootstrap Social buttons (built into Bootstrap 5). Available button classes:" %}</p>
+        <ul>
+            <li><code>btn-social btn-github</code></li>
+            <li><code>btn-social btn-twitter</code></li>
+            <li><code>btn-social btn-facebook</code></li>
+            <li><code>btn-social btn-google-plus</code></li>
+            <li><code>btn-social btn-instagram</code></li>
+            <li><code>btn-social btn-linkedin</code></li>
+            <li><code>btn-social btn-youtube</code></li>
+        </ul>
+        <p>{% translate "Example:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>SOCIAL_LINKS = [
+    {
+        "title": "GitHub",
+        "icon": "fa-brands fa-github",   # Font Awesome icon
+        "btn_class": "btn-social btn-github",
+        "url": "https://github.com/yourname",
+    },
+    {
+        "title": "Twitter",
+        "icon": "fa-brands fa-x-twitter",
+        "btn_class": "btn-social btn-twitter",
+        "url": "https://twitter.com/yourname",
+    },
+]</code></pre>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,144 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Captcha Setup Guide" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'example:features' %}">{% translate "Features" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Captcha" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#overview">{% translate "Overview" %}</a></li>
+                <li class="list-group-item"><a href="#getting-keys">{% translate "Getting reCAPTCHA Keys" %}</a></li>
+                <li class="list-group-item"><a href="#setup">{% translate "Setting Up" %}</a></li>
+                <li class="list-group-item"><a href="#how-it-works">{% translate "How It Works" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Captcha Setup Guide" %}</h1>
+        <p class="lead">{% translate "Learn how to protect your forms from spam using Google reCAPTCHA." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="overview" class="mb-3">{% translate "Overview" %}</h2>
+        <p>{% translate "reCAPTCHA is Google's free service that protects your website from spam and abuse. It uses advanced risk analysis to distinguish bots from real humans. This template includes django-recaptcha which provides easy integration with Django forms." %}</p>
+
+        <div class="alert alert-info">
+            <i class="fa-solid fa-circle-info"></i>
+            <strong>{% translate "Why Use Captcha?" %}</strong>
+            <p class="mb-0">{% translate "Without captcha, automated bots can fill out your forms with spam, create fake accounts, or flood your contact form with unwanted messages. reCAPTCHA stops this while keeping the experience smooth for real users." %}</p>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="getting-keys" class="mb-3">{% translate "Getting reCAPTCHA Keys" %}</h2>
+        <p>{% translate "Before you can use reCAPTCHA, you need to register your site on Google's platform to get API keys:" %}</p>
+
+        <ol class="mb-4">
+            <li class="mb-2">{% translate "Go to" %} <a href="https://www.google.com/recaptcha/admin" target="_blank">Google reCAPTCHA Admin Console</a></li>
+            <li class="mb-2">{% translate "Click the + button to register a new site" %}</li>
+            <li class="mb-2">{% translate "Enter a Label to identify your site (e.g., 'My Django Project', 'Production Site')" %}</li>
+            <li class="mb-2">
+                {% translate "Choose reCAPTCHA v2 and select 'I'm not a robot' checkbox" %}
+                <div class="text-muted small mt-1">{% translate "(v2 is easier to implement than v3 invisible captcha)" %}</div>
+            </li>
+            <li class="mb-2">
+                {% translate "Add your Domains:" %}
+                <ul class="mt-1">
+                    <li>{% translate "localhost (for local development)" %}</li>
+                    <li>{% translate "127.0.0.1 (alternative for local)" %}</li>
+                    <li>{% translate "yourdomain.com (for production)" %}</li>
+                </ul>
+            </li>
+            <li class="mb-2">{% translate "Accept the Terms of Service" %}</li>
+            <li class="mb-2">{% translate "Click Submit" %}</li>
+        </ol>
+
+        <div class="alert alert-success">
+            <i class="fa-solid fa-key"></i>
+            <strong>{% translate "After Submitting" %}</strong>
+            <p class="mb-0">{% translate "You'll see a Site Key and Secret Key. Copy these - you'll need them for your .env file!" %}</p>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="setup" class="mb-3">{% translate "Setting Up in Your Project" %}</h2>
+        <p>{% translate "Add the following to your .env file:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code># Enable or disable captcha
+RECAPTCHA_ENABLED=True
+
+# Your site key (public - safe to show in HTML)
+RECAPTCHA_PUBLIC_KEY=your_site_key_here
+
+# Your secret key (private - never share!)
+RECAPTCHA_PRIVATE_KEY=your_secret_key_here</code></pre>
+
+        <h4 class="mt-4">{% translate "For Development" %}</h4>
+        <p>{% translate "When developing locally, you can disable captcha:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>RECAPTCHA_ENABLED=False</code></pre>
+        <p>{% translate "The form will work without the captcha widget. When you're ready for production, simply set RECAPTCHA_ENABLED=True." %}</p>
+
+        <div class="alert alert-warning">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            <strong>{% translate "Note:" %}</strong>
+            <p class="mb-0">{% translate "The test keys warning that normally appears is automatically silenced in development and test environments, so you won't see it even if captcha is enabled." %}</p>
+        </div>
+
+        <h4 class="mt-4">{% translate "For Production" %}</h4>
+        <p>{% translate "Make sure captcha is enabled:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>RECAPTCHA_ENABLED=True
+RECAPTCHA_PUBLIC_KEY=your_actual_site_key
+RECAPTCHA_PRIVATE_KEY=your_actual_secret_key</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="how-it-works" class="mb-3">{% translate "How It Works" %}</h2>
+        <p>{% translate "This template uses a conditional pattern to add captcha only when enabled:" %}</p>
+
+        <pre class="bg-dark text-light p-3 rounded"><code>from django import forms
+from django.conf import settings
+from django_recaptcha.fields import ReCaptchaField
+
+class ContactForm(forms.Form):
+    first_name = forms.CharField(max_length=50)
+    last_name = forms.CharField(max_length=50)
+    email = forms.EmailField()
+    message = forms.CharField(widget=forms.Textarea)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # Only add captcha if enabled in settings
+        if getattr(settings, 'RECAPTCHA_ENABLED', False):
+            self.fields['captcha'] = ReCaptchaField()</code></pre>
+
+        <h4 class="mt-4">{% translate "Why This Pattern?" %}</h4>
+        <ul>
+            <li>{% translate "Flexible: Enable/disable without changing code" %}</li>
+            <li>{% translate "Production-ready: Easy to turn on when deploying" %}</li>
+            <li>{% translate "User-friendly: Real users won't see captcha in development" %}</li>
+        </ul>
+
+        <h4 class="mt-4">{% translate "Where It's Used" %}</h4>
+        <p>{% translate "In this template, captcha is already integrated in:" %}</p>
+        <ul>
+            <li>{% translate "Contact Form - Prevents spam through the contact page" %}</li>
+            <li>{% translate "Signup Form - Optional protection for user registration" %}</li>
+        </ul>
+
+        <div class="alert alert-info mt-4">
+            <i class="fa-solid fa-circle-info"></i>
+            <strong>{% translate "Want to add captcha to other forms?" %}</strong>
+            <p class="mb-0">{% translate "Simply copy the pattern above: import ReCaptchaField, then add it conditionally in your form's __init__ method based on RECAPTCHA_ENABLED." %}</p>
+        </div>
+    </div>
+</div>
+{% endblock %}
