@@ -26,7 +26,7 @@ INSTALLED_APPS.extend(
     ]
 )
 
-MIDDLEWARE.insert(5, "debug_toolbar.middleware.DebugToolbarMiddleware")
+MIDDLEWARE.insert(7, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 CACHES = {
     'default': {
