@@ -1,4 +1,4 @@
-{% load static i18n %}<!DOCTYPE html>
+{% load static i18n django_htmx %}<!DOCTYPE html>
 {% get_current_language as LANGUAGE_CODE %}
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
@@ -19,7 +19,7 @@
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
     {% block stylesheet %}{% endblock %}
 </head>
-<body class="d-flex flex-column min-vh-100 bg-light-subtle">
+<body class="d-flex flex-column min-vh-100 bg-light-subtle" hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
 {% block base_body %}
     {% include 'includes/navbar.html' %}
 
@@ -51,6 +51,7 @@
 {% endblock base_body %}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+{% htmx_script %}
 <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.min.js"></script>
 <script src="https://cdn.datatables.net/2.3.7/js/dataTables.min.js"></script>

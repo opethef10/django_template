@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.8.0 - 2026-04-04
+
+### Added
+
+- django_htmx
+
 ## 0.7.0 - 2026-04-01
 
 ### Added
