@@ -43,12 +43,14 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "pwa",
     "django_recaptcha",
-    "mdeditor"
+    "mdeditor",
+    "django_htmx",
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_htmx.middleware.HtmxMiddleware',
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     "django_minify_html.middleware.MinifyHtmlMiddleware",
