@@ -10,7 +10,6 @@ from .views import (
     DocumentationSettingsView,
     DocumentationSetupView,
     DocumentationStructureView,
-    SearchView,
 )
 
 app_name = "example"
@@ -25,5 +24,4 @@ urlpatterns = [
     path("features/", DocumentationFeaturesView.as_view(), name="features"),
     path("deployment/", DocumentationDeploymentView.as_view(), name="deployment"),
     path("deployment/pythonanywhere/", DocumentationPythonanywhereView.as_view(), name="pythonanywhere"),
-    path("api/search/", SearchView.as_view(), name="search"),
 ]
