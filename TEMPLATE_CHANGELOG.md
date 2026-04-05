@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.9.0 - 2026-04-05
+
+### Added
+
+- General SearchView for modal fuzzy search
+
+### Changed
+
+- Example app endpoint to docs/
+
 ## 0.8.0 - 2026-04-04
 
 ### Added

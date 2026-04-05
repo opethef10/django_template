@@ -17,7 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 
-from .views import HomeView, ContactView
+from .views import HomeView, ContactView, SearchView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,8 @@ urlpatterns = [
     path("pages/", include("django.contrib.flatpages.urls")),
     path("subscriptions/", include("src.apps.subscriptions.urls")),
     path('mdeditor/', include('mdeditor.urls')),
-    path('', include("src.apps.example.urls")),
+    path('docs/', include("src.apps.example.urls")),
+    path('api/search/', SearchView.as_view(), name='search'),
     path('', include('pwa.urls')),
     path('', HomeView.as_view(), name='home'),
     path("i18n/", include("django.conf.urls.i18n"))

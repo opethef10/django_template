@@ -1,17 +1,35 @@
+from django.apps import apps
 from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import EmailMessage
-from django.http import Http404
+from django.http import Http404, JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.cache import cache_page
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, RedirectView, View
 
 from .forms import ContactForm
 
 
-class HomeView(TemplateView):
-    template_name = "home.html"
+class HomeView(RedirectView):
+    url = reverse_lazy('example:index')
+
+
+@method_decorator(cache_page(30 * settings.DAYS), name='dispatch')
+class SearchView(View):
+    def get(self, request, *args, **kwargs):
+        results = []
+        for app_config in apps.get_app_configs():
+            if app_config.name.startswith('src.apps.'):
+                try:
+                    module = __import__(f'{app_config.name}.search', fromlist=['get_search_results'])
+                    if hasattr(module, 'get_search_results'):
+                        results.extend(module.get_search_results())
+                except Exception:
+                    pass
+        return JsonResponse({'results': results})
 
 
 class ContactView(SuccessMessageMixin, FormView):
