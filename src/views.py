@@ -5,13 +5,13 @@ from django.core.mail import EmailMessage
 from django.http import Http404
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
-from django.views.generic import FormView, TemplateView
+from django.views.generic import FormView, RedirectView, View
 
 from .forms import ContactForm
 
 
-class HomeView(TemplateView):
-    template_name = "home.html"
+class HomeView(RedirectView):
+    url = reverse_lazy('example:index')
 
 
 class ContactView(SuccessMessageMixin, FormView):

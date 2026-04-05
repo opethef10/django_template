@@ -17,7 +17,6 @@ app_name = "example"
 
 urlpatterns = [
     path("", DocumentationIndexView.as_view(), name="index"),
-    path("", DocumentationIndexView.as_view(), name="home"),
     path("setup/", DocumentationSetupView.as_view(), name="setup"),
     path("structure/", DocumentationStructureView.as_view(), name="structure"),
     path("settings/", DocumentationSettingsView.as_view(), name="settings"),

@@ -27,7 +27,7 @@ urlpatterns = [
     path("pages/", include("django.contrib.flatpages.urls")),
     path("subscriptions/", include("src.apps.subscriptions.urls")),
     path('mdeditor/', include('mdeditor.urls')),
-    path('', include("src.apps.example.urls")),
+    path('docs/', include("src.apps.example.urls")),
     path('', include('pwa.urls')),
     path('', HomeView.as_view(), name='home'),
     path("i18n/", include("django.conf.urls.i18n"))
