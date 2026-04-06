@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from django.conf import settings
 
 from .views import HomeView, ContactView, SearchView
@@ -35,4 +36,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))
