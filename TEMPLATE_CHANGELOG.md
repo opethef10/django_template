@@ -20,6 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Example app renamed to docs
+- container to container-lg
 
 ## 0.9.0 - 2026-04-05
 
