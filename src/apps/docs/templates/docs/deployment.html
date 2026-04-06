@@ -4,7 +4,7 @@
 {% block title %}{% translate "Deployment" %}{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
 <li class="breadcrumb-item active">{% translate "Deployment" %}</li>
 {% endblock %}
 
@@ -32,7 +32,7 @@
         <h2 id="pythonanywhere" class="h3 mb-4">
             <i class="fa-brands fa-python text-primary"></i> 
             {% translate "PythonAnywhere" %}
-            <a href="{% url 'example:pythonanywhere' %}" class="btn btn-sm btn-outline-primary ms-2">{% translate "Detailed Guide" %}</a>
+            <a href="{% url 'docs:pythonanywhere' %}" class="btn btn-sm btn-outline-primary ms-2">{% translate "Detailed Guide" %}</a>
         </h2>
         <p>{% translate "This template is specifically designed for PythonAnywhere with optimized scripts and configurations." %}</p>
 

@@ -6,37 +6,37 @@ NAVBAR_MENUS = [
         "items": [
             {
                 "label": _("Home"),
-                "url_name": "example:index",
+                "url_name": "docs:index",
                 "args": [],
                 "kwargs": {},
             },
             {
                 "label": _("Setup"),
-                "url_name": "example:setup",
+                "url_name": "docs:setup",
                 "args": [],
                 "kwargs": {},
             },
             {
                 "label": _("Structure"),
-                "url_name": "example:structure",
+                "url_name": "docs:structure",
                 "args": [],
                 "kwargs": {},
             },
             {
                 "label": _("Settings"),
-                "url_name": "example:settings",
+                "url_name": "docs:settings",
                 "args": [],
                 "kwargs": {},
             },
             {
                 "label": _("Features"),
-                "url_name": "example:features",
+                "url_name": "docs:features",
                 "args": [],
                 "kwargs": {},
             },
             {
                 "label": _("Deployment"),
-                "url_name": "example:deployment",
+                "url_name": "docs:deployment",
                 "args": [],
                 "kwargs": {},
             },
@@ -51,15 +51,15 @@ FOOTER_LINKS = [
     },
     {
         "label": _("Documentation"),
-        "url_name": "example:index",
+        "url_name": "docs:index",
     },
     {
         "label": _("Setup Guide"),
-        "url_name": "example:setup",
+        "url_name": "docs:setup",
     },
     {
         "label": _("PythonAnywhere"),
-        "url_name": "example:pythonanywhere",
+        "url_name": "docs:pythonanywhere",
     },
 ]
 

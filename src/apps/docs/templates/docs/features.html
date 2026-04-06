@@ -4,7 +4,7 @@
 {% block title %}{% translate "Features" %}{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
 <li class="breadcrumb-item active">{% translate "Features" %}</li>
 {% endblock %}
 
@@ -334,7 +334,7 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-shield text-success"></i> reCAPTCHA</h3>
                 <p>{% translate "Automatic spam protection for signup and contact forms." %}</p>
-                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
+                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'docs:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
             </div>
         </div>
 
@@ -342,7 +342,7 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
             <div class="card-body">
                 <h3 class="h5"><i class="fa-solid fa-envelope text-primary"></i> Email</h3>
                 <p>{% translate "Email notifications for password resets, contact forms, and user notifications (production only)." %}</p>
-                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'example:email' %}">{% translate "Email Guide" %}</a>.</p>
+                <p>{% translate "Full setup guide available in the" %} <a href="{% url 'docs:email' %}">{% translate "Email Guide" %}</a>.</p>
             </div>
         </div>
 
