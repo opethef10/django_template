@@ -14,7 +14,7 @@ from .forms import ContactForm
 
 
 class HomeView(RedirectView):
-    url = reverse_lazy('example:index')
+    url = reverse_lazy('docs:index')
 
 
 @method_decorator(cache_page(30 * settings.DAYS), name='dispatch')
@@ -27,7 +27,7 @@ class SearchView(View):
                     module = __import__(f'{app_config.name}.search', fromlist=['get_search_results'])
                     if hasattr(module, 'get_search_results'):
                         results.extend(module.get_search_results())
-                except Exception:
+                except ImportError:
                     pass
         return JsonResponse({'results': results})
 

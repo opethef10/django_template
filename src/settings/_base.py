@@ -28,7 +28,7 @@ INSTALLED_APPS = [
     # "allauth.socialaccount.providers.google",
     "src.apps.accounts",
     "src.apps.subscriptions",
-    "src.apps.example",
+    "src.apps.docs",
     "django_minify_html",
     "django_extensions",
     "django.contrib.admin",

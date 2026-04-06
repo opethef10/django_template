@@ -4,7 +4,7 @@
 {% block title %}{% translate "Project Structure" %}{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
 <li class="breadcrumb-item active">{% translate "Structure" %}</li>
 {% endblock %}
 
@@ -99,7 +99,7 @@
 │   ├── apps/                 # Django apps (features/modules)
 │   │   ├── accounts/         # User profiles and authentication
 │   │   ├── subscriptions/   # Email notifications
-│   │   └── example/         # This documentation app
+│   │   └── docs/         # This documentation app
 │   ├── static/               # CSS, JS, images (served to everyone)
 │   │   ├── css/
 │   │   └── js/

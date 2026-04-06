@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.conf.urls.static import static
 from django.conf import settings
 
 from .views import HomeView, ContactView, SearchView
@@ -27,7 +28,7 @@ urlpatterns = [
     path("pages/", include("django.contrib.flatpages.urls")),
     path("subscriptions/", include("src.apps.subscriptions.urls")),
     path('mdeditor/', include('mdeditor.urls')),
-    path('docs/', include("src.apps.example.urls")),
+    path('docs/', include("src.apps.docs.urls")),
     path('api/search/', SearchView.as_view(), name='search'),
     path('', include('pwa.urls')),
     path('', HomeView.as_view(), name='home'),
@@ -35,4 +36,5 @@ urlpatterns = [
 ]
 
 if settings.DEBUG:
+    urlpatterns.extend(static(settings.STATIC_URL, document_root=settings.STATIC_ROOT))
     urlpatterns.append(path('__debug__/', include('debug_toolbar.urls')))

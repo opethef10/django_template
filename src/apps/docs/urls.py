@@ -12,7 +12,7 @@ from .views import (
     DocumentationStructureView,
 )
 
-app_name = "example"
+app_name = "docs"
 
 urlpatterns = [
     path("", DocumentationIndexView.as_view(), name="index"),
