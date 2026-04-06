@@ -27,7 +27,7 @@ class SearchView(View):
                     module = __import__(f'{app_config.name}.search', fromlist=['get_search_results'])
                     if hasattr(module, 'get_search_results'):
                         results.extend(module.get_search_results())
-                except Exception:
+                except ImportError:
                     pass
         return JsonResponse({'results': results})
 
