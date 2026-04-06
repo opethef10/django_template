@@ -14,7 +14,7 @@ from .forms import ContactForm
 
 
 class HomeView(RedirectView):
-    url = reverse_lazy('example:index')
+    url = reverse_lazy('docs:index')
 
 
 @method_decorator(cache_page(30 * settings.DAYS), name='dispatch')

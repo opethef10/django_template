@@ -4,7 +4,7 @@
 {% block title %}{% translate "Setup Guide" %}{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
 <li class="breadcrumb-item active">{% translate "Setup" %}</li>
 {% endblock %}
 
@@ -27,7 +27,7 @@
 
         <div class="alert alert-info">
             <i class="fa-solid fa-circle-info"></i>
-            <strong>{% translate "Development Only:" %}</strong> {% translate "This setup is for local development. See" %} <a href="{% url 'example:deployment' %}">{% translate "Deployment Guide" %}</a> {% translate "for production." %}
+            <strong>{% translate "Development Only:" %}</strong> {% translate "This setup is for local development. See" %} <a href="{% url 'docs:deployment' %}">{% translate "Deployment Guide" %}</a> {% translate "for production." %}
         </div>
 
         <hr class="my-5">
@@ -194,10 +194,10 @@ pip install -r requirements/development.txt</code></pre>
 
         <h2 id="next-steps" class="h3 mb-3">{% translate "Next Steps" %}</h2>
         <ul>
-            <li><a href="{% url 'example:structure' %}">{% translate "Understand the project structure" %}</a></li>
-            <li><a href="{% url 'example:settings' %}">{% translate "Configure settings" %}</a></li>
-            <li><a href="{% url 'example:features' %}">{% translate "Explore built-in features" %}</a></li>
-            <li><a href="{% url 'example:deployment' %}">{% translate "Deploy to production" %}</a></li>
+            <li><a href="{% url 'docs:structure' %}">{% translate "Understand the project structure" %}</a></li>
+            <li><a href="{% url 'docs:settings' %}">{% translate "Configure settings" %}</a></li>
+            <li><a href="{% url 'docs:features' %}">{% translate "Explore built-in features" %}</a></li>
+            <li><a href="{% url 'docs:deployment' %}">{% translate "Deploy to production" %}</a></li>
         </ul>
     </div>
 </div>

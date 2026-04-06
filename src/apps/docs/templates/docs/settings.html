@@ -4,7 +4,7 @@
 {% block title %}{% translate "Settings & Configuration" %}{% endblock %}
 
 {% block breadcrumb %}
-<li class="breadcrumb-item"><a href="{% url 'example:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
 <li class="breadcrumb-item active">{% translate "Settings" %}</li>
 {% endblock %}
 
@@ -100,7 +100,7 @@
         <ul>
             <li><code>allauth</code> - {% translate "User registration and authentication with social login support" %}</li>
             <li><code>pwa</code> - {% translate "Progressive Web App support (makes your site installable)" %}</li>
-            <li><code>django_recaptcha</code> - <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a></li>
+            <li><code>django_recaptcha</code> - <a href="{% url 'docs:captcha' %}">{% translate "Captcha Guide" %}</a></li>
             <li><code>widget_tweaks</code> - {% translate "Easy form field styling in templates" %}</li>
             <li><code>django_minify_html</code> - {% translate "Minifies HTML to make pages load faster" %}</li>
             <li><code>django_extensions</code> - {% translate "Helpful extras like additional management commands" %}</li>
@@ -112,7 +112,7 @@
         <ul>
             <li><code>src.apps.accounts</code> - {% translate "User profiles and extended user data" %}</li>
             <li><code>src.apps.subscriptions</code> - {% translate "Email notifications and subscriptions" %}</li>
-            <li><code>src.apps.example</code> - {% translate "This documentation app" %}</li>
+            <li><code>src.apps.docs</code> - {% translate "This documentation app" %}</li>
         </ul>
 
         <hr class="my-5">
@@ -186,7 +186,7 @@
         <p>{% translate "Caching is a technique where Django stores frequently-used data in memory so it can be retrieved faster. For example, instead of querying the database every time someone visits a page, Django can save the result and serve it instantly. In production, you typically use a cache server like Redis or Memcached. However, setting up a cache server adds complexity to your local development environment. The dummy cache pretends to cache things but doesn't actually store anything - this keeps your development setup simple while still allowing code that uses caching to work without errors." %}</p>
 
         <h4 class="mt-4">{% translate "reCAPTCHA" %}</h4>
-        <p>{% translate "reCAPTCHA protects your forms from spam bots. In development, you can disable it by setting RECAPTCHA_ENABLED=False in your .env file. For a complete guide, see the" %} <a href="{% url 'example:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
+        <p>{% translate "reCAPTCHA protects your forms from spam bots. In development, you can disable it by setting RECAPTCHA_ENABLED=False in your .env file. For a complete guide, see the" %} <a href="{% url 'docs:captcha' %}">{% translate "Captcha Guide" %}</a>.</p>
 
         <hr class="my-5">
 
@@ -207,7 +207,7 @@
 
         <h4 class="mt-4">{% translate "Real SMTP Email" %}</h4>
         <p>{% translate "In production, when users sign up, request password resets, or contact you through forms, they need to actually receive those emails. This requires a real email server (SMTP). We use Gmail's SMTP server as a simple option, but you can use any email provider. The email is only enabled if DJANGO_EMAIL_ENABLED=True - this allows you to disable email completely if needed without changing code." %}</p>
-        <p>{% translate "For a complete guide on setting up Gmail with App Passwords for production, see" %} <a href="{% url 'example:email' %}">{% translate "Email Guide" %}</a>.</p>
+        <p>{% translate "For a complete guide on setting up Gmail with App Passwords for production, see" %} <a href="{% url 'docs:email' %}">{% translate "Email Guide" %}</a>.</p>
 
         <hr class="my-5">
 
