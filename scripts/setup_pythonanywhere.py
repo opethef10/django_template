@@ -184,12 +184,12 @@ def copy_environment_variables():
     project_description = input("Enter a description of your project: ")
 
     env_content = ENV_FILE_TEMPLATE.format(
-        PROJECT_SLUG=USERNAME,
-        PROJECT_NAME=project_name,
-        PROJECT_DESCRIPTION=project_description,
-        PROJECT_DOMAIN=WEBAPP_NAME,
-        DJANGO_SECRET_KEY=secrets.token_urlsafe(50),
-        DJANGO_ALLOWED_HOSTS=WEBAPP_NAME,
+        USERNAME,
+        project_name,
+        project_description,
+        WEBAPP_NAME,
+        secrets.token_urlsafe(50),
+        WEBAPP_NAME,
     )
     with open(ENV_FILE_PATH, "w") as f:
         f.write(env_content)
