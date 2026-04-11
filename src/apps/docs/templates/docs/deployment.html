@@ -14,10 +14,11 @@
         <div class="card sticky-top">
             <div class="card-header">{% translate "On This Page" %}</div>
             <ul class="list-group list-group-flush">
-                <li class="list-group-item"><a href="#pythonanywhere">{% translate "PythonAnywhere" %}</a></li>
+                <li class="list-group-item"><a href="#prerequisites">{% translate "Prerequisites" %}</a></li>
+                <li class="list-group-item"><a href="#setup">{% translate "Setup and Deploy" %}</a></li>
+                <li class="list-group-item"><a href="#deployment">{% translate "Automatic Deployment" %}</a></li>
+                <li class="list-group-item"><a href="#troubleshooting">{% translate "Troubleshooting" %}</a></li>
                 <li class="list-group-item"><a href="#requirements">{% translate "Requirements Files" %}</a></li>
-                <li class="list-group-item"><a href="#environment-prod">{% translate "Environment Variables" %}</a></li>
-                <li class="list-group-item"><a href="#deployment-checklist">{% translate "Deployment Checklist" %}</a></li>
                 <li class="list-group-item"><a href="#scripts">{% translate "Deployment Scripts" %}</a></li>
             </ul>
         </div>
@@ -25,16 +26,146 @@
 
     <div class="col-lg-9">
         <h1 class="mb-4">{% translate "Deployment" %}</h1>
-        <p class="lead">{% translate "This template is optimized for deployment on various platforms." %}</p>
+        <p class="lead">{% translate "This template is optimized for PythonAnywhere deployment with automated scripts." %}</p>
 
         <hr class="my-5">
 
-        <h2 id="pythonanywhere" class="h3 mb-4">
-            <i class="fa-brands fa-python text-primary"></i> 
-            {% translate "PythonAnywhere" %}
-            <a href="{% url 'docs:pythonanywhere' %}" class="btn btn-sm btn-outline-primary ms-2">{% translate "Detailed Guide" %}</a>
-        </h2>
-        <p>{% translate "This template is specifically designed for PythonAnywhere with optimized scripts and configurations." %}</p>
+        <h2 id="prerequisites" class="h3 mb-3">{% translate "Prerequisites" %}</h2>
+        <ul>
+            <li>{% translate "PythonAnywhere account" %}</li>
+            <li>{% translate "Git repository hosting your project (GitHub, GitLab, etc.)" %}</li>
+            <li>{% translate "API token from PythonAnywhere account" %}</li>
+        </ul>
+
+        <h4 class="h6 mt-4">{% translate "Getting Your API Token" %}</h4>
+        <ol>
+            <li>{% translate "Log in to" %} <a href="https://www.pythonanywhere.com" target="_blank">PythonAnywhere</a></li>
+            <li>{% translate "Click your username in the top-right corner" %}</li>
+            <li>{% translate "Select" %} <strong>Account</strong></li>
+            <li>{% translate "Go to the" %} <strong>API token</strong> {% translate "tab" %}</li>
+            <li>{% translate "Click" %} <strong>Create a new API token</strong></li>
+        </ol>
+        <p>{% translate "Once created, the API token will be automatically available in your Bash console as the" %} <code>API_TOKEN</code> {% translate "environment variable." %}</p>
+
+        <div class="alert alert-info mt-3">
+            <i class="fa-solid fa-info-circle"></i>
+            <strong>{% translate "About $USER:" %}</strong> {% translate "In the commands below," %} <code>$USER</code> {% translate "is a shell variable that automatically contains your PythonAnywhere username. You don't need to replace it manually." %}
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="setup" class="h3 mb-3">{% translate "Setup and Deploy" %}</h2>
+        <p>{% translate "Open a new Bash console in PythonAnywhere by clicking" %} <strong>Dashboard → consoles → Bash</strong>. {% translate "Then run these commands in order:" %}</p>
+
+        <h4 class="h6 mt-4">1. {% translate "Clone Your Repository" %}</h4>
+        <p>{% translate "Replace" %} <code>&lt;URL&gt;</code> {% translate "with your git repository URL:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>git clone &lt;URL&gt; $USER.pythonanywhere.com</code></pre>
+
+        <h4 class="h6 mt-4">2. {% translate "Navigate to Project Directory" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>cd $USER.pythonanywhere.com</code></pre>
+
+        <h4 class="h6 mt-4">3. {% translate "Create Virtual Environment" %}</h4>
+        <p>{% translate "This creates a virtual environment at" %} <code>~/.virtualenvs/$USER</code>:</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>mkvirtualenv $USER --python=/usr/bin/python3.13</code></pre>
+
+        <h4 class="h6 mt-4">4. {% translate "Upgrade pip" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>pip install --upgrade pip</code></pre>
+
+        <h4 class="h6 mt-4">5. {% translate "Install Dependencies" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>pip install -r requirements/production.txt</code></pre>
+
+        <h4 class="h6 mt-4">6. {% translate "Run Setup Script" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>python scripts/setup_pythonanywhere.py</code></pre>
+        <p>{% translate "This script will automatically:" %}</p>
+        <ul>
+            <li>{% translate "Create the web app on PythonAnywhere" %}</li>
+            <li>{% translate "Configure static file mappings (/static/, /media/, etc.)" %}</li>
+            <li>{% translate "Set up environment variables (.env file)" %}</li>
+            <li>{% translate "Run database migrations" %}</li>
+            <li>{% translate "Collect static files" %}</li>
+            <li>{% translate "Create a superuser (admin account)" %}</li>
+            <li>{% translate "Generate and configure WSGI file" %}</li>
+            <li>{% translate "Enable HTTPS force" %}</li>
+        </ul>
+
+        <div class="alert alert-warning mt-4">
+            <i class="fa-solid fa-exclamation-triangle"></i>
+            <strong>{% translate "Important:" %}</strong> {% translate "The setup script creates your project at" %} <code>/home/$USER/$USER.pythonanywhere.com</code> {% translate "and registers" %} <code>$USER.pythonanywhere.com</code> {% translate "as your web app domain. This is the expected behavior." %}
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="deployment" class="h3 mb-3">{% translate "Automatic Deployment" %}</h2>
+        
+        <p>{% translate "For future updates, run the update script from your project directory:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>cd ~/$USER.pythonanywhere.com
+./scripts/update.sh</code></pre>
+        <p>{% translate "The update script will:" %}</p>
+        <ul>
+            <li>{% translate "Backup the database to" %} <code>~/.backups/</code></li>
+            <li>{% translate "Pull latest changes from git" %}</li>
+            <li>{% translate "Install/upgrade dependencies" %}</li>
+            <li>{% translate "Run database migrations" %}</li>
+            <li>{% translate "Collect static files" %}</li>
+            <li>{% translate "Reload the web app" %}</li>
+        </ul>
+
+        <h4 class="h6 mt-4">{% translate "Backup Database Only" %}</h4>
+        <p>{% translate "If you want to backup without updating:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>./scripts/backupdb.sh</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="troubleshooting" class="h3 mb-3">{% translate "Troubleshooting" %}</h2>
+
+        <div class="accordion" id="troubleshootingAccordion">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#apiToken">
+                        {% translate "API Token Error" %}
+                    </button>
+                </h3>
+                <div id="apiToken" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>{% translate "Verify your API token is set:" %}</p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>echo $API_TOKEN</code></pre>
+                        <p>{% translate "If empty, regenerate your token in Account → API token tab." %}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#virtualenvError">
+                        {% translate "Virtualenv Not Activated" %}
+                    </button>
+                </h3>
+                <div id="virtualenvError" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>{% translate "Make sure your virtualenv is activated (required before running Django commands):" %}</p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>workon $USER</code></pre>
+                        <p>{% translate "Or manually activate:" %}</p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>source ~/.virtualenvs/$USER/bin/activate</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#error500">
+                        {% translate "500 Server Error" %}
+                    </button>
+                </h3>
+                <div id="error500" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <ul>
+                            <li>{% translate "Check error log in Web tab" %}</li>
+                            <li>{% translate "Verify .env file exists and has correct values" %}</li>
+                            <li>{% translate "Check that virtualenv path is correct" %}</li>
+                            <li>{% translate "Ensure static files are collected" %}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
 
         <hr class="my-5">
 
@@ -58,7 +189,7 @@
                     </tr>
                     <tr>
                         <td><code>requirements/production.txt</code></td>
-                        <td>{% translate "Production server (base.txt only)" %}</td>
+                        <td>{% translate "Production server (base.txt + pythonanywhere-core)" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -66,41 +197,8 @@
 
         <hr class="my-5">
 
-        <h2 id="environment-prod" class="h3 mb-3">{% translate "Production Environment Variables" %}</h2>
-        <pre class="bg-dark text-light p-3 rounded"><code># Essential for Production
-DJANGO_SECRET_KEY=your-very-long-random-secret-key
-DJANGO_ALLOWED_HOSTS=yourdomain.com,www.yourdomain.com
-
-# Email (optional)
-DJANGO_EMAIL_ENABLED=True
-DJANGO_SERVER_EMAIL=noreply@yourdomain.com
-DJANGO_EMAIL_HOST_USER=smtp@gmail.com
-DJANGO_EMAIL_HOST_PASSWORD=your-app-password
-
-# Disable public registration if needed
-ACCOUNT_ALLOW_SIGNUPS=False
-
-# reCAPTCHA (optional)
-RECAPTCHA_ENABLED=False</code></pre>
-
-        <hr class="my-5">
-
-        <h2 id="deployment-checklist" class="h3 mb-3">{% translate "Deployment Checklist" %}</h2>
-        <ul class="list-group mb-4">
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Set" %} <code>DEBUG=False</code> {% translate "in production settings" %}</li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Configure" %} <code>DJANGO_SECRET_KEY</code></li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Set" %} <code>ALLOWED_HOSTS</code></li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Collect static files:" %} <code>python manage.py collectstatic</code></li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Run migrations:" %} <code>python manage.py migrate</code></li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Configure email settings" %}</li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Set up HTTPS (handled by hosting provider)" %}</li>
-            <li class="list-group-item"><i class="fa-solid fa-square-check text-success me-2"></i> {% translate "Backup database regularly" %}</li>
-        </ul>
-
-        <hr class="my-5">
-
         <h2 id="scripts" class="h3 mb-3">{% translate "Deployment Scripts" %}</h2>
-        <p>{% translate "Located in" %} <code>scripts/</code>:</p>
+        <p>{% translate "All scripts are located in the" %} <code>scripts/</code> {% translate "directory:" %}</p>
         <div class="table-responsive mb-4">
             <table class="table">
                 <thead>
@@ -111,16 +209,20 @@ RECAPTCHA_ENABLED=False</code></pre>
                 </thead>
                 <tbody>
                     <tr>
+                        <td><code>setup_pythonanywhere.py</code></td>
+                        <td>{% translate "Initial PythonAnywhere setup (creates webapp, runs migrations, creates superuser)" %}</td>
+                    </tr>
+                    <tr>
                         <td><code>update.sh</code></td>
                         <td>{% translate "Full deployment update (backup, pull, install, migrate, collectstatic, reload)" %}</td>
                     </tr>
                     <tr>
                         <td><code>reload.sh</code></td>
-                        <td>{% translate "Touch WSGI file to reload server" %}</td>
+                        <td>{% translate "Touch WSGI file to reload server without other changes" %}</td>
                     </tr>
                     <tr>
                         <td><code>backupdb.sh</code></td>
-                        <td>{% translate "Database backup" %}</td>
+                        <td>{% translate "Database backup to ~/.backups/" %}</td>
                     </tr>
                     <tr>
                         <td><code>create_wsgi.sh</code></td>

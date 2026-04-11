@@ -58,8 +58,8 @@ FOOTER_LINKS = [
         "url_name": "docs:setup",
     },
     {
-        "label": _("PythonAnywhere"),
-        "url_name": "docs:pythonanywhere",
+        "label": _("Deployment"),
+        "url_name": "docs:deployment",
     },
 ]
 
