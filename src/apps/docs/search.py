@@ -88,27 +88,15 @@ def get_search_results():
         {
             "url": reverse_lazy("docs:deployment"),
             "search_text": "Deployment",
-            "search_tokens": ["deployment", "deploy", "production", "server", "hosting", "pythonanywhere"],
+            "search_tokens": ["deployment", "deploy", "production", "server", "hosting", "pythonanywhere", "wsgi", "web app", "static files", "database", "migrate", "api token", "virtualenv"],
             "category": "Documentation",
             "sub_links": [
+                {"url": reverse_lazy("docs:deployment") + "#prerequisites", "label": "Prerequisites"},
+                {"url": reverse_lazy("docs:deployment") + "#setup", "label": "Setup"},
+                {"url": reverse_lazy("docs:deployment") + "#deployment", "label": "Automatic Deployment"},
+                {"url": reverse_lazy("docs:deployment") + "#troubleshooting", "label": "Troubleshooting"},
                 {"url": reverse_lazy("docs:deployment") + "#requirements", "label": "Requirements"},
-                {"url": reverse_lazy("docs:deployment") + "#deployment-checklist", "label": "Checklist"},
                 {"url": reverse_lazy("docs:deployment") + "#scripts", "label": "Scripts"},
-            ]
-        },
-        {
-            "url": reverse_lazy("docs:pythonanywhere"),
-            "search_text": "PythonAnywhere Deployment Guide",
-            "search_tokens": ["pythonanywhere", "python anywhere", "deploy", "deployment", "wsgi", "web app", "static files", "database", "migrate", "domain", "custom domain"],
-            "category": "Documentation",
-            "sub_links": [
-                {"url": reverse_lazy("docs:pythonanywhere") + "#prerequisites", "label": "Prerequisites"},
-                {"url": reverse_lazy("docs:pythonanywhere") + "#step1", "label": "Console Setup"},
-                {"url": reverse_lazy("docs:pythonanywhere") + "#step2", "label": "Environment"},
-                {"url": reverse_lazy("docs:pythonanywhere") + "#step3", "label": "Migrations"},
-                {"url": reverse_lazy("docs:pythonanywhere") + "#step4", "label": "Static Files"},
-                {"url": reverse_lazy("docs:pythonanywhere") + "#step5", "label": "Web App Config"},
-                {"url": reverse_lazy("docs:pythonanywhere") + "#troubleshooting", "label": "Troubleshooting"},
             ]
         },
     ]

@@ -6,7 +6,6 @@ from .views import (
     DocumentationEmailView,
     DocumentationFeaturesView,
     DocumentationIndexView,
-    DocumentationPythonanywhereView,
     DocumentationSettingsView,
     DocumentationSetupView,
     DocumentationStructureView,
@@ -23,5 +22,4 @@ urlpatterns = [
     path("features/email/", DocumentationEmailView.as_view(), name="email"),
     path("features/", DocumentationFeaturesView.as_view(), name="features"),
     path("deployment/", DocumentationDeploymentView.as_view(), name="deployment"),
-    path("deployment/pythonanywhere/", DocumentationPythonanywhereView.as_view(), name="pythonanywhere"),
 ]

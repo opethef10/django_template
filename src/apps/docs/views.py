@@ -31,7 +31,3 @@ class DocumentationFeaturesView(TemplateView):
 
 class DocumentationDeploymentView(TemplateView):
     template_name = "docs/deployment.html"
-
-
-class DocumentationPythonanywhereView(TemplateView):
-    template_name = "docs/pythonanywhere.html"
