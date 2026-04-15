@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.9.6 - 2026-04-15
+
+### Changed
+
+- Navbar menus not showing dropdown when there is only one item
+
 ## 0.9.5 - 2026-04-11
 
 ### Changed
