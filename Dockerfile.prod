@@ -1,0 +1,37 @@
+FROM python:3.13-slim
+
+RUN useradd --create-home --shell /bin/bash appuser
+
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf8 \
+    PYTHONUTF8=1 \
+    PYTHONDONTWRITEBYTECODE=1 \
+    DJANGO_SETTINGS_MODULE=src.settings.docker_prod
+
+ARG PIP_DISABLE_PIP_VERSION_CHECK=1
+ARG PIP_NO_CACHE_DIR=1
+
+ARG PROJECT_SLUG
+ARG PROJECT_NAME
+ARG PROJECT_DESCRIPTION
+ARG PROJECT_DOMAIN
+ARG DJANGO_SECRET_KEY
+ARG DJANGO_ALLOWED_HOSTS
+
+WORKDIR /app
+
+COPY requirements/base.txt requirements/docker_prod.txt ./requirements/
+
+RUN pip install --no-cache-dir -r ./requirements/docker_prod.txt
+
+COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
+
+COPY . .
+
+RUN chmod +x /usr/local/bin/entrypoint.sh && chown -R appuser:appuser /app
+
+USER appuser
+
+EXPOSE 8000
+
+ENTRYPOINT ["entrypoint.sh"]
