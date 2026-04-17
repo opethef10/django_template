@@ -28,6 +28,12 @@
         <h1 class="mb-4">{% translate "Deployment" %}</h1>
         <p class="lead">{% translate "This template is optimized for PythonAnywhere deployment with automated scripts." %}</p>
 
+        <div class="alert alert-secondary mb-4">
+            <i class="fa-brands fa-docker"></i>
+            <strong>{% translate "Looking for Docker?" %}</strong>
+            {% translate "See the" %} <a href="{% url 'docs:docker' %}">{% translate "Docker Deployment" %}</a> {% translate "guide for containerized deployment." %}
+        </div>
+
         <hr class="my-5">
 
         <h2 id="prerequisites" class="h3 mb-3">{% translate "Prerequisites" %}</h2>

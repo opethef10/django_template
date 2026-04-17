@@ -3,6 +3,7 @@ from django.urls import path
 from .views import (
     DocumentationCaptchaView,
     DocumentationDeploymentView,
+    DocumentationDockerView,
     DocumentationEmailView,
     DocumentationFeaturesView,
     DocumentationIndexView,
@@ -22,4 +23,5 @@ urlpatterns = [
     path("features/email/", DocumentationEmailView.as_view(), name="email"),
     path("features/", DocumentationFeaturesView.as_view(), name="features"),
     path("deployment/", DocumentationDeploymentView.as_view(), name="deployment"),
+    path("docker/", DocumentationDockerView.as_view(), name="docker"),
 ]
