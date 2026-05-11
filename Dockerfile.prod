@@ -28,6 +28,8 @@ COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 COPY . .
 
+RUN mkdir -p /app/var && chown -R appuser:appuser /app
+
 RUN chmod +x /usr/local/bin/entrypoint.sh && chown -R appuser:appuser /app
 
 USER appuser
