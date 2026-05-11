@@ -53,12 +53,21 @@
 
         <h2 class="h4 mb-4">{% translate "Deployment" %}</h2>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-6">
                 <div class="card border-primary">
                     <div class="card-body">
-                        <h5 class="card-title"><i class="fa-brands fa-python text-primary"></i> {% translate "PythonAnywhere Deployment" %}</h5>
-                        <p class="card-text">{% translate "Deploy your project to PythonAnywhere with our optimized scripts and guides." %}</p>
+                        <h5 class="card-title"><i class="fa-brands fa-python text-primary"></i> {% translate "PythonAnywhere" %}</h5>
+                        <p class="card-text">{% translate "Deploy to PythonAnywhere with automated scripts." %}</p>
                         <a href="{% url 'docs:deployment' %}" class="btn btn-primary">{% translate "Deployment Guide" %}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card border-info">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa-brands fa-docker text-info"></i> {% translate "Docker" %}</h5>
+                        <p class="card-text">{% translate "Deploy using Docker and Docker Compose." %}</p>
+                        <a href="{% url 'docs:docker' %}" class="btn btn-info">{% translate "Docker Guide" %}</a>
                     </div>
                 </div>
             </div>

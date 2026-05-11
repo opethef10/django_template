@@ -1,0 +1,21 @@
+name: ${PROJECT_SLUG}-prod
+
+services:
+  django_app:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+      args:
+        PROJECT_SLUG: ${PROJECT_SLUG}
+        PROJECT_NAME: ${PROJECT_NAME}
+        PROJECT_DESCRIPTION: ${PROJECT_DESCRIPTION}
+        PROJECT_DOMAIN: ${PROJECT_DOMAIN}
+        DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+        DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+    image: ${PROJECT_SLUG}:prod
+    container_name: ${PROJECT_SLUG}-prod
+    ports:
+      - "${PROJECT_PORT_PROD:-8000}:8000"
+    volumes:
+      - .:/app
+    restart: unless-stopped

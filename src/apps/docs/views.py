@@ -31,3 +31,7 @@ class DocumentationFeaturesView(TemplateView):
 
 class DocumentationDeploymentView(TemplateView):
     template_name = "docs/deployment.html"
+
+
+class DocumentationDockerView(TemplateView):
+    template_name = "docs/docker.html"

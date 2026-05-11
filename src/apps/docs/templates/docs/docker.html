@@ -1,0 +1,229 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "Docker Deployment" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item active">{% translate "Docker Deployment" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#overview">{% translate "Overview" %}</a></li>
+                <li class="list-group-item"><a href="#files">{% translate "Files Created" %}</a></li>
+                <li class="list-group-item"><a href="#environment">{% translate "Environment Variables" %}</a></li>
+                <li class="list-group-item"><a href="#build-run">{% translate "Build and Run" %}</a></li>
+                <li class="list-group-item"><a href="#troubleshooting">{% translate "Troubleshooting" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "Docker Deployment" %}</h1>
+        <p class="lead">{% translate "Deploy this template using Docker and Docker Compose." %}</p>
+
+        <div class="alert alert-info mb-4">
+            <i class="fa-solid fa-info-circle"></i>
+            <strong>{% translate "PythonAnywhere vs Docker:" %}</strong>
+            {% translate "Use PythonAnywhere for simpler hosting with built-in management. Use Docker for more control or deploying on your own infrastructure." %}
+        </div>
+
+        <a href="{% url 'docs:deployment' %}" class="btn btn-outline-secondary mb-4">
+            <i class="fa-solid fa-arrow-left"></i> {% translate "Back to PythonAnywhere Deployment" %}
+        </a>
+
+        <hr class="my-5">
+
+        <h2 id="overview" class="h3 mb-3">{% translate "Overview" %}</h2>
+        <p>{% translate "This template includes Docker configuration for production deployment using:" %}</p>
+        <ul>
+            <li><strong>Gunicorn</strong> - WSGI application server</li>
+            <li><strong>WhiteNoise</strong> - Static file serving</li>
+            <li><strong>SQLite</strong> - Database (persisted via volume mount)</li>
+        </ul>
+
+        <hr class="my-5">
+
+        <h2 id="files" class="h3 mb-3">{% translate "Files Created" %}</h2>
+        <div class="table-responsive mb-4">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% translate "File" %}</th>
+                        <th>{% translate "Purpose" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>Dockerfile.prod</code></td>
+                        <td>{% translate "Production Docker image with Gunicorn" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>docker-compose.prod.yml</code></td>
+                        <td>{% translate "Production compose configuration" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>requirements/docker_prod.txt</code></td>
+                        <td>{% translate "Production dependencies (base + gunicorn + whitenoise)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>src/wsgi.py</code></td>
+                        <td>{% translate "WSGI application entry point" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>src/settings/docker_prod.py</code></td>
+                        <td>{% translate "Docker production settings (WhiteNoise, BASE_DIR/var)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>scripts/entrypoint.sh</code></td>
+                        <td>{% translate "Container startup script (collectstatic + gunicorn)" %}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="environment" class="h3 mb-3">{% translate "Environment Variables" %}</h2>
+        <p>{% translate "Add these to your" %} <code>.env</code> {% translate "file:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>PROJECT_SLUG=your_project_slug
+PROJECT_NAME=Your Project Name
+PROJECT_DESCRIPTION=Project description
+PROJECT_DOMAIN=example.com
+DJANGO_SECRET_KEY=your-secret-key-here
+DJANGO_ALLOWED_HOSTS=example.com,www.example.com
+PROJECT_PORT_PROD=8000</code></pre>
+
+        <div class="alert alert-warning mt-3">
+            <i class="fa-solid fa-exclamation-triangle"></i>
+            <strong>{% translate "Note:" %}</strong>
+            {% translate "The" %} <code>PROJECT_PORT_PROD</code> {% translate "defaults to 8000. Set this in your" %} <code>.env</code> {% translate "or change the default in" %} <code>docker-compose.prod.yml</code>.
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="build-run" class="h3 mb-3">{% translate "Build and Run" %}</h2>
+
+        <h4 class="h6 mt-4">1. {% translate "Build the image" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose -f docker-compose.prod.yml build</code></pre>
+
+        <h4 class="h6 mt-4">2. {% translate "Run the container" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose -f docker-compose.prod.yml up -d</code></pre>
+
+        <h4 class="h6 mt-4">3. {% translate "View logs" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker logs -f bestdjangotemplate-prod</code></pre>
+
+        <h4 class="h6 mt-4">4. {% translate "Stop the container" %}</h4>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose -f docker-compose.prod.yml down</code></pre>
+
+        <hr class="my-5">
+
+        <h2 id="troubleshooting" class="h3 mb-3">{% translate "Troubleshooting" %}</h2>
+
+        <div class="accordion" id="troubleshootingAccordion">
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#staticFiles">
+                        {% translate "Static files not loading" %}
+                    </button>
+                </h3>
+                <div id="staticFiles" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>{% translate "Static files are served by WhiteNoise. Ensure:" %}</p>
+                        <ul>
+                            <li>{% translate "collectstatic has run (check entrypoint.sh logs)" %}</li>
+                            <li>{% translate "STATIC_ROOT is set correctly in docker_prod.py" %}</li>
+                            <li>{% translate "Files exist in ./var/static/" %}</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#permissionError">
+                        {% translate "Permission denied errors" %}
+                    </button>
+                </h3>
+                <div id="permissionError" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>{% translate "The container runs as appuser. Ensure files in ./var/ are writable:" %}</p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>chmod -R 777 var/
+docker compose -f docker-compose.prod.yml restart</code></pre>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#databaseLost">
+                        {% translate "Database data lost on restart" %}
+                    </button>
+                </h3>
+                <div id="databaseLost" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>{% translate "SQLite persists via volume mount (.:/app). If data is lost:" %}</p>
+                        <ul>
+                            <li>{% translate "Verify volume mount is active:" %} <code>docker inspect &lt;container&gt; | grep -A Mounts</code></li>
+                            <li>{% translate "Check database exists on host:" %} <code>ls -la *.sqlite3</code></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h3 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#envVars">
+                        {% translate "Environment variables not found" %}
+                    </button>
+                </h3>
+                <div id="envVars" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
+                    <div class="accordion-body">
+                        <p>{% translate "Build-time variables (PROJECT_SLUG, DJANGO_SECRET_KEY, etc.) must be passed via:" %}</p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>docker compose -f docker-compose.prod.yml build --build-arg DJANGO_SECRET_KEY=your-key</code></pre>
+                        <p>{% translate "Or ensure they are in your .env file before building." %}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 class="h3 mb-3">{% translate "Quick Reference" %}</h2>
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>{% translate "Item" %}</th>
+                        <th>{% translate "Value" %}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>{% translate "Default port" %}</td>
+                        <td><code>8000</code></td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Internal port" %}</td>
+                        <td><code>8000</code></td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Container name" %}</td>
+                        <td><code>&lt;PROJECT_SLUG&gt;-prod</code></td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Static files" %}</td>
+                        <td><code>./var/static/</code></td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Database" %}</td>
+                        <td><code>./&lt;PROJECT_SLUG&gt;.sqlite3</code></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
