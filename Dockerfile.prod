@@ -28,7 +28,9 @@ COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 COPY . .
 
-RUN mkdir -p /app/var && chown -R appuser:appuser /app
+ENV DATA_DIR=/data
+
+RUN mkdir -p /data && chown -R appuser:appuser /data
 
 RUN chmod +x /usr/local/bin/entrypoint.sh && chown -R appuser:appuser /app
 
