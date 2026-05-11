@@ -10,7 +10,7 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ] + [m for m in MIDDLEWARE if m != 'django.middleware.security.SecurityMiddleware']
 
-_VAR_DIR = Path(f"{BASE_DIR}/var")
+_VAR_DIR = Path("/data")
 _VAR_DIR.mkdir(parents=True, exist_ok=True)
 
 STATIC_ROOT = _VAR_DIR / "static"
