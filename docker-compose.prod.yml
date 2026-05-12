@@ -19,7 +19,9 @@ services:
       - "${PROJECT_PORT_PROD:-8000}:8000"
     volumes:
       - prod_data:/app/data
+      - backup_data:/app/backups
     restart: unless-stopped
 
 volumes:
   prod_data:
+  backup_data:
