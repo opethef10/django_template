@@ -8,6 +8,9 @@ from ._base import *
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', cast=Csv())
+CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS]
+CSRF_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 _VAR_DIR = Path("/var/www/")
 
