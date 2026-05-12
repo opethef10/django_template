@@ -1,0 +1,67 @@
+#!/bin/bash
+set -euo pipefail
+
+# --- CONFIG / ENV -------------------------------------------------------------
+
+if [[ -z "${PROJECT_SLUG:-}" ]]; then
+    echo "[ERROR] PROJECT_SLUG not set. Did you set env_file in docker-compose?"
+    exit 1
+fi
+
+BACKUP_FOLDER="/app/backups"
+mkdir -p "$BACKUP_FOLDER"
+
+DB_FILE="/app/data/$PROJECT_SLUG.sqlite3"
+BACKUP_FILE_PREFIX="$PROJECT_SLUG."
+DB_EXTENSION=".sqlite3"
+
+echo "[INFO] Backup folder: $BACKUP_FOLDER"
+echo "[INFO] Database file: $DB_FILE"
+
+# --- FUNCTIONS ----------------------------------------------------------------
+
+get_file_mtime_formatted() { date -r "$1" +"%Y%m%d_%H%M%S"; }
+get_file_mtime_epoch()     { date -r "$1" +"%s"; }
+
+# --- FIND LATEST BACKUP --------------------------------------------------------
+
+latest_backup=$(ls -1t "$BACKUP_FOLDER" \
+    | grep "^${BACKUP_FILE_PREFIX}.*\.gz$" \
+    | head -n 1 || true)
+
+if [[ -n "$latest_backup" ]]; then
+    echo "[DEBUG] Latest backup candidate: $BACKUP_FOLDER/$latest_backup"
+else
+    echo "[DEBUG] Latest backup candidate: <none>"
+fi
+
+# --- DECIDE IF BACKUP NEEDED ---------------------------------------------------
+
+should_copy=true
+db_mtime_epoch=$(get_file_mtime_epoch "$DB_FILE")
+
+if [[ -n "$latest_backup" ]]; then
+    latest_backup_file="$BACKUP_FOLDER/$latest_backup"
+    backup_mtime_epoch=$(get_file_mtime_epoch "$latest_backup_file")
+
+    if [[ "$db_mtime_epoch" -le "$backup_mtime_epoch" ]]; then
+        should_copy=false
+    fi
+fi
+
+# --- BACKUP --------------------------------------------------------------------
+
+if $should_copy; then
+    DATETIME_FORMAT=$(get_file_mtime_formatted "$DB_FILE")
+    BACKUP_FILE="$BACKUP_FOLDER/$BACKUP_FILE_PREFIX$DATETIME_FORMAT$DB_EXTENSION"
+
+    echo "[INFO] Creating a vacuumed backup..."
+    echo "[INFO] Destination: $BACKUP_FILE.gz"
+
+    python3 -m sqlite3 "$DB_FILE" "VACUUM INTO '$BACKUP_FILE'"
+    gzip "$BACKUP_FILE"
+
+    echo "[INFO] Backup successfully created and compressed."
+else
+    echo "[INFO] No new backup needed - database not modified since last backup."
+fi
