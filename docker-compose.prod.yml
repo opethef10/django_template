@@ -17,5 +17,8 @@ services:
     ports:
       - "${PROJECT_PORT_PROD:-8000}:8000"
     volumes:
-      - .:/app
+      - prod_data:/app/data
     restart: unless-stopped
+
+volumes:
+  prod_data:

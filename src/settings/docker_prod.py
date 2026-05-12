@@ -10,12 +10,18 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ] + [m for m in MIDDLEWARE if m != 'django.middleware.security.SecurityMiddleware']
 
-_VAR_DIR = Path("/data")
-_VAR_DIR.mkdir(parents=True, exist_ok=True)
+_VAR_DIR = Path("/app/data")
 
 STATIC_ROOT = _VAR_DIR / "static"
 MEDIA_ROOT = _VAR_DIR / "media"
 _LOG_PATH = _VAR_DIR / "proj.log"
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': _VAR_DIR / f'{PROJECT_SLUG}.sqlite3',
+    }
+}
 
 LOGGING['handlers']['file'] = {
     'level': 'INFO',
