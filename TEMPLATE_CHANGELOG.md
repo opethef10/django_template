@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.10.9 - 2026-06-03
+
+### Changed
+
+- Docker production security https hsts
+
 ## 0.10.1 - 2026-05-12
 
 ### Fixed
