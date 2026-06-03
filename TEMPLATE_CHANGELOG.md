@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.10.10 - 2026-06-03
+
+### Fixed
+
+- Infinite 301 loop in Docker production when behind a proxy that does not preserve `X-Forwarded-Proto` (e.g. Cloudflare Tunnel) by dropping the Django-level `SECURE_SSL_REDIRECT`; HTTPS enforcement belongs at the proxy/CDN edge
+
 ## 0.10.9 - 2026-06-03
 
 ### Changed
