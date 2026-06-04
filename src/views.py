@@ -9,8 +9,10 @@ from django.views.decorators.cache import cache_page
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views.generic import FormView, RedirectView, View
+from mdeditor.views import UploadView
 
 from .forms import ContactForm
+from .mixins import SuperUserRequiredMixin
 
 
 class HomeView(RedirectView):
@@ -87,3 +89,13 @@ class ContactView(SuccessMessageMixin, FormView):
         response = super().form_invalid(form)
         messages.error(self.request, self.error_message)
         return response
+
+
+class SecureMDEditorUploadView(SuperUserRequiredMixin, UploadView):
+    """mdeditor upload endpoint gated to superusers.
+
+    Wraps the upstream mdeditor UploadView (which is unauthenticated and
+    csrf_exempt) with the project's SuperUserRequiredMixin. The editor.md
+    widget continues to work for superusers; non-superusers are redirected
+    to the allauth login page.
+    """

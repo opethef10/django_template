@@ -18,7 +18,7 @@ from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
 
-from .views import HomeView, ContactView, SearchView
+from .views import HomeView, ContactView, SearchView, SecureMDEditorUploadView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,7 +27,7 @@ urlpatterns = [
     path("contact/", ContactView.as_view(), name='contact'),
     path("pages/", include("django.contrib.flatpages.urls")),
     path("subscriptions/", include("src.apps.subscriptions.urls")),
-    path('mdeditor/', include('mdeditor.urls')),
+    path('mdeditor/uploads/', SecureMDEditorUploadView.as_view(), name='mdeditor_uploads'),
     path('docs/', include("src.apps.docs.urls")),
     path('api/search/', SearchView.as_view(), name='search'),
     path('', include('pwa.urls')),
