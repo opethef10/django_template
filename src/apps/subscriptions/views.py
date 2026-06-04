@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.contrib import messages
-from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import EmailMultiAlternatives
 from django.urls import reverse_lazy
@@ -11,6 +11,7 @@ from markdown import markdown
 from .forms import SendTopicMailForm, UserSubscriptionForm
 from .models import UserTopicSubscription
 from .utils import build_subscription_footer
+from src.mixins import SuperUserRequiredMixin
 
 
 class SubscriptionUpdateView(SuccessMessageMixin, LoginRequiredMixin, FormView):
@@ -36,15 +37,12 @@ class SubscriptionUpdateView(SuccessMessageMixin, LoginRequiredMixin, FormView):
         return context
 
 
-class SendTopicMailView(UserPassesTestMixin, SuccessMessageMixin, FormView):
+class SendTopicMailView(SuperUserRequiredMixin, SuccessMessageMixin, FormView):
     template_name = "subscriptions/send_topic_mail.html"
     form_class = SendTopicMailForm
     success_url = reverse_lazy("subscriptions:send")
     success_message = _("Email sent successfully.")
     error_message = _("An error occurred while submitting the form. Please try again.")
-
-    def test_func(self):
-        return self.request.user.is_superuser
 
     def form_valid(self, form):
         topic = form.cleaned_data["topic"]
