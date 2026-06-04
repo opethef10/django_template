@@ -15,6 +15,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.11.0 - 2026-06-04
+
+### Added
+- SuperUserRequiredMixin in `src/mixins.py` for reusable superuser-gated views
+
+### Security
+- Restrict the django-mdeditor upload endpoint to superusers (CVE-2025-13030)
+- Upgrade `requests` library
+
 ## 0.10.10 - 2026-06-03
 
 ### Fixed
