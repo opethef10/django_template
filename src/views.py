@@ -6,6 +6,7 @@ from django.core.mail import EmailMessage
 from django.http import Http404, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
+from django.views.decorators.csrf import csrf_exempt
 from django.utils.translation import gettext_lazy as _
 from django.urls import reverse_lazy
 from django.views.generic import FormView, RedirectView, View
@@ -91,6 +92,7 @@ class ContactView(SuccessMessageMixin, FormView):
         return response
 
 
+@method_decorator(csrf_exempt, name='dispatch')
 class SecureMDEditorUploadView(SuperUserRequiredMixin, UploadView):
     """mdeditor upload endpoint gated to superusers.
 
