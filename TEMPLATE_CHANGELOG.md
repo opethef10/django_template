@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.11.1 - 2026-06-05
+
+### Changed
+- Add `--upgrade` flag to `pip install` in `scripts/update.sh` so dependencies are refreshed on every deploy
+
+### Fixed
+- CSRF 403 on the mdeditor upload endpoint: applying `@method_decorator(csrf_exempt, name='dispatch')` as a class decorator on `SecureMDEditorUploadView` ensures the `csrf_exempt` attribute is set on the class's own `__dict__` instead of being MRO-shadowed by `UserPassesTestMixin.dispatch`, so `as_view()` returns a view function that propagates CSRF exemption correctly
+
 ## 0.11.0 - 2026-06-04
 
 ### Added
