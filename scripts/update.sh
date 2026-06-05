@@ -38,7 +38,7 @@ export DJANGO_SETTINGS_MODULE=src.settings.production
 
 "$SCRIPT_DIR/backupdb.sh"
 git pull
-pip install -r requirements/production.txt
+pip install --upgrade -r requirements/production.txt
 python manage.py collectstatic --noinput
 python manage.py migrate
 python manage.py compilemessages
