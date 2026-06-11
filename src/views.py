@@ -3,7 +3,7 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import EmailMessage
-from django.http import Http404, JsonResponse
+from django.http import Http404, HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django.views.decorators.csrf import csrf_exempt
@@ -33,6 +33,25 @@ class SearchView(View):
                 except ImportError:
                     pass
         return JsonResponse({'results': results})
+
+
+@method_decorator(cache_page(30 * settings.DAYS), name='dispatch')
+class LLMView(View):
+    def get(self, request, *args, **kwargs):
+        markdown_parts = []
+        for app_config in apps.get_app_configs():
+            if app_config.name.startswith('src.apps.'):
+                try:
+                    module = __import__(f'{app_config.name}.llm', fromlist=['get_markdown_results'])
+                    if hasattr(module, 'get_markdown_results'):
+                        result = module.get_markdown_results()
+                        if result:
+                            markdown_parts.append(result)
+                except ImportError:
+                    pass
+        if not markdown_parts:
+            raise Http404()
+        return HttpResponse("\n\n".join(markdown_parts), content_type="text/plain; charset=utf-8")
 
 
 class ContactView(SuccessMessageMixin, FormView):

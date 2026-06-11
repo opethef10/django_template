@@ -66,6 +66,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     "django.contrib.redirects.middleware.RedirectFallbackMiddleware",
     "allauth.account.middleware.AccountMiddleware",
+    "src.middleware.MarkdownMiddleware",
 ]
 
 TEMPLATES = [
@@ -86,6 +87,7 @@ TEMPLATES = [
             "libraries": {
                 "form_tags": "src.tags.form_tags",
                 "menu_tags": "src.tags.menu_tags",
+                "markdown_tags": "src.tags.markdown_tags",
             },
         },
     },
