@@ -28,12 +28,6 @@ INSTALLED_APPS.extend(
 
 MIDDLEWARE.insert(7, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
-CACHES = {
-    'default': {
-        'BACKEND': 'django.core.cache.backends.dummy.DummyCache',
-    }
-}
-
 mimetypes.add_type("application/javascript", ".js", True)
 
 DEBUG_TOOLBAR_CONFIG = {

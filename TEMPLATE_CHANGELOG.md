@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.0 - 2026-07-12
+
+### Added
+
+- Healthcheck endpoint at `/health/` for monitoring and uptime checks
+
 ## 0.11.1 - 2026-06-05
 
 ### Changed
