@@ -1,4 +1,4 @@
-name: ${PROJECT_SLUG}-prod
+name: ${PROJECT_SLUG}-staging
 
 services:
   django_app:
@@ -12,11 +12,11 @@ services:
         PROJECT_DOMAIN: ${PROJECT_DOMAIN}
         DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
         DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
-    image: ${PROJECT_SLUG}:prod
-    container_name: ${PROJECT_SLUG}-prod
+    image: ${PROJECT_SLUG}:staging
+    container_name: ${PROJECT_SLUG}-staging
     env_file: .env
     ports:
-      - "${PROJECT_PORT_PROD:-8000}:8000"
+      - "${PROJECT_PORT_STAGING:-8000}:8000"
     volumes:
       - prod_data:/app/data
       - backup_data:/app/backups
@@ -31,3 +31,4 @@ services:
 volumes:
   prod_data:
   backup_data:
+

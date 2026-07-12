@@ -17,6 +17,7 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf.urls.static import static
 from django.conf import settings
+from health_check.views import HealthCheckView
 
 from .views import HomeView, ContactView, SearchView, SecureMDEditorUploadView
 
@@ -30,6 +31,7 @@ urlpatterns = [
     path('mdeditor/uploads/', SecureMDEditorUploadView.as_view(), name='mdeditor_uploads'),
     path('docs/', include("src.apps.docs.urls")),
     path('api/search/', SearchView.as_view(), name='search'),
+    path('health/', HealthCheckView.as_view(), name='health_check'),
     path('', include('pwa.urls')),
     path('', HomeView.as_view(), name='home'),
     path("i18n/", include("django.conf.urls.i18n"))

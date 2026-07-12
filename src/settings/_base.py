@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.sites",
     "django.contrib.redirects",
+    "health_check",
     "widget_tweaks",
     "pwa",
     "django_recaptcha",
