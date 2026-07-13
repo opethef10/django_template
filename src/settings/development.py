@@ -29,8 +29,3 @@ INSTALLED_APPS.extend(
 MIDDLEWARE.insert(7, "debug_toolbar.middleware.DebugToolbarMiddleware")
 
 mimetypes.add_type("application/javascript", ".js", True)
-
-DEBUG_TOOLBAR_CONFIG = {
-    'INTERCEPT_REDIRECTS': False,
-    # 'SHOW_TOOLBAR_CALLBACK': lambda _request: DEBUG
-}

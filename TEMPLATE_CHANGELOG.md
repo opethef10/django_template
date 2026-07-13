@@ -15,6 +15,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.1 - 2026-07-13
+
+### Changed
+
+- Upgrade to Python 3.14 and Django 6.0
+
+### Fixed
+
+- Container healthcheck to use curl instead of python so that it uses less CPU
+
 ## 0.12.0 - 2026-07-12
 
 ### Added

@@ -144,8 +144,6 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [PROJECT_DIR / 'static']
 MEDIA_URL = '/media/'
 
-# Default primary key field type
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
@@ -177,6 +175,7 @@ YEARS = 365 * DAYS
 # ==============================================================================
 
 X_FRAME_OPTIONS = 'SAMEORIGIN'
+URLIZE_ASSUME_HTTPS = True
 
 MDEDITOR_CONFIGS = {
     'default': {

@@ -71,14 +71,12 @@ class ContactView(SuccessMessageMixin, FormView):
         ]
 
         # Use EmailMessage instead of send_mail
-        admin_emails = [email for _, email in settings.ADMINS]
-
         prefix = settings.EMAIL_SUBJECT_PREFIX
         email = EmailMessage(
             subject=f"{prefix}{self.subject} - {first_name} {last_name}",
             body=form.cleaned_data['message'].strip(),
             from_email=None,  # You can specify a from address here if needed
-            to=admin_emails,  # Use the admin emails from settings.
+            to=settings.ADMINS,  # Use the admin emails from settings.
             reply_to=[mail_address]
         )
 
