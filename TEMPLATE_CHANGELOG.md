@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.2 - 2026-07-17
+
+### Fixed
+
+- Mdeditor disable flowcharts and sequence diagrams to fix JS errors.
+
 ## 0.12.1 - 2026-07-13
 
 ### Changed

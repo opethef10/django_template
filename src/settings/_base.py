@@ -200,8 +200,8 @@ MDEDITOR_CONFIGS = {
         'search_replace': True,  # Whether to open the search for replacement
         'emoji': True,  # whether to open the expression function
         'tex': True,  # whether to open the tex chart function
-        'flow_chart': True,  # whether to open the flow chart function
-        'sequence': True,  # Whether to open the sequence diagram function
+        'flow_chart': False,  # whether to open the flow chart function
+        'sequence': False,  # Whether to open the sequence diagram function
         'watch': True,  # Live preview
         'lineWrapping': True,  # lineWrapping
         'lineNumbers': True,  # lineNumbers
