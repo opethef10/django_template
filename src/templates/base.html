@@ -25,23 +25,30 @@
 
     {% include 'includes/modal.html' %}
 
+    {% block banner %}
+    {% endblock %}
+
     <div class="container-lg mb-5 flex-grow-1">
+        {% block messages %}
+            {% if messages %}
+            <div class="mt-4">
+                {% for message in messages %}
+                    <div class="alert {{ message.tags }} alert-dismissible mb-2 d-flex align-items-center" role="alert">
+                        <div class="flex-grow-1">{{ message }}</div>
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        {% endblock %}
+
         {% block crumbarea %}
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb my-4 p-3 bg-body-tertiary rounded-4">
+                <ol class="breadcrumb my-3 py-2 px-3 bg-body-tertiary rounded-pill shadow-sm">
                     {% block breadcrumb %}
                     {% endblock %}
                 </ol>
             </nav>
-        {% endblock %}
-
-        {% block messages %}
-            {% for message in messages %}
-                <div class="alert {{ message.tags }} alert-dismissible" role="alert">
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    {{ message }}
-                </div>
-            {% endfor %}
         {% endblock %}
 
         {% block content %}
