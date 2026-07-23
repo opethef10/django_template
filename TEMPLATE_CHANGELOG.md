@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.3 - 2026-07-23
+
+### Changed
+
+- Breadcrumbs style
+
 ## 0.12.2 - 2026-07-17
 
 ### Fixed
