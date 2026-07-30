@@ -1,20 +1,23 @@
-FROM python:3.14-slim
+FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --shell /bin/bash appuser
 
-ENV PYTHONUNBUFFERED=1
-ENV PYTHONIOENCODING=utf8
-ENV PYTHONUTF8=1
-ENV PYTHONDONTWRITEBYTECODE=1
-ARG PIP_DISABLE_PIP_VERSION_CHECK=1
-ARG PIP_NO_CACHE_DIR=1
+ENV PYTHONUNBUFFERED=1 \
+    PYTHONIOENCODING=utf8 \
+    PYTHONUTF8=1 \
+    PYTHONDONTWRITEBYTECODE=1
 
 WORKDIR /app
 
-COPY requirements/base.txt requirements/development.txt ./requirements/
+COPY pyproject.toml uv.lock ./
 
-RUN pip install --no-cache-dir -r ./requirements/development.txt
+RUN pip install --no-cache-dir uv && \
+    uv sync --group dev && \
+    chmod -R a+r /app/.venv
+
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
 
 COPY . .
 

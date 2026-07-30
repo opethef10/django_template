@@ -1,4 +1,4 @@
-FROM python:3.14-slim
+FROM python:3.13-slim
 
 RUN apt-get update && apt-get install -y --no-install-recommends curl && rm -rf /var/lib/apt/lists/* \
     && useradd --create-home --shell /bin/bash appuser
@@ -9,9 +9,6 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONDONTWRITEBYTECODE=1 \
     DJANGO_SETTINGS_MODULE=src.settings.docker_prod
 
-ARG PIP_DISABLE_PIP_VERSION_CHECK=1
-ARG PIP_NO_CACHE_DIR=1
-
 ARG PROJECT_SLUG
 ARG PROJECT_NAME
 ARG PROJECT_DESCRIPTION
@@ -21,9 +18,14 @@ ARG DJANGO_ALLOWED_HOSTS
 
 WORKDIR /app
 
-COPY requirements/base.txt requirements/docker_prod.txt ./requirements/
+COPY pyproject.toml uv.lock ./
 
-RUN pip install --no-cache-dir -r ./requirements/docker_prod.txt
+RUN pip install --no-cache-dir uv && \
+    uv sync --group docker && \
+    chmod -R a+r /app/.venv
+
+ENV VIRTUAL_ENV=/app/.venv \
+    PATH="/app/.venv/bin:$PATH"
 
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 

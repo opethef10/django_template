@@ -15,8 +15,8 @@ This template serves as a starting point for Django projects. It includes models
 
 ## Prerequisites
 
-- Python 3.10+
-- Django 5.x
+- Python 3.13+
+- [uv](https://docs.astral.sh/uv/) (or install via `pip install uv`)
 - SQLite (or any supported database backend)
 
 ## Setup Instructions
@@ -30,12 +30,11 @@ cd django_template
 
 ### 2. Install Dependencies
 
-Set up a virtual environment and install required packages:
+Install [uv](https://docs.astral.sh/uv/) and set up the environment:
 
 ```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements/development.txt
+pip install uv
+uv sync --group dev
 ```
 
 ### 3. Configure the Database
@@ -43,8 +42,8 @@ pip install -r requirements/development.txt
 Run migrations to set up the database:
 
 ```bash
-python manage.py makemigrations
-python manage.py migrate
+uv run python manage.py makemigrations
+uv run python manage.py migrate
 ```
 
 ### 4. Run the Development Server
@@ -52,7 +51,7 @@ python manage.py migrate
 Start the server to see the app in action:
 
 ```bash
-python manage.py runserver
+uv run python manage.py runserver
 ```
 
 Visit [http://localhost:8000](http://localhost:8000) to explore the project.

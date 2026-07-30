@@ -15,6 +15,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.13.0 - 2026-07-30
+
+### Changed
+
+- Migrated from `pip` + `requirements/*.txt` to `uv` + `pyproject.toml`
+- Dependencies defined in `[project.dependencies]` (base) and `[dependency-groups]` (`dev`, `prod`, `docker`)
+- `uv.lock` added to version control for reproducible installs
+- All `manage.py` commands now use `uv run` (scripts/test, scripts/update.sh, README)
+- Python version bumped to 3.13 (PythonAnywhere compatibility)
+
+### Removed
+
+- `requirements/base.txt`
+- `requirements/development.txt`
+- `requirements/production.txt`
+- `requirements/docker_prod.txt`
+
 ## 0.12.3 - 2026-07-23
 
 ### Changed

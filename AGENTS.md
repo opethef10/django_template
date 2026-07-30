@@ -108,17 +108,22 @@ All configuration via `.env` file. See `.env.example` for required variables.
 
 ## Dependencies
 
-Three requirement files, use `-r` to include:
+Managed via [uv](https://docs.astral.sh/uv/). Dependencies are defined in `pyproject.toml` using `[project.dependencies]` (shared) and `[dependency-groups]` (environment-specific).
 
-| File | Use Case | Includes |
-|------|----------|----------|
-| `requirements/base.txt` | All environments | Core Django, allauth, PWA, recaptcha, etc. |
-| `requirements/development.txt` | Local development | base.txt + django-debug-toolbar |
-| `requirements/production.txt` | Production deployment | base.txt only |
+| Group | Use Case | Includes |
+|-------|----------|----------|
+| `dev` | Local development | Base + django-debug-toolbar |
+| `prod` | PythonAnywhere deployment | Base + pythonanywhere-core |
+| `docker` | Docker production | Base + gunicorn + whitenoise |
 
 **Install for development:**
 ```bash
-pip install -r requirements/development.txt
+uv sync --group dev
+```
+
+**Install for production:**
+```bash
+uv sync --group prod
 ```
 
 ## Key Production-Ready Features
@@ -220,7 +225,7 @@ Place custom commands in `<app>/management/commands/`.
 
 **Use test settings for faster execution:**
 ```bash
-python manage.py test --settings=src.settings.tests
+uv run python manage.py test --settings=src.settings.tests
 ```
 
 Or use the script:

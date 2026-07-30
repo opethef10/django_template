@@ -5,6 +5,12 @@ SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
 PROJECT_ROOT="$(cd "$SCRIPT_DIR/.." && pwd)"
 cd "$PROJECT_ROOT"
 
+# Ensure uv is installed
+if ! command -v uv &> /dev/null; then
+    echo "uv not found, installing..."
+    pip install uv
+fi
+
 # Check if the script is running inside a virtual environment
 if [ -z "${VIRTUAL_ENV:-}" ]; then
     echo "Error: This script must be run inside a virtual environment." >&2
@@ -38,9 +44,9 @@ export DJANGO_SETTINGS_MODULE=src.settings.production
 
 "$SCRIPT_DIR/backupdb.sh"
 git pull
-pip install --upgrade -r requirements/production.txt
-python manage.py collectstatic --noinput
-python manage.py migrate
-python manage.py compilemessages
-python manage.py test --settings=src.settings.tests
+uv sync --group prod
+uv run python manage.py collectstatic --noinput
+uv run python manage.py migrate
+uv run python manage.py compilemessages
+uv run python manage.py test --settings=src.settings.tests
 "$SCRIPT_DIR/reload.sh"
