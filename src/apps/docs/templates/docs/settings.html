@@ -21,6 +21,7 @@
                 <li class="list-group-item"><a href="#internationalization">{% translate "Internationalization" %}</a></li>
                 <li class="list-group-item"><a href="#development">{% translate "Development Settings" %}</a></li>
                 <li class="list-group-item"><a href="#pythonanywhere">{% translate "PythonAnywhere Settings" %}</a></li>
+                <li class="list-group-item"><a href="#docker">{% translate "Docker Settings" %}</a></li>
                 <li class="list-group-item"><a href="#tests">{% translate "Test Settings" %}</a></li>
                 <li class="list-group-item"><a href="#menu-config">{% translate "Menu Configuration" %}</a></li>
             </ul>
@@ -55,6 +56,10 @@
                     <tr>
                         <td><code>settings/pa.py</code></td>
                         <td>{% translate "PythonAnywhere (secure, logged, real email)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>settings/docker_prod.py</code></td>
+                        <td>{% translate "Docker (inherits pa + WhiteNoise, HSTS, SQLite in /app/data)" %}</td>
                     </tr>
                     <tr>
                         <td><code>settings/tests.py</code></td>
@@ -208,6 +213,32 @@
         <h4 class="mt-4">{% translate "Real SMTP Email" %}</h4>
         <p>{% translate "In production, when users sign up, request password resets, or contact you through forms, they need to actually receive those emails. This requires a real email server (SMTP). We use Gmail's SMTP server as a simple option, but you can use any email provider. The email is only enabled if DJANGO_EMAIL_ENABLED=True - this allows you to disable email completely if needed without changing code." %}</p>
         <p>{% translate "For a complete guide on setting up Gmail with App Passwords for production, see" %} <a href="{% url 'docs:email' %}">{% translate "Email Guide" %}</a>.</p>
+
+        <hr class="my-5">
+
+        <h2 id="docker" class="h3 mb-3">{% translate "Docker Settings" %}</h2>
+        <p>{% translate "When you deploy with Docker (Dockerfile.prod and docker-compose.prod.yml), Django uses the docker_prod.py settings. They inherit everything from the PythonAnywhere settings - DEBUG=False, secrets from the environment, real SMTP email, reCAPTCHA - and add container-specific overrides." %}</p>
+
+        <h4 class="mt-4">{% translate "How It's Activated" %}</h4>
+        <p>{% translate "Dockerfile.prod sets" %} <code>DJANGO_SETTINGS_MODULE=src.settings.docker_prod</code> {% translate "as an environment variable, and src/wsgi.py uses it as the default. You don't need to configure it yourself." %}</p>
+
+        <h4 class="mt-4">{% translate "HSTS and Secure Cookies" %}</h4>
+        <p>{% translate "docker_prod.py enforces HTTPS with strict transport security (HSTS): the site is served over HTTPS for a year, including subdomains, and requests inclusion in the HSTS preload list. CSRF and session cookies are marked Secure, and CSRF_TRUSTED_ORIGINS is generated automatically from ALLOWED_HOSTS." %}</p>
+
+        <h4 class="mt-4">{% translate "WhiteNoise Static Files" %}</h4>
+        <p>{% translate "Static files are served directly by Gunicorn using WhiteNoise with compressed, hashed file names (CompressedManifestStaticFilesStorage). No separate web server like Nginx is needed inside the container." %}</p>
+
+        <h4 class="mt-4">{% translate "SQLite and Data Volume" %}</h4>
+        <p>{% translate "The database is SQLite at" %} <code>/app/data/&lt;PROJECT_SLUG&gt;.sqlite3</code>. {% translate "Static files live in" %} <code>/app/data/static</code> {% translate "and media uploads in" %} <code>/app/data/media</code>. {% translate "Everything under /app/data is persisted by the prod_data named volume, so your data survives container restarts and rebuilds." %}</p>
+
+        <h4 class="mt-4">{% translate "File Logging" %}</h4>
+        <p>{% translate "The file logging handler writes to" %} <code>/app/data/proj.log</code>. {% translate "View it from inside the container with:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>docker compose -f docker-compose.prod.yml exec django_app cat /app/data/proj.log</code></pre>
+
+        <h4 class="mt-4">{% translate "Environment Variables" %}</h4>
+        <p>{% translate "docker_prod.py reads the same variables as PythonAnywhere: DJANGO_SECRET_KEY and DJANGO_ALLOWED_HOSTS are required, plus DJANGO_EMAIL_* and RECAPTCHA_* when enabled. PROJECT_SLUG, PROJECT_NAME, PROJECT_DESCRIPTION, and PROJECT_DOMAIN are passed as Docker build arguments. The exposed port is" %} <code>PROJECT_PORT_PROD</code> {% translate "(default 8000)." %}</p>
+
+        <p>{% translate "For complete instructions, see the" %} <a href="{% url 'docs:docker' %}">{% translate "Docker Deployment Guide" %}</a>.</p>
 
         <hr class="my-5">
 
