@@ -78,7 +78,7 @@
         <pre class="bg-dark text-light p-3 rounded"><code>pip install --upgrade pip</code></pre>
 
         <h4 class="h6 mt-4">5. {% translate "Install Dependencies" %}</h4>
-        <pre class="bg-dark text-light p-3 rounded"><code>pip install -r requirements/production.txt</code></pre>
+        <pre class="bg-dark text-light p-3 rounded"><code>pip install -r requirements/pa.txt</code></pre>
 
         <h4 class="h6 mt-4">6. {% translate "Run Setup Script" %}</h4>
         <pre class="bg-dark text-light p-3 rounded"><code>python scripts/setup_pythonanywhere.py</code></pre>
@@ -102,7 +102,7 @@
         <hr class="my-5">
 
         <h2 id="deployment" class="h3 mb-3">{% translate "Automatic Deployment" %}</h2>
-        
+
         <p>{% translate "For future updates, run the update script from your project directory:" %}</p>
         <pre class="bg-dark text-light p-3 rounded"><code>cd ~/$USER.pythonanywhere.com
 ./scripts/update.sh</code></pre>
@@ -194,8 +194,8 @@
                         <td>{% translate "Local development (+ debug toolbar)" %}</td>
                     </tr>
                     <tr>
-                        <td><code>requirements/production.txt</code></td>
-                        <td>{% translate "Production server (base.txt + pythonanywhere-core)" %}</td>
+                        <td><code>requirements/pa.txt</code></td>
+                        <td>{% translate "PythonAnywhere (base.txt + pythonanywhere-core)" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -229,10 +229,6 @@
                     <tr>
                         <td><code>backupdb.sh</code></td>
                         <td>{% translate "Database backup to ~/.backups/" %}</td>
-                    </tr>
-                    <tr>
-                        <td><code>create_wsgi.sh</code></td>
-                        <td>{% translate "Generate PythonAnywhere WSGI file" %}</td>
                     </tr>
                     <tr>
                         <td><code>test</code></td>

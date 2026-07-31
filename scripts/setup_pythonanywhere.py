@@ -25,7 +25,7 @@ VIRTUALENV_PYTHON = VIRTUALENV_PATH / "bin" / "python"
 
 PROJECT_PATH = HOME_PATH / WEBAPP_NAME
 FORCE_HTTPS = True
-DJANGO_SETTINGS = "src.settings.production"
+DJANGO_SETTINGS = "src.settings.pa"
 DJANGO_BASE_CMD = [str(VIRTUALENV_PYTHON), "manage.py"]
 ENV_FILE_PATH = PROJECT_PATH / ".env"
 

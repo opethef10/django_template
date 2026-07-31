@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from .production import *
+from .pa import *
 
 
 CSRF_TRUSTED_ORIGINS = [f"https://{h}" for h in ALLOWED_HOSTS]

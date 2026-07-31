@@ -34,11 +34,11 @@ if [[ ! -f "$WSGI_PATH" ]]; then
     exit 1
 fi
 
-export DJANGO_SETTINGS_MODULE=src.settings.production
+export DJANGO_SETTINGS_MODULE=src.settings.pa
 
 "$SCRIPT_DIR/backupdb.sh"
 git pull
-pip install --upgrade -r requirements/production.txt
+pip install --upgrade -r requirements/pa.txt
 python manage.py collectstatic --noinput
 python manage.py migrate
 python manage.py compilemessages
