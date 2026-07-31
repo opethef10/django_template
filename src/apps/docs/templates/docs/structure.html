@@ -43,7 +43,7 @@
             <li>{% translate "Local: Show errors on screen, use dummy email" %}</li>
             <li>{% translate "Production: Hide errors, send real emails, use secure cookies" %}</li>
         </ul>
-        <p>{% translate "Instead of changing settings every time you deploy, we keep them in separate files: _base.py (shared), development.py (local), production.py (live). This way, you don't accidentally break your live site while working locally." %}</p>
+        <p>{% translate "Instead of changing settings every time you deploy, we keep them in separate files: _base.py (shared), development.py (local), pa.py (PythonAnywhere). This way, you don't accidentally break your live site while working locally." %}</p>
 
         <h4 class="mt-4">{% translate "Why Separate Requirements?" %}</h4>
         <p>{% translate "Production doesn't need development tools (like debug toolbar). By keeping them separate, your live server is faster and more secure. Less code on production means less potential security issues." %}</p>
@@ -77,13 +77,13 @@
 ├── requirements/
 │   ├── base.txt              # Core dependencies (Django, allauth, etc.)
 │   ├── development.txt      # Development tools (+ base.txt)
-│   └── production.txt        # Production needs (just base.txt)
+│   └── pa.txt                 # PythonAnywhere needs (base.txt + pythonanywhere-core)
 ├── scripts/
 │   ├── test                  # Run tests
 │   ├── update.sh             # Deploy to server
 │   ├── reload.sh             # Restart the server
 │   ├── backupdb.sh           # Backup your database
-│   └── create_wsgi.sh        # Setup for PythonAnywhere
+│   └── setup_pythonanywhere.py # Setup for PythonAnywhere
 ├── src/                      # WHERE YOUR CODE LIVES (the real project)
 │   ├── __init__.py           # Makes this a Python package
 │   ├── urls.py               # Connects URLs to views
@@ -94,7 +94,8 @@
 │   ├── settings/             # Different configs for different environments
 │   │   ├── _base.py          # Shared settings (most stuff)
 │   │   ├── development.py    # Your local machine settings
-│   │   ├── production.py     # Live server settings
+│   │   ├── pa.py             # PythonAnywhere settings
+│   │   ├── production.py     # Docker production settings (WhiteNoise, /app/data)
 │   │   └── tests.py          # Fast settings for running tests
 │   ├── apps/                 # Django apps (features/modules)
 │   │   ├── accounts/         # User profiles and authentication

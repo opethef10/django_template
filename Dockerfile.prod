@@ -7,7 +7,7 @@ ENV PYTHONUNBUFFERED=1 \
     PYTHONIOENCODING=utf8 \
     PYTHONUTF8=1 \
     PYTHONDONTWRITEBYTECODE=1 \
-    DJANGO_SETTINGS_MODULE=src.settings.docker_prod
+    DJANGO_SETTINGS_MODULE=src.settings.production
 
 ARG PIP_DISABLE_PIP_VERSION_CHECK=1
 ARG PIP_NO_CACHE_DIR=1
@@ -21,9 +21,9 @@ ARG DJANGO_ALLOWED_HOSTS
 
 WORKDIR /app
 
-COPY requirements/base.txt requirements/docker_prod.txt ./requirements/
+COPY requirements/base.txt requirements/production.txt ./requirements/
 
-RUN pip install --no-cache-dir -r ./requirements/docker_prod.txt
+RUN pip install --no-cache-dir -r ./requirements/production.txt
 
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 

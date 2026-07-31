@@ -68,7 +68,7 @@
                         <td>{% translate "Production compose configuration" %}</td>
                     </tr>
                     <tr>
-                        <td><code>requirements/docker_prod.txt</code></td>
+                        <td><code>requirements/production.txt</code></td>
                         <td>{% translate "Production dependencies (base + gunicorn + whitenoise)" %}</td>
                     </tr>
                     <tr>
@@ -76,12 +76,16 @@
                         <td>{% translate "WSGI application entry point" %}</td>
                     </tr>
                     <tr>
-                        <td><code>src/settings/docker_prod.py</code></td>
-                        <td>{% translate "Docker production settings (WhiteNoise, BASE_DIR/var)" %}</td>
+                        <td><code>src/settings/production.py</code></td>
+                        <td>{% translate "Docker production settings (WhiteNoise, HSTS, /app/data paths)" %}</td>
                     </tr>
                     <tr>
                         <td><code>scripts/entrypoint.sh</code></td>
-                        <td>{% translate "Container startup script (collectstatic + gunicorn)" %}</td>
+                        <td>{% translate "Container startup script (migrate + collectstatic + gunicorn)" %}</td>
+                    </tr>
+                    <tr>
+                        <td><code>scripts/backupdb_docker.sh</code></td>
+                        <td>{% translate "Database backup inside the container to /app/backups" %}</td>
                     </tr>
                 </tbody>
             </table>
@@ -137,8 +141,8 @@ PROJECT_PORT_PROD=8000</code></pre>
                         <p>{% translate "Static files are served by WhiteNoise. Ensure:" %}</p>
                         <ul>
                             <li>{% translate "collectstatic has run (check entrypoint.sh logs)" %}</li>
-                            <li>{% translate "STATIC_ROOT is set correctly in docker_prod.py" %}</li>
-                            <li>{% translate "Files exist in ./var/static/" %}</li>
+                            <li>{% translate "STATIC_ROOT is set correctly in production.py" %}</li>
+                            <li>{% translate "Files exist in /app/data/static/ (inside the prod_data volume)" %}</li>
                         </ul>
                     </div>
                 </div>
@@ -151,9 +155,8 @@ PROJECT_PORT_PROD=8000</code></pre>
                 </h3>
                 <div id="permissionError" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
                     <div class="accordion-body">
-                        <p>{% translate "The container runs as appuser. Ensure files in ./var/ are writable:" %}</p>
-                        <pre class="bg-dark text-light p-3 rounded"><code>chmod -R 777 var/
-docker compose -f docker-compose.prod.yml restart</code></pre>
+                        <p>{% translate "The container runs as appuser. Data lives in named volumes (prod_data for /app/data, backup_data for /app/backups). If you see permission errors, check the ownership inside the container:" %}</p>
+                        <pre class="bg-dark text-light p-3 rounded"><code>docker compose -f docker-compose.prod.yml exec django_app ls -la /app/data</code></pre>
                     </div>
                 </div>
             </div>
@@ -165,10 +168,10 @@ docker compose -f docker-compose.prod.yml restart</code></pre>
                 </h3>
                 <div id="databaseLost" class="accordion-collapse collapse" data-bs-parent="#troubleshootingAccordion">
                     <div class="accordion-body">
-                        <p>{% translate "SQLite persists via volume mount (.:/app). If data is lost:" %}</p>
+                        <p>{% translate "SQLite persists via the prod_data named volume (prod_data:/app/data). If data is lost:" %}</p>
                         <ul>
-                            <li>{% translate "Verify volume mount is active:" %} <code>docker inspect &lt;container&gt; | grep -A Mounts</code></li>
-                            <li>{% translate "Check database exists on host:" %} <code>ls -la *.sqlite3</code></li>
+                            <li>{% translate "Verify the volume exists:" %} <code>docker volume ls</code></li>
+                            <li>{% translate "Check the database inside the container:" %} <code>docker compose -f docker-compose.prod.yml exec django_app ls -la /app/data</code></li>
                         </ul>
                     </div>
                 </div>
@@ -215,11 +218,23 @@ docker compose -f docker-compose.prod.yml restart</code></pre>
                     </tr>
                     <tr>
                         <td>{% translate "Static files" %}</td>
-                        <td><code>./var/static/</code></td>
+                        <td><code>/app/data/static</code> {% translate "(prod_data volume)" %}</td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Media files" %}</td>
+                        <td><code>/app/data/media</code> {% translate "(prod_data volume)" %}</td>
                     </tr>
                     <tr>
                         <td>{% translate "Database" %}</td>
-                        <td><code>./&lt;PROJECT_SLUG&gt;.sqlite3</code></td>
+                        <td><code>/app/data/&lt;PROJECT_SLUG&gt;.sqlite3</code> {% translate "(prod_data volume)" %}</td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Backups" %}</td>
+                        <td><code>/app/backups</code> {% translate "(backup_data volume)" %}</td>
+                    </tr>
+                    <tr>
+                        <td>{% translate "Health check" %}</td>
+                        <td><code>/health/</code></td>
                     </tr>
                 </tbody>
             </table>
