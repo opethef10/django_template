@@ -28,7 +28,7 @@ The `scripts/` folder contains deployment scripts optimized for **PythonAnywhere
 | `scripts/reload.sh` | Touch WSGI file to reload server |
 | `scripts/backupdb.sh` | Database backup |
 | `scripts/push` | Push to remote with submodule updates |
-| `scripts/create_wsgi.sh` | Generate PythonAnywhere WSGI file |
+| `scripts/setup_pythonanywhere.py` | Full PythonAnywhere setup from scratch (webapp, HTTPS, static mappings, .env, migrate, collectstatic, superuser, WSGI) |
 
 ## Git Workflow
 
@@ -59,7 +59,8 @@ Settings use a layered approach:
 |------|---------|
 | `settings/_base.py` | Shared configuration (installed apps, middleware, templates, etc.) |
 | `settings/development.py` | Local dev (DEBUG=True, DummyCache, console email, debug toolbar) |
-| `settings/production.py` | Production (env vars for secrets, file logging, real email) |
+| `settings/pa.py` | PythonAnywhere (env vars for secrets, file logging, real email) |
+| `settings/production.py` | Docker production (inherits pa + WhiteNoise, HSTS, SQLite in `/app/data`) |
 | `settings/tests.py` | Test settings (fast, no migrations, disabled logging) |
 
 **CRITICAL**: Never hardcode secrets in base settings. Use `python-decouple`:
@@ -68,7 +69,7 @@ from decouple import config
 SECRET_KEY = config('DJANGO_SECRET_KEY')
 ```
 
-### Development vs Production Settings
+### Development vs PythonAnywhere Settings
 
 **Development** (`manage.py` defaults to `src.settings.development`):
 - `DEBUG = True`
@@ -77,7 +78,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 - Console email backend (prints to terminal)
 - Debug toolbar enabled
 
-**Production**:
+**PythonAnywhere** (`src.settings.pa`):
 - `DEBUG = False`
 - `SECRET_KEY` from environment
 - `ALLOWED_HOSTS` from environment (comma-separated)
@@ -102,7 +103,7 @@ All configuration via `.env` file. See `.env.example` for required variables.
 - `PROJECT_ADMIN_NAME`, `PROJECT_ADMIN_EMAIL`
 - `DJANGO_SECRET_KEY`
 
-**Required for production:**
+**Required for PythonAnywhere:**
 - `DJANGO_ALLOWED_HOSTS` (comma-separated domain list)
 - `DJANGO_EMAIL_*` if `DJANGO_EMAIL_ENABLED=True`
 
@@ -114,7 +115,7 @@ Three requirement files, use `-r` to include:
 |------|----------|----------|
 | `requirements/base.txt` | All environments | Core Django, allauth, PWA, recaptcha, etc. |
 | `requirements/development.txt` | Local development | base.txt + django-debug-toolbar |
-| `requirements/production.txt` | Production deployment | base.txt only |
+| `requirements/pa.txt` | PythonAnywhere deployment | base.txt + pythonanywhere-core |
 
 **Install for development:**
 ```bash
@@ -132,17 +133,17 @@ pip install -r requirements/development.txt
 ### Logging
 - Verbose format with timestamps and timezone
 - Console handler for development
-- File handler (`/var/www/proj.log`) for production
+- File handler (`/var/www/proj.log`) on PythonAnywhere
 - Logger named `proj` under `LOGGING['loggers']`
 
 ### Email
 - Disabled by default, enable via `DJANGO_EMAIL_ENABLED=True`
-- Gmail SMTP configuration in production
+- Gmail SMTP configuration on PythonAnywhere
 - Console backend in development (safe, no accidental sends)
 
 ### Static/Media Files
 - Development: served from `src/static/` and `src/media/`
-- Production: collected to `/var/www/static` and `/var/www/media`
+- PythonAnywhere: collected to `/var/www/static` and `/var/www/media`
 - Apps can have their own `static/` folders (Django finds them automatically)
 
 ## Allauth Integration
@@ -238,7 +239,7 @@ Or use the script:
 
 ### Adding environment-specific settings
 1. Define in `_base.py` with a default
-2. Override in `development.py` or `production.py` as needed
+2. Override in `development.py` or `pa.py` as needed
 3. Use `config()` for values that differ between environments
 
 ### Accessing settings in code

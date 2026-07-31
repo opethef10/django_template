@@ -42,6 +42,13 @@ body {
 	border-right-width: 1px;
 }
 
+.copy-code-btn {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 0.75rem;
+}
+
 #searchModal .modal-dialog {
   max-width: 85% !important;
 }
