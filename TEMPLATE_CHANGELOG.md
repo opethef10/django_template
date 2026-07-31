@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
 - Rename `production` environment to `pa` (PythonAnywhere): `settings/production.py` → `settings/pa.py`, `requirements/production.txt` → `requirements/pa.txt`; updated scripts, Docker prod import, and documentation accordingly
+- Rename `docker_prod` environment to `production` (Docker): `settings/docker_prod.py` → `settings/production.py`, `requirements/docker_prod.txt` → `requirements/production.txt`; updated Dockerfile.prod, wsgi.py, and documentation accordingly
 
 ## 0.12.3 - 2026-07-23
 

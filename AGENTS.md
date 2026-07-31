@@ -60,7 +60,7 @@ Settings use a layered approach:
 | `settings/_base.py` | Shared configuration (installed apps, middleware, templates, etc.) |
 | `settings/development.py` | Local dev (DEBUG=True, DummyCache, console email, debug toolbar) |
 | `settings/pa.py` | PythonAnywhere (env vars for secrets, file logging, real email) |
-| `settings/docker_prod.py` | Docker (inherits pa + WhiteNoise, HSTS, SQLite in `/app/data`) |
+| `settings/production.py` | Docker production (inherits pa + WhiteNoise, HSTS, SQLite in `/app/data`) |
 | `settings/tests.py` | Test settings (fast, no migrations, disabled logging) |
 
 **CRITICAL**: Never hardcode secrets in base settings. Use `python-decouple`:

@@ -68,7 +68,7 @@
                         <td>{% translate "Production compose configuration" %}</td>
                     </tr>
                     <tr>
-                        <td><code>requirements/docker_prod.txt</code></td>
+                        <td><code>requirements/production.txt</code></td>
                         <td>{% translate "Production dependencies (base + gunicorn + whitenoise)" %}</td>
                     </tr>
                     <tr>
@@ -76,7 +76,7 @@
                         <td>{% translate "WSGI application entry point" %}</td>
                     </tr>
                     <tr>
-                        <td><code>src/settings/docker_prod.py</code></td>
+                        <td><code>src/settings/production.py</code></td>
                         <td>{% translate "Docker production settings (WhiteNoise, HSTS, /app/data paths)" %}</td>
                     </tr>
                     <tr>
@@ -141,7 +141,7 @@ PROJECT_PORT_PROD=8000</code></pre>
                         <p>{% translate "Static files are served by WhiteNoise. Ensure:" %}</p>
                         <ul>
                             <li>{% translate "collectstatic has run (check entrypoint.sh logs)" %}</li>
-                            <li>{% translate "STATIC_ROOT is set correctly in docker_prod.py" %}</li>
+                            <li>{% translate "STATIC_ROOT is set correctly in production.py" %}</li>
                             <li>{% translate "Files exist in /app/data/static/ (inside the prod_data volume)" %}</li>
                         </ul>
                     </div>
