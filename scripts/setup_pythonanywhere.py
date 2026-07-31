@@ -18,11 +18,13 @@ from pythonanywhere_core.webapp import Webapp
 
 PYTHON_VERSION = "3.13"
 USERNAME = get_username()
+HOME_PATH = Path(f"/home/{USERNAME}")
 WEBAPP_NAME = f"{USERNAME}.pythonanywhere.com"
-VIRTUALENV_PATH = Path(f"/home/{USERNAME}/.virtualenvs/{USERNAME}")
+VIRTUALENV_PATH = HOME_PATH / ".virtualenvs" / {USERNAME}
 VIRTUALENV_PYTHON = VIRTUALENV_PATH / "bin" / "python"
 
-PROJECT_PATH = Path(f"/home/{USERNAME}/{WEBAPP_NAME}")
+PROJECT_PATH = HOME_PATH / WEBAPP_NAME
+FORCE_HTTPS = True
 DJANGO_SETTINGS = "src.settings.production"
 DJANGO_BASE_CMD = [str(VIRTUALENV_PYTHON), "manage.py"]
 ENV_FILE_PATH = PROJECT_PATH / ".env"
@@ -38,7 +40,7 @@ DJANGO_ALLOWED_HOSTS={}
 
 VAR_WWW = Path("/var/www/")
 WSGI_FILE_PATH = VAR_WWW / f"{USERNAME}_pythonanywhere_com_wsgi.py"
-BASHRC_PATH = Path(f"/home/{USERNAME}/.bashrc")
+BASHRC_PATH = HOME_PATH / ".bashrc"
 
 STATIC_FILE_MAPPINGS = [
     ("/static/", VAR_WWW / "static"),
@@ -52,7 +54,7 @@ WSGI_FILE_CONTENT = f"""\
 import os
 import sys
 
-os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'src.settings.production')
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', '{DJANGO_SETTINGS}')
 
 path = '{PROJECT_PATH}'
 if path not in sys.path:
@@ -220,13 +222,13 @@ if __name__ == "__main__":
     webapp = Webapp(WEBAPP_NAME)
     webapp.create(
         python_version=PYTHON_VERSION,
-        virtualenv_path=Path(VIRTUALENV_PATH),
+        virtualenv_path=VIRTUALENV_PATH,
         project_path=PROJECT_PATH,
         nuke=False,
     )
     print("Webapp created successfully.")
-    webapp.patch({"force_https": True})
-    print("Enabled force HTTPS.")
+    webapp.patch({"force_https": FORCE_HTTPS})
+    print(f"Set force HTTPS {FORCE_HTTPS}.")
     for url_prefix, directory in STATIC_FILE_MAPPINGS:
         webapp.create_static_file_mapping(url_prefix, directory)
     print("Created static file mappings.")
