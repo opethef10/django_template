@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.6 - 2026-07-31
+
+### Fixed
+
+- Type error in PythonAnywhere deployment script
+
 ## 0.12.5 - 2026-07-31
 
 ### Added
