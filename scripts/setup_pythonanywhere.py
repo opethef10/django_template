@@ -20,7 +20,7 @@ PYTHON_VERSION = "3.13"
 USERNAME = get_username()
 HOME_PATH = Path(f"/home/{USERNAME}")
 WEBAPP_NAME = f"{USERNAME}.pythonanywhere.com"
-VIRTUALENV_PATH = HOME_PATH / ".virtualenvs" / {USERNAME}
+VIRTUALENV_PATH = HOME_PATH / ".virtualenvs" / USERNAME
 VIRTUALENV_PYTHON = VIRTUALENV_PATH / "bin" / "python"
 
 PROJECT_PATH = HOME_PATH / WEBAPP_NAME
@@ -123,7 +123,7 @@ def check_var_www():
 
 def create_wsgi_file():
     """Write the WSGI configuration file to /var/www/."""
-    with open(WSGI_FILE_PATH, "w") as f:
+    with WSGI_FILE_PATH.open("w") as f:
         f.write(WSGI_FILE_CONTENT)
     print(f"Created WSGI file at {WSGI_FILE_PATH}")
 
@@ -193,7 +193,7 @@ def copy_environment_variables():
         secrets.token_urlsafe(50),
         WEBAPP_NAME,
     )
-    with open(ENV_FILE_PATH, "w") as f:
+    with ENV_FILE_PATH.open("w") as f:
         f.write(env_content)
     print(f"Created environment file at {ENV_FILE_PATH}")
 
@@ -203,13 +203,13 @@ def set_django_settings_module():
     export_line = f"export DJANGO_SETTINGS_MODULE={DJANGO_SETTINGS}\n"
 
     if BASHRC_PATH.exists():
-        with open(BASHRC_PATH, "r") as f:
+        with BASHRC_PATH.open() as f:
             content = f.read()
         if export_line.strip() in content:
             print(f"DJANGO_SETTINGS_MODULE already set in {BASHRC_PATH}")
             return
 
-    with open(BASHRC_PATH, "a") as f:
+    with BASHRC_PATH.open("a") as f:
         f.write(export_line)
     print(f"Added DJANGO_SETTINGS_MODULE to {BASHRC_PATH}")
 
