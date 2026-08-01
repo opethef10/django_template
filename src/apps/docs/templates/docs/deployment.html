@@ -18,7 +18,7 @@
                 <li class="list-group-item"><a href="#setup">{% translate "Setup and Deploy" %}</a></li>
                 <li class="list-group-item"><a href="#deployment">{% translate "Automatic Deployment" %}</a></li>
                 <li class="list-group-item"><a href="#troubleshooting">{% translate "Troubleshooting" %}</a></li>
-                <li class="list-group-item"><a href="#requirements">{% translate "Requirements Files" %}</a></li>
+                <li class="list-group-item"><a href="#requirements">{% translate "Dependencies" %}</a></li>
                 <li class="list-group-item"><a href="#scripts">{% translate "Deployment Scripts" %}</a></li>
             </ul>
         </div>
@@ -78,7 +78,7 @@
         <pre class="bg-dark text-light p-3 rounded"><code>pip install --upgrade pip</code></pre>
 
         <h4 class="h6 mt-4">5. {% translate "Install Dependencies" %}</h4>
-        <pre class="bg-dark text-light p-3 rounded"><code>pip install -r requirements/pa.txt</code></pre>
+        <pre class="bg-dark text-light p-3 rounded"><code>pip install --group pa</code></pre>
 
         <h4 class="h6 mt-4">6. {% translate "Run Setup Script" %}</h4>
         <pre class="bg-dark text-light p-3 rounded"><code>python scripts/setup_pythonanywhere.py</code></pre>
@@ -175,27 +175,28 @@
 
         <hr class="my-5">
 
-        <h2 id="requirements" class="h3 mb-3">{% translate "Requirements Files" %}</h2>
+        <h2 id="requirements" class="h3 mb-3">{% translate "Dependencies" %}</h2>
+        <p>{% translate "Dependencies are defined in" %} <code>pyproject.toml</code> {% translate "and installed with pip using dependency groups (PEP 735):" %}</p>
         <div class="table-responsive mb-4">
             <table class="table">
                 <thead>
                     <tr>
-                        <th>{% translate "File" %}</th>
+                        <th>{% translate "Command" %}</th>
                         <th>{% translate "Use Case" %}</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td><code>requirements/base.txt</code></td>
-                        <td>{% translate "All environments (Django, allauth, PWA, etc.)" %}</td>
+                        <td><code>pip install --group development</code></td>
+                        <td>{% translate "Local development (base + django-debug-toolbar)" %}</td>
                     </tr>
                     <tr>
-                        <td><code>requirements/development.txt</code></td>
-                        <td>{% translate "Local development (+ debug toolbar)" %}</td>
+                        <td><code>pip install --group pa</code></td>
+                        <td>{% translate "PythonAnywhere (base + pythonanywhere-core)" %}</td>
                     </tr>
                     <tr>
-                        <td><code>requirements/pa.txt</code></td>
-                        <td>{% translate "PythonAnywhere (base.txt + pythonanywhere-core)" %}</td>
+                        <td><code>pip install --group production</code></td>
+                        <td>{% translate "Docker (base + gunicorn + whitenoise)" %}</td>
                     </tr>
                 </tbody>
             </table>

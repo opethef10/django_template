@@ -109,18 +109,21 @@ All configuration via `.env` file. See `.env.example` for required variables.
 
 ## Dependencies
 
-Three requirement files, use `-r` to include:
+Dependencies are defined in `pyproject.toml` (PEP 621) and installed with pip using dependency groups (PEP 735):
 
-| File | Use Case | Includes |
-|------|----------|----------|
-| `requirements/base.txt` | All environments | Core Django, allauth, PWA, recaptcha, etc. |
-| `requirements/development.txt` | Local development | base.txt + django-debug-toolbar |
-| `requirements/pa.txt` | PythonAnywhere deployment | base.txt + pythonanywhere-core |
+| Group | Use Case | Includes |
+|-------|----------|----------|
+| `base` | All environments | Core Django, allauth, PWA, recaptcha, etc. |
+| `development` | Local development | base + django-debug-toolbar |
+| `pa` | PythonAnywhere deployment | base + pythonanywhere-core |
+| `production` | Docker deployment | base + gunicorn + whitenoise |
 
 **Install for development:**
 ```bash
-pip install -r requirements/development.txt
+pip install --group development
 ```
+
+Note: `pip install --group <name>` installs only that group's packages (requires pip >= 25.1).
 
 ## Key Production-Ready Features
 
