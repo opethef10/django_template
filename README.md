@@ -35,7 +35,7 @@ Set up a virtual environment and install required packages:
 ```bash
 python -m venv venv
 source venv/bin/activate  # On Windows: venv\Scripts\activate
-pip install -r requirements/development.txt
+pip install --group development
 ```
 
 ### 3. Configure the Database

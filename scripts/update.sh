@@ -38,7 +38,7 @@ export DJANGO_SETTINGS_MODULE=src.settings.pa
 
 "$SCRIPT_DIR/backupdb.sh"
 git pull
-pip install --upgrade -r requirements/pa.txt
+pip install --upgrade --group pa
 python manage.py collectstatic --noinput
 python manage.py migrate
 python manage.py compilemessages

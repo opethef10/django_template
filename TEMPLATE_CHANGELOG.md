@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.7 - 2026-08-01
+
+### Added
+- Migrate dependency management from `requirements/*.txt` to `pyproject.toml`; install with pip using dependency groups (PEP 735): `pip install --group development`, `pip install --group pa`, `pip install --group production`
+
 ## 0.12.6 - 2026-07-31
 
 ### Fixed

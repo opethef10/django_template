@@ -12,9 +12,9 @@ ARG PIP_NO_CACHE_DIR=1
 
 WORKDIR /app
 
-COPY requirements/base.txt requirements/development.txt ./requirements/
+COPY pyproject.toml ./pyproject.toml
 
-RUN pip install --no-cache-dir -r ./requirements/development.txt
+RUN pip install --no-cache-dir --group development
 
 COPY . .
 
