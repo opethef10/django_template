@@ -21,9 +21,9 @@ ARG DJANGO_ALLOWED_HOSTS
 
 WORKDIR /app
 
-COPY requirements/base.txt requirements/production.txt ./requirements/
+COPY pyproject.toml ./pyproject.toml
 
-RUN pip install --no-cache-dir -r ./requirements/production.txt
+RUN pip install --no-cache-dir --group production
 
 COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 

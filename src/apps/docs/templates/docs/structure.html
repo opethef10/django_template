@@ -74,10 +74,7 @@
 ├── .env                      # Your local settings (never commit to git!)
 ├── .env.example              # Template for local development
 ├── .production.env.example   # Template for production server
-├── requirements/
-│   ├── base.txt              # Core dependencies (Django, allauth, etc.)
-│   ├── development.txt      # Development tools (+ base.txt)
-│   └── pa.txt                 # PythonAnywhere needs (base.txt + pythonanywhere-core)
+├── pyproject.toml            # Dependencies & project metadata (PEP 621)
 ├── scripts/
 │   ├── test                  # Run tests
 │   ├── update.sh             # Deploy to server
