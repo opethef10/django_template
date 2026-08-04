@@ -1,5 +1,3 @@
-from pathlib import Path
-
 from decouple import config, Csv
 
 from ._base import *
@@ -9,11 +7,9 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 ALLOWED_HOSTS = config('DJANGO_ALLOWED_HOSTS', cast=Csv())
 
-_VAR_DIR = Path("/var/www/")
-
-STATIC_ROOT = _VAR_DIR / "static"
-MEDIA_ROOT = _VAR_DIR / "media"
-_LOG_PATH = _VAR_DIR / "proj.log"
+STATIC_ROOT = VAR_DIR / "static"
+MEDIA_ROOT = VAR_DIR / "media"
+_LOG_PATH = VAR_DIR / "proj.log"
 
 EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
 if EMAIL_ENABLED:
