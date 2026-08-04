@@ -12,13 +12,6 @@ ENV PYTHONUNBUFFERED=1 \
 ARG PIP_DISABLE_PIP_VERSION_CHECK=1
 ARG PIP_NO_CACHE_DIR=1
 
-ARG PROJECT_SLUG
-ARG PROJECT_NAME
-ARG PROJECT_DESCRIPTION
-ARG PROJECT_DOMAIN
-ARG DJANGO_SECRET_KEY
-ARG DJANGO_ALLOWED_HOSTS
-
 WORKDIR /app
 
 COPY pyproject.toml ./pyproject.toml
@@ -29,7 +22,7 @@ COPY scripts/entrypoint.sh /usr/local/bin/entrypoint.sh
 
 COPY . .
 
-RUN mkdir -p /app/data && chown appuser:appuser /app/data
+RUN mkdir -p /app/var && chown appuser:appuser /app/var
 
 RUN chmod +x /usr/local/bin/entrypoint.sh && chown -R appuser:appuser /app
 
