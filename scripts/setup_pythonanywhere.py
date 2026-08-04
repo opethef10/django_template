@@ -24,6 +24,7 @@ VIRTUALENV_PATH = HOME_PATH / ".virtualenvs" / USERNAME
 VIRTUALENV_PYTHON = VIRTUALENV_PATH / "bin" / "python"
 
 PROJECT_PATH = HOME_PATH / WEBAPP_NAME
+VAR_PATH = PROJECT_PATH / "var"
 FORCE_HTTPS = True
 DJANGO_SETTINGS = "src.settings.pa"
 DJANGO_BASE_CMD = [str(VIRTUALENV_PYTHON), "manage.py"]
@@ -43,11 +44,11 @@ WSGI_FILE_PATH = VAR_WWW / f"{USERNAME}_pythonanywhere_com_wsgi.py"
 BASHRC_PATH = HOME_PATH / ".bashrc"
 
 STATIC_FILE_MAPPINGS = [
-    ("/static/", VAR_WWW / "static"),
-    ("/media/", VAR_WWW / "media"),
-    ("/favicon.ico", VAR_WWW / "static" / "favicon.ico"),
-    ("/robots.txt", VAR_WWW / "static" / "robots.txt"),
-    ("/ads.txt", VAR_WWW / "static" / "ads.txt"),
+    ("/static/", VAR_PATH / "static"),
+    ("/media/", VAR_PATH / "media"),
+    ("/favicon.ico", VAR_PATH / "static" / "favicon.ico"),
+    ("/robots.txt", VAR_PATH / "static" / "robots.txt"),
+    ("/ads.txt", VAR_PATH / "static" / "ads.txt"),
 ]
 
 WSGI_FILE_CONTENT = f"""\

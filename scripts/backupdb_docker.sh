@@ -11,7 +11,7 @@ fi
 BACKUP_FOLDER="/app/backups"
 mkdir -p "$BACKUP_FOLDER"
 
-DB_FILE="/app/data/$PROJECT_SLUG.sqlite3"
+DB_FILE="/app/var/$PROJECT_SLUG.sqlite3"
 BACKUP_FILE_PREFIX="$PROJECT_SLUG."
 DB_EXTENSION=".sqlite3"
 

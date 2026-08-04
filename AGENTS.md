@@ -59,8 +59,8 @@ Settings use a layered approach:
 |------|---------|
 | `settings/_base.py` | Shared configuration (installed apps, middleware, templates, etc.) |
 | `settings/development.py` | Local dev (DEBUG=True, DummyCache, console email, debug toolbar) |
-| `settings/pa.py` | PythonAnywhere (env vars for secrets, file logging, real email) |
-| `settings/production.py` | Docker production (inherits pa + WhiteNoise, HSTS, SQLite in `/app/data`) |
+| `settings/pa.py` | PythonAnywhere (env vars for secrets, file logging, real email). Data dir = `BASE_DIR/var` |
+| `settings/production.py` | Docker production (inherits pa + WhiteNoise, HSTS). Data dir = `BASE_DIR/var` (`/app/var`) |
 | `settings/tests.py` | Test settings (fast, no migrations, disabled logging) |
 
 **CRITICAL**: Never hardcode secrets in base settings. Use `python-decouple`:
@@ -82,9 +82,9 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 - `DEBUG = False`
 - `SECRET_KEY` from environment
 - `ALLOWED_HOSTS` from environment (comma-separated)
-- File-based logging to `/var/www/proj.log`
+- File-based logging to `var/proj.log` (under `BASE_DIR`)
 - Real SMTP email (only if `EMAIL_ENABLED=True`)
-- Static/media files served from `/var/www/`
+- Static/media files served from `var/` (under `BASE_DIR`)
 
 ### Test Settings (`src.settings.tests`)
 
@@ -100,12 +100,11 @@ All configuration via `.env` file. See `.env.example` for required variables.
 
 **Required for all environments:**
 - `PROJECT_SLUG`, `PROJECT_NAME`, `PROJECT_DESCRIPTION`, `PROJECT_DOMAIN`
-- `PROJECT_ADMIN_NAME`, `PROJECT_ADMIN_EMAIL`
 - `DJANGO_SECRET_KEY`
 
 **Required for PythonAnywhere:**
 - `DJANGO_ALLOWED_HOSTS` (comma-separated domain list)
-- `DJANGO_EMAIL_*` if `DJANGO_EMAIL_ENABLED=True`
+- `DJANGO_EMAIL_*` and `PROJECT_ADMIN_EMAILS` if `DJANGO_EMAIL_ENABLED=True`
 
 ## Dependencies
 
@@ -136,7 +135,7 @@ Note: `pip install --group <name>` installs only that group's packages (requires
 ### Logging
 - Verbose format with timestamps and timezone
 - Console handler for development
-- File handler (`/var/www/proj.log`) on PythonAnywhere
+- File handler (`var/proj.log` under `BASE_DIR`) on PythonAnywhere
 - Logger named `proj` under `LOGGING['loggers']`
 
 ### Email
@@ -146,7 +145,7 @@ Note: `pip install --group <name>` installs only that group's packages (requires
 
 ### Static/Media Files
 - Development: served from `src/static/` and `src/media/`
-- PythonAnywhere: collected to `/var/www/static` and `/var/www/media`
+- PythonAnywhere: collected to `var/static` and `var/media` (under `BASE_DIR`)
 - Apps can have their own `static/` folders (Django finds them automatically)
 
 ## Allauth Integration

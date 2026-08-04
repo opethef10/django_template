@@ -6,6 +6,7 @@ from django.utils.translation import gettext_lazy as _
 
 PROJECT_DIR = Path(__file__).parent.parent
 BASE_DIR = PROJECT_DIR.parent
+VAR_DIR = BASE_DIR / "var"
 
 PROJECT_SLUG = config("PROJECT_SLUG")
 PROJECT_NAME = config("PROJECT_NAME")
@@ -91,7 +92,7 @@ TEMPLATES = [
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / f'{PROJECT_SLUG}.sqlite3',
+        'NAME': VAR_DIR / f'{PROJECT_SLUG}.sqlite3',
     }
 }
 

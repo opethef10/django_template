@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.8 - 2026-08-04
+
+### Changed
+- Unify the runtime data dir across PythonAnywhere, Docker and dev: `VAR_DIR = BASE_DIR / "var"` defined once in `_base.py` replaces `/var/www/` (PA) and the `/app/data` override (production.py, now inherited from pa.py). DATABASES (sqlite in `var/`) now lives in `_base.py`
+- PythonAnywhere static/media mappings and `backupdb.sh` point to `PROJECT_PATH/var`
+
 ## 0.12.7 - 2026-08-01
 
 ### Added
