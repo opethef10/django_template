@@ -10,11 +10,9 @@ import os
 from pathlib import Path
 import secrets
 import subprocess
-import sys
 
 from pythonanywhere_core.base import get_username, helpful_token_error_message
 from pythonanywhere_core.webapp import Webapp
-
 
 PYTHON_VERSION = "3.13"
 USERNAME = get_username()
@@ -73,8 +71,7 @@ def check_api_token():
     """
     token = os.environ.get("API_TOKEN")
     if token is None:
-        print(helpful_token_error_message())
-        sys.exit(1)
+        raise SystemExit(helpful_token_error_message())
 
 
 def check_project_folder():
@@ -83,9 +80,10 @@ def check_project_folder():
     Exits with error if PROJECT_PATH does not exist.
     """
     if not PROJECT_PATH.exists():
-        print(f"Error: Project folder {PROJECT_PATH} does not exist.")
-        print("Please clone your repository first.")
-        sys.exit(1)
+        raise SystemExit(
+            f"Error: Project folder {PROJECT_PATH} does not exist.\n"
+            "Please clone your repository first."
+        )
 
 
 def check_virtualenv():
@@ -95,15 +93,17 @@ def check_virtualenv():
     executable exists. Exits with error if either check fails.
     """
     if os.environ.get("VIRTUAL_ENV") != str(VIRTUALENV_PATH):
-        print("Error: Virtualenv not activated or activated incorrectly.")
-        print(f"Expected VIRTUAL_ENV={VIRTUALENV_PATH}")
-        print(f"Got VIRTUAL_ENV={os.environ.get('VIRTUAL_ENV')}")
-        sys.exit(1)
+        raise SystemExit(
+            "Error: Virtualenv not activated or activated incorrectly.\n"
+            f"Expected VIRTUAL_ENV={VIRTUALENV_PATH}\n"
+            f"Got VIRTUAL_ENV={os.environ.get('VIRTUAL_ENV')}"
+        )
 
     if not VIRTUALENV_PYTHON.exists():
-        print(f"Error: Virtualenv not found at {VIRTUALENV_PATH}.")
-        print("Please create and activate your virtualenv first.")
-        sys.exit(1)
+        raise SystemExit(
+            f"Error: Virtualenv not found at {VIRTUALENV_PATH}.\n"
+            "Please create and activate your virtualenv first."
+        )
 
 
 def check_manage_py():
@@ -113,8 +113,7 @@ def check_manage_py():
     """
     manage_py_path = PROJECT_PATH / "manage.py"
     if not manage_py_path.exists():
-        print(f"Error: manage.py not found at {manage_py_path}.")
-        sys.exit(1)
+        raise SystemExit(f"Error: manage.py not found at {manage_py_path}.")
 
 
 def check_var_www():
@@ -129,49 +128,20 @@ def create_wsgi_file():
     print(f"Created WSGI file at {WSGI_FILE_PATH}")
 
 
-def run_django_migrate():
-    """Run Django database migrations.
+def run_django_command(*args):
+    """Run a manage.py command, exiting with an error if it fails.
 
-    Exits with error if migration fails.
+    The arguments are hardcoded constants (virtualenv path and fixed flags),
+    so there is no untrusted input to sanitize.
     """
-    result = subprocess.run(
-        DJANGO_BASE_CMD + ["migrate", f"--settings={DJANGO_SETTINGS}"],
+    command_name = " ".join(args)
+    result = subprocess.run(  # noqa: S603 - constant args only (paths/flags)
+        [*DJANGO_BASE_CMD, *args, f"--settings={DJANGO_SETTINGS}"],
         cwd=PROJECT_PATH,
     )
     if result.returncode != 0:
-        print("Error: Django migrate failed.")
-        sys.exit(1)
-    print("Django migrations applied successfully.")
-
-
-def run_django_collectstatic():
-    """Collect static files for Django.
-
-    Exits with error if collection fails.
-    """
-    result = subprocess.run(
-        DJANGO_BASE_CMD + ["collectstatic", "--no-input", f"--settings={DJANGO_SETTINGS}"],
-        cwd=PROJECT_PATH,
-    )
-    if result.returncode != 0:
-        print("Error: Django collectstatic failed.")
-        sys.exit(1)
-    print("Static files collected successfully.")
-
-
-def run_django_createsuperuser():
-    """Create a Django superuser.
-
-    Exits with error if creation fails.
-    """
-    result = subprocess.run(
-        DJANGO_BASE_CMD + ["createsuperuser", f"--settings={DJANGO_SETTINGS}"],
-        cwd=PROJECT_PATH,
-    )
-    if result.returncode != 0:
-        print("Error: Django createsuperuser failed.")
-        sys.exit(1)
-    print("Superuser created successfully.")
+        raise SystemExit(f"Error: Django {command_name} failed.")
+    print(f"Django {command_name} completed successfully.")
 
 
 def copy_environment_variables():
@@ -236,9 +206,9 @@ if __name__ == "__main__":
 
     copy_environment_variables()
     set_django_settings_module()
-    run_django_migrate()
-    run_django_collectstatic()
-    run_django_createsuperuser()
+    run_django_command("migrate")
+    run_django_command("collectstatic", "--no-input")
+    run_django_command("createsuperuser")
     check_var_www()
     create_wsgi_file()
     webapp.reload()

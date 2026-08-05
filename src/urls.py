@@ -21,6 +21,10 @@ from health_check.views import HealthCheckView
 
 from .views import HomeView, ContactView, SearchView, SecureMDEditorUploadView
 
+admin.site.site_header = settings.ADMIN_SITE_HEADER
+admin.site.site_title = settings.ADMIN_SITE_TITLE
+admin.site.index_title = settings.ADMIN_SITE_INDEX_TITLE
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
