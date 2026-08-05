@@ -9,13 +9,6 @@ ALLOWED_HOSTS = ["*"]
 # CSRF_COOKIE_SECURE = True
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-
-# For Docker
-# `debug` is only True in templates if the vistor IP is in INTERNAL_IPS.
-INTERNAL_IPS = type(
-    str("c"), (), {"__contains__": lambda *a: True, "copy": lambda self: self}
-)()
-
 SILENCED_SYSTEM_CHECKS = [
     'django_recaptcha.recaptcha_test_key_error',
 ]
@@ -27,5 +20,9 @@ INSTALLED_APPS.extend(
 )
 
 MIDDLEWARE.insert(7, "debug_toolbar.middleware.DebugToolbarMiddleware")
+
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": lambda request: DEBUG,
+}
 
 mimetypes.add_type("application/javascript", ".js", True)
