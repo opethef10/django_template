@@ -34,3 +34,13 @@ production = [
     "gunicorn==25.3.0",
     "whitenoise==6.12.0",
 ]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 89
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "RUF", "S", "DJ", "DTZ"]
+
+[tool.ruff.lint.isort]
+force-sort-within-sections = true
