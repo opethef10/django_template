@@ -17,6 +17,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.12.10 - 2026-08-06
 
+### Added
+
+- django-upgrade and django-removals to development dependencies in pyproject.toml
+
 ### Changed
 
 - Static files storage to ManifestStaticFilesStorage in PythonAnywhere
