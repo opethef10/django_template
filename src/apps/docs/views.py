@@ -29,6 +29,10 @@ class DocumentationFeaturesView(TemplateView):
     template_name = "docs/features.html"
 
 
+class DocumentationLLMView(TemplateView):
+    template_name = "docs/llm.html"
+
+
 class DocumentationDeploymentView(TemplateView):
     template_name = "docs/deployment.html"
 

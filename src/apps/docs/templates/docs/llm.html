@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block title %}{% translate "LLM Integration Guide" %}{% endblock %}
+
+{% block breadcrumb %}
+<li class="breadcrumb-item"><a href="{% url 'docs:index' %}">{% translate "Documentation" %}</a></li>
+<li class="breadcrumb-item"><a href="{% url 'docs:features' %}">{% translate "Features" %}</a></li>
+<li class="breadcrumb-item active">{% translate "LLM" %}</li>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3">
+        <div class="card sticky-top">
+            <div class="card-header">{% translate "On This Page" %}</div>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><a href="#overview">{% translate "Overview" %}</a></li>
+                <li class="list-group-item"><a href="#llms-txt">{% translate "The /llms.txt Endpoint" %}</a></li>
+                <li class="list-group-item"><a href="#adding-content">{% translate "Adding Content per App" %}</a></li>
+                <li class="list-group-item"><a href="#markdown-pages">{% translate "Markdown Page Variants" %}</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="col-lg-9">
+        <h1 class="mb-4">{% translate "LLM Integration Guide" %}</h1>
+        <p class="lead">{% translate "Make your site's content readable by LLM/AI assistants as plain markdown." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="overview" class="mb-3">{% translate "Overview" %}</h2>
+        <p>{% translate "AI assistants and LLM tools increasingly read websites as plain text to answer questions about them. This template ships with built-in support for that:" %}</p>
+        <ul>
+            <li>{% translate "A" %} <code>/llms.txt</code> {% translate "endpoint that aggregates curated markdown about each app" %}</li>
+            <li>{% translate "A" %} <code>.md</code> {% translate "variant of any page, served as raw markdown" %}</li>
+        </ul>
+
+        <div class="alert alert-info">
+            <i class="fa-solid fa-circle-info"></i>
+            <strong>{% translate "Why Does This Matter?" %}</strong>
+            <p class="mb-0">{% translate "LLMs can already read HTML, but clean markdown is easier for them to parse accurately. Providing markdown versions means AI assistants give better, more reliable answers about your project." %}</p>
+        </div>
+
+        <hr class="my-5">
+
+        <h2 id="llms-txt" class="mb-3">{% translate "The /llms.txt Endpoint" %}</h2>
+        <p>{% translate "The endpoint is served at" %} <code>/llms.txt</code> {% translate "and aggregates markdown content from every app in" %} <code>src/apps/</code>.</p>
+        <p>{% translate "How it works:" %}</p>
+        <ol>
+            <li>{% translate "Scans each installed app under" %} <code>src.apps.*</code></li>
+            <li>{% translate "Looks for an optional" %} <code>llm.py</code> {% translate "module in the app" %}</li>
+            <li>{% translate "Calls" %} <code>get_markdown_results()</code> {% translate "if it exists" %}</li>
+            <li>{% translate "Joins the returned strings and serves them as plain text" %}</li>
+        </ol>
+        <p>{% translate "The response is cached for 30 days. If no app provides content, the endpoint returns 404." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="adding-content" class="mb-3">{% translate "Adding Content per App" %}</h2>
+        <p>{% translate "To contribute content, create an" %} <code>llm.py</code> {% translate "file in your app:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code># src/apps/myapp/llm.py
+
+def get_markdown_results():
+    return """# My App
+
+Useful facts about this app for AI assistants.
+"""
+</code></pre>
+        <p class="mb-0">{% translate "Whatever the function returns is appended to the" %} <code>/llms.txt</code> {% translate "response. Apps without an" %} <code>llm.py</code> {% translate "are skipped automatically." %}</p>
+
+        <hr class="my-5">
+
+        <h2 id="markdown-pages" class="mb-3">{% translate "Markdown Page Variants" %}</h2>
+        <p>{% translate "Every page can also be served as raw markdown by appending" %} <code>.md</code> {% translate "to its URL. For example," %} <code>/docs/features/llm.md</code> {% translate "serves this page as markdown." %}</p>
+        <p>{% translate "To enable this for a page, create a" %} <code>.md</code> {% translate "template next to the existing" %} <code>.html</code> {% translate "one:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>src/apps/docs/templates/docs/llm.html  # existing page
+src/apps/docs/templates/docs/llm.md    # new markdown variant</code></pre>
+        <p>{% translate "The middleware swaps the template and serves it with" %} <code>Content-Type: text/markdown</code>. {% translate "If no" %} <code>.md</code> {% translate "template exists, requesting the" %} <code>.md</code> {% translate "URL returns 404." %}</p>
+        <p class="mb-0">{% translate "Use the" %} <code>md_link</code> {% translate "filter to link to the markdown variant from your templates:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded mb-0"><code>{% verbatim %}{% load markdown_tags %}
+<a href="{{ url|md_link }}">Raw markdown</a>{% endverbatim %}</code></pre>
+    </div>
+</div>
+{% endblock %}

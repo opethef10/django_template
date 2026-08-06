@@ -86,6 +86,18 @@ def get_search_results():
             ]
         },
         {
+            "url": reverse_lazy("docs:llm"),
+            "search_text": "LLM Integration Guide",
+            "search_tokens": ["llm", "ai", "assistant", "llms.txt", "markdown", "middleware", "md", "md_link", "chatgpt", "gpt", "claude"],
+            "category": "Documentation",
+            "sub_links": [
+                {"url": reverse_lazy("docs:llm") + "#overview", "label": "Overview"},
+                {"url": reverse_lazy("docs:llm") + "#llms-txt", "label": "The /llms.txt Endpoint"},
+                {"url": reverse_lazy("docs:llm") + "#adding-content", "label": "Adding Content"},
+                {"url": reverse_lazy("docs:llm") + "#markdown-pages", "label": "Markdown Page Variants"},
+            ]
+        },
+        {
             "url": reverse_lazy("docs:deployment"),
             "search_text": "Deployment",
             "search_tokens": ["deployment", "deploy", "production", "server", "hosting", "pythonanywhere", "wsgi", "web app", "static files", "database", "migrate", "api token", "virtualenv"],

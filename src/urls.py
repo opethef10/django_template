@@ -1,7 +1,7 @@
 """project URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/5.0/topics/http/urls/
+    https://docs.djangoproject.com/en/6.0/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -19,7 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from health_check.views import HealthCheckView
 
-from .views import HomeView, ContactView, SearchView, SecureMDEditorUploadView
+from .views import HomeView, ContactView, SearchView, LLMView, SecureMDEditorUploadView
 
 admin.site.site_header = settings.ADMIN_SITE_HEADER
 admin.site.site_title = settings.ADMIN_SITE_TITLE
@@ -36,6 +36,7 @@ urlpatterns = [
     path('docs/', include("src.apps.docs.urls")),
     path('api/search/', SearchView.as_view(), name='search'),
     path('health/', HealthCheckView.as_view(), name='health_check'),
+    path('llms.txt', LLMView.as_view(), name='llm'),
     path('', include('pwa.urls')),
     path('', HomeView.as_view(), name='home'),
     path("i18n/", include("django.conf.urls.i18n"))
