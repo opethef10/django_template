@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.13.0 - 2026-08-06
+
+### Added
+
+- LLM integration: `/llms.txt` endpoint aggregating markdown content from each app's optional `llm.py` module
+- `MarkdownMiddleware` to serve `.md` variants of pages (swaps `.html` template for `.md`, serves `text/markdown`, 404 if no `.md` template)
+- `md_link` template filter to link to `.md` versions of pages
+
 ## 0.12.12 - 2026-08-06
 
 ### Added
