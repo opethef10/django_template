@@ -158,6 +158,45 @@ This template uses `django-allauth` for authentication:
 
 **Do not change AUTHENTICATION_BACKENDS** unless you also update the adapter.
 
+## LLM Integration
+
+The template ships with built-in support for LLM/AI assistants that read the site as plain markdown.
+
+### `llms.txt` endpoint
+
+- Served at `/llms.txt` by `LLMView` (`src/views.py`)
+- Scans every installed app under `src.apps.*` and tries to import `<app>.llm`
+- Calls `get_markdown_results()` if present; any returned string is appended to the response
+- Output is joined with blank lines and served as `text/plain; charset=utf-8`
+- Returns 404 when no app provides content
+- Response is cached for 30 days (`cache_page`)
+
+To add content, create `<app>/llm.py`:
+```python
+def get_markdown_results():
+    return """# My App
+
+Useful facts about this app for AI assistants.
+"""
+```
+
+### Markdown page variants
+
+`MarkdownMiddleware` (`src/middleware.py`) lets any page also be served as raw markdown:
+
+- Requesting `/some/page.md` strips `.md`, resolves the normal URL, then swaps the `.html` template for a `.md` sibling in `process_template_response`
+- The response is served with `Content-Type: text/markdown; charset=utf-8`
+- Returns 404 if no `.md` template exists for the resolved view
+- Create `<template>.md` next to an existing `<template>.html` to enable this for a page
+
+### `md_link` filter
+
+`src/tags/markdown_tags.py` provides an `md_link` filter that appends `.md` to a URL, useful for linking between markdown variants:
+```django
+{% load markdown_tags %}
+<a href="{{ url|md_link }}">Raw markdown</a>
+```
+
 ## Custom Template Tags
 
 Two custom template tag libraries:
@@ -166,6 +205,7 @@ Two custom template tag libraries:
 |---------|----------|---------|
 | `form_tags` | `src/tags/form_tags.py` | Form rendering utilities |
 | `menu_tags` | `src/tags/menu_tags.py` | Menu/navigation utilities |
+| `markdown_tags` | `src/tags/markdown_tags.py` | Markdown link utilities (`md_link` filter) |
 
 Register in `TEMPLATES['OPTIONS']['libraries']` in `_base.py`.
 
@@ -206,6 +246,8 @@ src/apps/<app_name>/
 ├── forms.py (optional)
 ├── signals.py (optional)
 ├── utils.py (optional)
+├── search.py (optional, see Search)
+├── llm.py (optional, see LLM Integration)
 ├── tests/
 │   ├── __init__.py
 │   └── test_*.py

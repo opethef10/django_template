@@ -27,6 +27,7 @@
                 <li class="list-group-item"><a href="#markdown">{% translate "Markdown Editor" %}</a></li>
                 <li class="list-group-item"><a href="#recaptcha">{% translate "reCAPTCHA" %}</a></li>
                 <li class="list-group-item"><a href="#email">{% translate "Email" %}</a></li>
+                <li class="list-group-item"><a href="#llm">{% translate "LLM Integration" %}</a></li>
                 <li class="list-group-item"><a href="#pwa">{% translate "PWA" %}</a></li>
                 <li class="list-group-item"><a href="#i18n">{% translate "Internationalization" %}</a></li>
             </ul>
@@ -343,6 +344,19 @@ $('#officeTable th:nth-child(n+2), #officeTable td:nth-child(n+2)').colorize();
                 <h3 class="h5"><i class="fa-solid fa-envelope text-primary"></i> Email</h3>
                 <p>{% translate "Email notifications for password resets, contact forms, and user notifications (production only)." %}</p>
                 <p>{% translate "Full setup guide available in the" %} <a href="{% url 'docs:email' %}">{% translate "Email Guide" %}</a>.</p>
+            </div>
+        </div>
+
+        <div id="llm" class="card mb-4">
+            <div class="card-body">
+                <h3 class="h5"><i class="fa-solid fa-robot text-dark"></i> LLM Integration</h3>
+                <p>{% translate "Serve your site's content as plain markdown so LLM/AI assistants can read it accurately." %}</p>
+                <ul>
+                    <li>{% translate "Curated content aggregated at" %} <code>/llms.txt</code></li>
+                    <li>{% translate "Any page also available as raw markdown via" %} <code>.md</code> {% translate "URLs" %}</li>
+                    <li>{% translate "Per-app" %} <code>llm.py</code> {% translate "modules for content" %}</li>
+                </ul>
+                <p class="mb-0">{% translate "Full guide available in the" %} <a href="{% url 'docs:llm' %}">{% translate "LLM Integration Guide" %}</a>.</p>
             </div>
         </div>
 
