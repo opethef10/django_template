@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.12 - 2026-08-06
+
+### Added
+
+- Template setup and sync script
+
 ## 0.12.11 - 2026-08-06
 
 ### Fixed
