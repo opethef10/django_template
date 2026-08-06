@@ -11,6 +11,15 @@ STATIC_ROOT = VAR_DIR / "static"
 MEDIA_ROOT = VAR_DIR / "media"
 _LOG_PATH = VAR_DIR / "proj.log"
 
+STORAGES = {
+    "default": {
+        "BACKEND": "django.core.files.storage.FileSystemStorage",
+    },
+    "staticfiles": {
+        "BACKEND": "django.contrib.staticfiles.storage.ManifestStaticFilesStorage",
+    },
+}
+
 EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
 if EMAIL_ENABLED:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

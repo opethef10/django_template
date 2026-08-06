@@ -16,6 +16,7 @@ SILENCED_SYSTEM_CHECKS = [
 INSTALLED_APPS.extend(
     [
         "debug_toolbar",
+        "django_removals",
     ]
 )
 

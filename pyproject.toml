@@ -24,6 +24,8 @@ base = [
 development = [
     { include-group = "base" },
     "django-debug-toolbar~=7.0.0",
+    "django-removals",
+    "django-upgrade",
 ]
 pa = [
     { include-group = "base" },
