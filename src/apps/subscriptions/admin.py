@@ -18,6 +18,9 @@ class NotificationTopicAdmin(SelectRelatedModelAdmin):
     list_display = ('label', 'key',)
     readonly_fields = ('subscribed_users',)
 
+    @admin.display(
+        description="Subscribed Users"
+    )
     def subscribed_users(self, obj):
         """Return a list of subscribed users as clickable links."""
         users = obj.usertopicsubscription_set.prefetch_related('user').all()
@@ -30,4 +33,3 @@ class NotificationTopicAdmin(SelectRelatedModelAdmin):
             links.append(f'<a href="{url}">{user.get_full_name()}</a>')
         return format_html(", ".join(links))
 
-    subscribed_users.short_description = "Subscribed Users"

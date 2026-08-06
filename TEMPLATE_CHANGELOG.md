@@ -17,9 +17,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## 0.12.10 - 2026-08-06
 
+### Changed
+
+- Static files storage to ManifestStaticFilesStorage in PythonAnywhere
+
 ### Removed
 
-- fail_silently parameters in mail sending functions, since they are deprecated in Django 6.0
+- STATICFILES_STORAGE setting, since it is deprecated in Django 6.0
+- fail_silently parameters in mail sending functions, since it's deprecated in Django 6.0
+
 ## 0.12.9 - 2026-08-05
 
 ### Added
