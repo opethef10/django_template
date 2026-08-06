@@ -15,6 +15,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.10 - 2026-08-06
+
+### Added
+
+- django-upgrade and django-removals to development dependencies in pyproject.toml
+
+### Changed
+
+- Static files storage to ManifestStaticFilesStorage in PythonAnywhere
+
+### Removed
+
+- STATICFILES_STORAGE setting, since it is deprecated in Django 6.0
+- fail_silently parameters in mail sending functions, since it's deprecated in Django 6.0
+
 ## 0.12.9 - 2026-08-05
 
 ### Added

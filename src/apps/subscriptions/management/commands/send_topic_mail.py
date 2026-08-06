@@ -59,7 +59,7 @@ class Command(BaseCommand):
             to=[settings.DEFAULT_FROM_EMAIL],
             bcc=subscribers,
         )
-        email.send(fail_silently=False)
+        email.send()
 
         self.stdout.write(
             self.style.SUCCESS(
