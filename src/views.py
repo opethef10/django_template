@@ -81,7 +81,7 @@ class ContactView(SuccessMessageMixin, FormView):
         )
 
         # Send the email
-        email.send(fail_silently=False)
+        email.send()
         return super().form_valid(form)
 
     def form_invalid(self, form):

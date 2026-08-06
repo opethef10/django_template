@@ -78,7 +78,7 @@ class SendTopicMailView(SuperUserRequiredMixin, SuccessMessageMixin, FormView):
         )
 
         email.attach_alternative(message_html, "text/html")
-        email.send(fail_silently=False)
+        email.send()
         return super().form_valid(form)
 
     def form_invalid(self, form):

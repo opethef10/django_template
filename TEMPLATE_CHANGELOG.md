@@ -15,6 +15,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.10 - 2026-08-06
+
+### Removed
+
+- fail_silently parameters in mail sending functions, since they are deprecated in Django 6.0
 ## 0.12.9 - 2026-08-05
 
 ### Added
