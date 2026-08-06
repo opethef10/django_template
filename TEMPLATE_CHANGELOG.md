@@ -15,6 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.12.11 - 2026-08-06
+
+### Fixed
+
+- Broken `icons/apple-touch-icon.png` and `icons/site.webmanifest` references in `base.html`, which caused a `Missing staticfiles manifest entry` error under `ManifestStaticFilesStorage`
+- Broken social preview image references in `meta.html` (`/static/icons/meta_image.jpg` did not exist); now resolve `logo.png` through the `{% static %}` tag so they survive hashed static files storage
+
 ## 0.12.10 - 2026-08-06
 
 ### Added
