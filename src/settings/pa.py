@@ -22,13 +22,19 @@ STORAGES = {
 
 EMAIL_ENABLED = config("DJANGO_EMAIL_ENABLED", cast=bool, default=False)
 if EMAIL_ENABLED:
-    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-    EMAIL_HOST = "smtp.gmail.com"
-    EMAIL_PORT = 587
-    EMAIL_USE_TLS = True
+    MAILERS = {
+        "default": {
+            "BACKEND": "django.core.mail.backends.smtp.EmailBackend",
+            "OPTIONS": {
+                "host": config("DJANGO_EMAIL_HOST", default="smtp.gmail.com"),
+                "port": config("DJANGO_EMAIL_PORT", cast=int, default=587),
+                "username": config("DJANGO_EMAIL_HOST_USER"),
+                "password": config("DJANGO_EMAIL_HOST_PASSWORD"),
+                "use_tls": config("DJANGO_EMAIL_USE_TLS", cast=bool, default=True),
+            }
+        }
+    }
     SERVER_EMAIL = config("DJANGO_SERVER_EMAIL")
-    EMAIL_HOST_USER = config("DJANGO_EMAIL_HOST_USER")
-    EMAIL_HOST_PASSWORD = config("DJANGO_EMAIL_HOST_PASSWORD")
     ADMINS = config("PROJECT_ADMIN_EMAILS", cast=Csv())
 
 RECAPTCHA_ENABLED = config("RECAPTCHA_ENABLED", cast=bool, default=False)

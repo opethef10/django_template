@@ -6,7 +6,7 @@ requires-python = ">=3.13"
 
 [dependency-groups]
 base = [
-    "Django~=6.0.7",
+    "Django~=6.1.0",
     "django-allauth[socialaccount]~=65.18.0",
     "django_extensions==4.1",
     "django-htmx==1.27.0",
@@ -19,7 +19,7 @@ base = [
     "markdown~=3.10.2",
     "python-decouple==3.8",
     "requests~=2.34.2",
-    "django-health-check~=4.4.3",
+    "django-health-check~=4.5.0",
 ]
 development = [
     { include-group = "base" },
