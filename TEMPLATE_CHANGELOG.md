@@ -15,6 +15,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.14.0 - 2026-08-08
+
+### Added
+
+- Django 6.1 support
+- uv.lock file
+
 ## 0.13.0 - 2026-08-06
 
 ### Added
