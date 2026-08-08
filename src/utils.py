@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.staticfiles.storage import ManifestStaticFilesStorage
 
 
 class SelectRelatedModelAdmin(admin.ModelAdmin):
@@ -23,3 +24,7 @@ class SelectRelatedModelAdmin(admin.ModelAdmin):
                 queryset = queryset.select_related(related_field)
             kwargs['queryset'] = queryset
         return super().formfield_for_foreignkey(db_field, request, **kwargs)
+
+
+class LenientManifestStaticFilesStorage(ManifestStaticFilesStorage):
+    manifest_strict = False
