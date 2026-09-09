@@ -3,7 +3,7 @@ from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 from mdeditor.fields import MDTextFormField
 
-from .models import NotificationTopic, UserTopicSubscription
+from .models import NotificationTopic, UserTopicSubscription, EmailTemplate
 
 
 class UserSubscriptionForm(forms.Form):
@@ -51,9 +51,16 @@ class UserSubscriptionForm(forms.Form):
 
 
 class SendTopicMailForm(forms.Form):
+    template = forms.ModelChoiceField(
+        queryset=EmailTemplate.objects.all(),
+        required=False,
+        empty_label=_("Select a template..."),
+        label=_("Template"),
+    )
     topic = forms.ModelChoiceField(
         queryset=NotificationTopic.objects.all(),
         required=True,
+        empty_label=_("Select a topic..."),
         label=_("Topic"),
     )
     subject = forms.CharField(

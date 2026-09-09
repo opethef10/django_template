@@ -22,3 +22,20 @@ class UserTopicSubscription(models.Model):
 
     def __str__(self):
         return f"{self.user} - {self.topic}"
+
+
+class EmailTemplate(models.Model):
+    name = models.CharField(max_length=128, unique=True)
+    topic = models.ForeignKey(
+        NotificationTopic,
+        on_delete=models.CASCADE,
+        related_name="email_templates",
+    )
+    subject = models.CharField(max_length=255)
+    body = models.TextField(help_text="Markdown content.")
+
+    class Meta:
+        ordering = ["name"]
+
+    def __str__(self):
+        return self.name

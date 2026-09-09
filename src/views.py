@@ -63,6 +63,7 @@ class ContactView(SuccessMessageMixin, FormView):
     )
     success_url = reverse_lazy('contact')
     subject = _("Contact Us")
+    page_title = "Bize Ulaşın"
 
     def dispatch(self, request, *args, **kwargs):
         if not getattr(settings, 'DEBUG', False):

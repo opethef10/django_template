@@ -3,7 +3,7 @@ from django.urls import reverse
 from django.utils.html import format_html
 
 
-from .models import UserTopicSubscription, NotificationTopic
+from .models import UserTopicSubscription, NotificationTopic, EmailTemplate
 from ...utils import SelectRelatedModelAdmin
 
 
@@ -33,3 +33,8 @@ class NotificationTopicAdmin(SelectRelatedModelAdmin):
             links.append(f'<a href="{url}">{user.get_full_name()}</a>')
         return format_html(", ".join(links))
 
+
+@admin.register(EmailTemplate)
+class EmailTemplateAdmin(SelectRelatedModelAdmin):
+    list_display = ('name', 'topic', 'subject')
+    search_fields = ('name', 'subject', 'topic__label')

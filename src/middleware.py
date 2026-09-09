@@ -1,5 +1,6 @@
 from django.template import engines
 from django.template.exceptions import TemplateDoesNotExist
+from django.template.loader import render_to_string
 from django.http import Http404
 
 
@@ -41,6 +42,7 @@ class MarkdownMiddleware:
                 if self.template_exists(md_template):
                     response.template_name = md_template
                     response['Content-Type'] = 'text/markdown; charset=utf-8'
+                    self._prepend_frontmatter(request, response)
                     return response
             raise Http404(f"Markdown template not found for: {template_name}")
         else:
@@ -49,10 +51,27 @@ class MarkdownMiddleware:
             if self.template_exists(md_template):
                 response.template_name = md_template
                 response['Content-Type'] = 'text/markdown; charset=utf-8'
+                self._prepend_frontmatter(request, response)
             else:
                 raise Http404(f"Markdown template not found: {md_template}")
 
         return response
+
+    def _prepend_frontmatter(self, request, response):
+        """Prepend YAML front matter to the rendered markdown response."""
+        context = getattr(response, 'context_data', None) or {}
+        frontmatter = render_to_string(
+            'includes/frontmatter.html', context, request=request
+        ).encode('utf-8')
+
+        def prepend(rendered):
+            if getattr(rendered, 'streaming', False):
+                return
+            rendered.content = frontmatter + rendered.content
+            if 'Content-Length' in rendered:
+                rendered['Content-Length'] = str(len(rendered.content))
+
+        response.add_post_render_callback(prepend)
 
     def get_md_template_name(self, template_name):
         """Convert template name to .md version"""

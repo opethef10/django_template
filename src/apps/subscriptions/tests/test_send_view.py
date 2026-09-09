@@ -1,11 +1,11 @@
-from django.test import TestCase, Client
+from django.test import TestCase, Client, override_settings
 from django.urls import reverse
 from django.contrib.auth import get_user_model
 from django.core import mail
 from django.contrib.messages import get_messages
 from django.conf import settings
 
-from ..models import NotificationTopic, UserTopicSubscription
+from ..models import NotificationTopic, UserTopicSubscription, EmailTemplate
 
 User = get_user_model()
 
@@ -140,3 +140,35 @@ class SendTopicMailViewTests(TestCase):
         self.assertTrue(
             any("no users subscribed" in m.message.lower() for m in messages)
         )
+
+    def test_template_field_present_in_context(self):
+        self.client.login(username="admin", password="pw")
+        EmailTemplate.objects.create(
+            name="Welcome", topic=self.topic_general,
+            subject="Welcome!", body="Hello there",
+        )
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("template", response.context["form"].fields)
+
+    def test_send_with_template_submitted_fields_win(self):
+        self.client.login(username="admin", password="pw")
+        template = EmailTemplate.objects.create(
+            name="Newsletter", topic=self.topic_general,
+            subject="Monthly Newsletter", body="# Updates",
+        )
+
+        data = {
+            "topic": self.topic_news.pk,
+            "template": template.pk,
+            "subject": "My custom subject",
+            "message": "My custom body",
+        }
+
+        response = self.client.post(self.url, data, follow=True)
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(len(mail.outbox), 1)
+
+        sent = mail.outbox[0]
+        self.assertEqual(sent.subject, f"{settings.EMAIL_SUBJECT_PREFIX}My custom subject")
+        self.assertIn("My custom body", sent.body)

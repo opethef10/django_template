@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.shortcuts import get_object_or_404
+from django.utils.translation import gettext_lazy as _
 from django.views.generic import TemplateView
 
 
@@ -10,6 +11,7 @@ class BaseUserProfileView(LoginRequiredMixin, TemplateView):
 
 class UserProfileView(BaseUserProfileView):
     template_name = 'my_account.html'
+    page_title = _("Profile")
 
     def get_user(self):
         return self.request.user
@@ -21,6 +23,7 @@ class UserAccountView(BaseUserProfileView):
     def setup(self, request, *args, **kwargs):
         super().setup(request, *args, **kwargs)
         self.user = get_object_or_404(User, username=self.kwargs.get('username'))
+        self.page_title = self.user.get_full_name() or self.user.username
 
     def get_user(self):
         return self.user

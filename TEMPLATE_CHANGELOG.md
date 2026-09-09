@@ -15,7 +15,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
-## 0.14.2- 2026-08-08
+## 0.15.0 - 2026-09-09
+
+### Added
+
+- Breadcrumb action toolbar with copy link, share, and copy-as-markdown buttons
+- Inline navbar search replacing modal search, with keyboard navigation (arrow keys, Tab, Enter) and transliteration support
+- `EmailTemplate` model for reusable email templates in subscriptions
+- `crumb_tags` template library: `admin_edit_link` and `admin_changelist_link` tags for superuser admin links in breadcrumbs
+- `language_tags` template library: `lang_flag` and `flag` filters for flag-icons CSS integration
+- YAML frontmatter template and `MarkdownMiddleware` frontmatter prepending for `.md` responses
+- Page title, description, and image support in meta tags via `view.page_title`, `view.page_description`, `view.page_image`
+- Flag-icons CSS library for language selector
+
+### Changed
+
+- Navbar: inline search input, logo image, language dropdown with flag icons instead of select
+- Search: replaced modal with inline dropdown, full keyboard navigation, transliteration for Turkish characters
+- Breadcrumb area layout: flex row with action buttons alongside breadcrumb items
+- Container width from `container-lg` to `container`
+- Base templates: `page_title` support in `<title>` and allauth layouts
+- Removed old modal search and unused list-group-horizontal CSS
+
+### Removed
+
+- Modal search template (`includes/modal.html`)
+
+## 0.14.2 - 2026-08-08
 
 ### Removed
 
