@@ -1,0 +1,6 @@
+{% load static %}---
+title: {% if view.page_title %}{{ view.page_title }} • {% endif %}{{ PROJECT_NAME }}
+description: {{ view.page_description|default:PROJECT_DESCRIPTION }}
+url: {{ request.build_absolute_uri }}
+image: {% if view.page_image %}{{ view.page_image }}{% else %}{{ PROJECT_URL }}{% static 'logo.png' %}{% endif %}
+---

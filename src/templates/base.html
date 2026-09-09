@@ -3,7 +3,7 @@
 <html lang="{{ LANGUAGE_CODE }}">
 <head>
     {% include 'includes/meta.html' %}
-    <title>{% if debug %}[DEV] {% endif %}{% block title %}{% endblock %} • {{ PROJECT_NAME }}</title>
+    <title>{% if debug %}[DEV] {% endif %}{% block title %}{% if view.page_title %}{{ view.page_title }}{% endif %}{% endblock %} • {{ PROJECT_NAME }}</title>
     <link href="https://fonts.googleapis.com/css?family=Peralta" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Cabin" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'logo.png' %}">
@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="https://cdn.datatables.net/2.3.7/css/dataTables.dataTables.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="{% static 'css/app.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lipis/flag-icons@7.5.0/css/flag-icons.min.css" />
     <link rel="stylesheet" href="{% static 'css/mobile.css' %}">
     <link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
     {% block stylesheet %}{% endblock %}
@@ -21,12 +22,10 @@
 {% block base_body %}
     {% include 'includes/navbar.html' %}
 
-    {% include 'includes/modal.html' %}
+        {% block banner %}
+        {% endblock %}
 
-    {% block banner %}
-    {% endblock %}
-
-    <div class="container-lg mb-5 flex-grow-1">
+    <div class="container mb-5 flex-grow-1">
         {% block messages %}
             {% if messages %}
             <div class="mt-4">
@@ -42,12 +41,30 @@
 
         {% block crumbarea %}
             <nav aria-label="breadcrumb">
-                <ol class="breadcrumb my-3 py-2 px-3 bg-body-tertiary rounded-pill shadow-sm">
-                    {% block breadcrumb %}
+                <div class="d-flex justify-content-between align-items-center my-3 py-2 px-3 bg-body-tertiary rounded-pill shadow-sm">
+                    <ol class="breadcrumb mb-0">
+                        {% block breadcrumb %}
+                        {% endblock %}
+                    </ol>
+                    {% block crumbactions %}
+                    <div class="d-flex align-items-center gap-1 crumb-actions">
+                        {% block crumbadmin %}
+                        {% endblock %}
+                        <button type="button" class="btn btn-sm btn-link crumb-action-btn" onclick="copyPageLink()" title="{% trans 'Copy the link' %}">
+                            <i class="fa-solid fa-link"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-link crumb-action-btn" onclick="shareNative()" title="{% trans 'Share' %}">
+                            <i class="fa-solid fa-share-nodes"></i>
+                        </button>
+                        <button type="button" class="btn btn-sm btn-link crumb-action-btn" onclick="copyAsMarkdown()" title="{% trans 'Copy as Markdown' %}" id="btn-copy-md">
+                            <i class="fa-brands fa-markdown"></i>
+                        </button>
+                    </div>
                     {% endblock %}
-                </ol>
+                </div>
             </nav>
         {% endblock %}
+
 
         {% block content %}
         {% endblock %}
@@ -65,6 +82,7 @@
 <script src="{% static 'js/jquery-colorize.js' %}"></script>
 <script src="{% static 'js/fuzzy-search.js' %}"></script>
 <script src="{% static 'js/copy-code.js' %}"></script>
+<script src="{% static 'js/breadcrumb-actions.js' %}"></script>
 <script src="{% static 'js/pwa.js' %}"></script>
 {% block javascript %}{% endblock %}
 </body>

@@ -88,7 +88,12 @@ TEMPLATES = [
                 "form_tags": "src.tags.form_tags",
                 "menu_tags": "src.tags.menu_tags",
                 "markdown_tags": "src.tags.markdown_tags",
+                "crumb_tags": "src.tags.crumb_tags",
+                "language_tags": "src.tags.language_tags",
             },
+            "builtins": [
+                "src.tags.language_tags",
+            ],
         },
     },
 ]

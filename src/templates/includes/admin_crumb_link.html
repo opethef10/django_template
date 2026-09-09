@@ -1,0 +1,14 @@
+{% load crumb_tags %}
+{% if user.is_superuser %}
+    {% if changelist_model %}
+        <a class="btn btn-sm btn-link crumb-action-btn crumb-admin-btn" href="{% admin_changelist_link changelist_model %}" title="{% trans "List in admin page" %}">
+            <i class="fa-solid fa-list"></i>
+        </a>
+    {% endif %}
+    {% if edit_obj %}
+        <a class="btn btn-sm btn-link crumb-action-btn crumb-admin-btn" href="{% admin_edit_link edit_obj %}" title="{% trans "Edit in admin page" %}">
+            <i class="fa-solid fa-pen-to-square"></i>
+        </a>
+    {% endif %}
+    <span class="crumb-divider" aria-hidden="true">|</span>
+{% endif %}

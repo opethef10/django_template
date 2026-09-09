@@ -1,66 +1,74 @@
 {% load i18n %}
-{% load menu_tags %}
-<nav class="navbar navbar-expand-md navbar-dark bg-dark" data-bs-theme="dark">
-    <div class="container-lg">
-        <a class="navbar-brand" href="{% url 'home' %}">{{ PROJECT_NAME }}</a>
+{% load static %}
+{% load language_tags %}
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark" data-bs-theme="dark">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="{% url 'home' %}">
+            <img src="{% static 'logo.png' %}"
+                 alt=""
+                 class="rounded-circle me-2"
+                 style="width: 2.5rem; height: 2.5rem; object-fit: cover; object-position: center; transform: scale(1.15);">
+            {{ PROJECT_NAME }}</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainMenu"
                 aria-controls="mainMenu" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
 
         <div class="collapse navbar-collapse" id="mainMenu">
-            <ul class="navbar-nav me-auto">
-              {% for menu in navbar_menus %}
-                {% if menu.items|length > 1 %}
-                  <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown"
-                       aria-haspopup="true" aria-expanded="false">
-                      {% trans menu.title %}
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                      {% for item in menu.items %}
-                        <a class="dropdown-item"
-                           href="{% resolve_url item.url_name item.args item.kwargs %}">
-                          {% trans item.label %}
-                        </a>
-                      {% endfor %}
-                    </div>
-                  </li>
-                {% else %}
-                  <li class="nav-item">
-                    {% with menu.items.0 as item %}
-                    <a class="nav-link"
-                       href="{% resolve_url item.url_name item.args item.kwargs %}">
-                      {% trans item.label %}
-                    </a>
-                    {% endwith %}
-                  </li>
-                {% endif %}
-              {% endfor %}
-            </ul>
-                      <div class="ms-auto d-flex gap-2 justify-content-end text-nowrap">
-          <button id="navbarSearchTrigger" type="button" class="btn btn-outline-light d-flex align-items-center">
-  <i class="fa fa-search me-1"></i><span class="small d-none d-lg-inline">{% trans "Search" %} (Ctrl+K)</span>
-</button>
+                      <div class="d-flex gap-2 justify-content-center text-nowrap flex-grow-1">
+          <div class="position-relative flex-grow-1">
+  <i class="fa fa-search search-icon"></i>
+  <input id="navbar-search-input"
+         type="text"
+         class="form-control"
+         placeholder="{% trans "Search" %}..."
+         autocomplete="off"
+         aria-label="{% trans "Search" %}">
+  <span class="kbd-hint d-none d-md-inline"><i class="fa-solid fa-keyboard me-1"></i>Ctrl+K</span>
+<div id="navbar-search-results" class="dropdown-menu">
+  <div class="d-flex justify-content-between align-items-center px-3 py-2">
+    <div class="flex-grow-1" style="min-width: 0;">
+      <div class="small text-muted mb-1">
+        <b>{% trans "To navigate results:" %}</b> <span class="search-kbd">↑</span> <span class="search-kbd">↓</span> {% trans "or" %} <span class ="search-kbd">⇧ Tab</span> / <span class="search-kbd">Tab</span>, {% trans "to go to the selected page:" %} <span class="search-kbd">Enter</span>
+      </div>
+    </div>
+    <button type="button" class="btn-close search-close-btn flex-shrink-0 ms-2" aria-label="Close"></button>
+  </div>
+  <div id="navbar-search-results-list"></div>
+</div>
+</div>
+
+<div class="d-flex align-items-center">
+    <i id="themeToggle" class="fa-solid fa-sun text-light" style="cursor:pointer;"></i>
+</div>
 
 {% get_available_languages as LANGUAGES %}
 {% if LANGUAGES|length > 1 %}
 <form class="d-flex align-items-center" method="post" action="{% url 'set_language' %}">
 {% csrf_token %}
 {% get_current_language as LANG_CODE %}
-<select class="form-select" name="language" onchange="this.form.submit()">
-    {% get_language_info_list for LANGUAGES as languages %}
-    {% for lang in languages %}
-        <option {% if lang.code == LANG_CODE %}selected{% endif %}
-                value="{{ lang.code }}">{{ lang.code|upper }}</option>
-    {% endfor %}
-</select>
+<div class="dropdown" data-bs-theme="dark">
+    <button class="btn btn-link text-light p-0 d-flex align-items-center text-decoration-none" type="button"
+            data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="{{ LANG_CODE|lang_flag }}" aria-hidden="true"></i>
+        <span class="visually-hidden">{{ LANG_CODE|upper }} {% trans "language" %}</span>
+        <span class="caret-triangle ms-1"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end mt-2">
+        {% get_language_info_list for LANGUAGES as languages %}
+        {% for lang in languages %}
+        <li>
+            <button type="submit" name="language" value="{{ lang.code }}"
+                    class="dropdown-item {% if lang.code == LANG_CODE %}active{% endif %}">
+                <i class="{{ lang.code|lang_flag }}" aria-hidden="true"></i>
+                <span class="ms-1">{{ lang.name_local }}</span>
+            </button>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
 </form>
 {% endif %}
-
-<div class="d-flex align-items-center">
-    <i id="themeToggle" class="fa-solid fa-sun text-light" style="cursor:pointer;"></i>
-</div>
 
             {% if user.is_authenticated %}
                 <ul class="navbar-nav">

@@ -7,14 +7,15 @@
 
 {% block title %}{{ flatpage.title }}{% endblock %}
 {% block breadcrumb %}
-    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+<li class="breadcrumb-item"><a href="{% url 'home' %}"><i class="fa-solid fa-house"></i><span class="visually-hidden">{% trans "Home" %}</span></a></li>
     <li class="breadcrumb-item">Pages</li>
     <li class="breadcrumb-item active" aria-current="page">{{ flatpage.title }}</li>
 {% endblock %}
 
+{% block crumbadmin %}
+    {% include 'includes/admin_crumb_link.html' with changelist_model='flatpages.FlatPage' edit_obj=flatpage %}
+{% endblock %}
+
 {% block content %}
-{% if request.user.is_superuser %}
-  <a href="{% url 'admin:flatpages_flatpage_change' flatpage.id %}" class="btn btn-secondary mb-3">Düzenle</a>
-{% endif %}
     {{ flatpage.content|render_markdown }}
 {% endblock %}

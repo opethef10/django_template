@@ -1,8 +1,6 @@
 {% extends "base.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Send Email" %}{% endblock %}
-
 {% block breadcrumb %}
     <li class="breadcrumb-item"><a href="{% url 'home' %}">{% trans "Home" %}</a></li>
     <li class="breadcrumb-item">{% trans "Subscriptions" %}</li>
@@ -20,5 +18,34 @@
         </form>
     </div>
 </div>
+
+<script id="template-data" type="application/json">{{ template_json|safe }}</script>
+<script>
+    const templates = JSON.parse(document.getElementById('template-data').textContent);
+    const topicSelect = document.querySelector('#id_topic');
+    const templateSelect = document.querySelector('#id_template');
+    const subjectInput = document.querySelector('#id_subject');
+
+    function getMessageEditor() {
+        const cmEl = document.querySelector('#id_message-wmd-wrapper .CodeMirror');
+        if (cmEl && cmEl.CodeMirror) {
+            return { set: md => cmEl.CodeMirror.setValue(md), get: () => cmEl.CodeMirror.getValue() };
+        }
+        const ta = document.querySelector('#id_message');
+        return ta ? { set: md => { ta.value = md; }, get: () => ta.value } : null;
+    }
+
+    function applyTemplate() {
+        const t = templates.find(x => String(x.pk) === templateSelect.value);
+        if (t) {
+            topicSelect.value = String(t.topic);
+            subjectInput.value = t.subject;
+            const editor = getMessageEditor();
+            if (editor) editor.set(t.body);
+        }
+    }
+
+    templateSelect.addEventListener('change', applyTemplate);
+</script>
 {% endblock %}
 

@@ -1,4 +1,5 @@
 from django.conf import settings
+import json
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
@@ -9,9 +10,9 @@ from django.views.generic.edit import FormView
 from markdown import markdown
 
 from .forms import SendTopicMailForm, UserSubscriptionForm
-from .models import UserTopicSubscription
-from .utils import build_subscription_footer
 from src.mixins import SuperUserRequiredMixin
+from .models import UserTopicSubscription, EmailTemplate
+from .utils import build_subscription_footer
 
 
 class SubscriptionUpdateView(SuccessMessageMixin, LoginRequiredMixin, FormView):
@@ -19,6 +20,7 @@ class SubscriptionUpdateView(SuccessMessageMixin, LoginRequiredMixin, FormView):
     template_name = 'subscriptions/update.html'
     success_url = reverse_lazy('subscriptions:update')
     success_message = _("Your subscriptions have been successfully updated!")
+    page_title = _("Subscriptions")
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -43,6 +45,16 @@ class SendTopicMailView(SuperUserRequiredMixin, SuccessMessageMixin, FormView):
     success_url = reverse_lazy("subscriptions:send")
     success_message = _("Email sent successfully.")
     error_message = _("An error occurred while submitting the form. Please try again.")
+    page_title = _("Send Email")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["template_json"] = json.dumps(
+            list(
+                EmailTemplate.objects.values("pk", "name", "subject", "body", "topic")
+            )
+        )
+        return context
 
     def form_valid(self, form):
         topic = form.cleaned_data["topic"]

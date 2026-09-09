@@ -4,15 +4,19 @@
     }
 
     .navbar-brand {
-        font-size: 1em; !important;
+        font-size: 1.25rem !important;
     }
 
     .navbar-dark {
-        font-size: 18px; !important;
+        font-size: 18px !important;
     }
 
     nav .btn {
-        font-size: 18px; !important;
+        font-size: 18px !important;
+    }
+
+    .kbd-hint {
+        display: none !important;
     }
 
     footer {

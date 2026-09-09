@@ -2,12 +2,11 @@
 {% extends "base.html" %}
 {% load i18n static %}
 {% block title %}
-    {% block head_title %}{% endblock %}
+    {% if view.page_title %}{{ view.page_title }}{% else %}{% block head_title %}{% endblock %}{% endif %}
 {% endblock title%}
 
 {% block base_body %}
     {% include 'includes/navbar.html'%}
-    {% include 'includes/modal.html' %}
         {% block body %}
             {% block content %}
             {% endblock content %}
