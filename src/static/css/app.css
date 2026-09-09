@@ -19,6 +19,12 @@ body {
     font-family: 'Peralta', cursive;
 }
 
+@media (max-width: 992px) {
+  .container {
+    max-width: 100%;
+  }
+}
+
 .navbar {
     z-index: 1050;
 }
