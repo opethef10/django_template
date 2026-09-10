@@ -172,3 +172,29 @@ body {
         font-size: 1em;
     }
 }
+
+.social-icon-link {
+    color: var(--bs-secondary-color);
+    font-size: 1.25rem;
+    transition: opacity 0.2s;
+}
+
+.social-icon-link:hover {
+    opacity: 0.7;
+    color: var(--bs-secondary-color);
+}
+
+.footer-links a {
+    color: var(--bs-secondary-color);
+    text-decoration: none;
+    font-weight: 300;
+}
+
+.footer-links a:not(:last-child)::after {
+    content: "·";
+    margin-left: 0.25rem;
+}
+
+.footer-links a:hover {
+    color: var(--bs-light);
+}

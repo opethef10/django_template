@@ -1,9 +1,9 @@
-from src.menus import NAVBAR_MENUS, FOOTER_LINKS, SOCIAL_LINKS
+from src.menus import DEVELOPER_LINK, FOOTER_LINKS, SOCIAL_LINKS
 
 
 def menus(request):
     return {
-        'navbar_menus': NAVBAR_MENUS,
         'footer_links': FOOTER_LINKS,
         'social_links': SOCIAL_LINKS,
+        'developer_link': DEVELOPER_LINK,
     }
