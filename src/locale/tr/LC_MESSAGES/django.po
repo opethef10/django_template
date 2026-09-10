@@ -129,6 +129,10 @@ msgstr "Sosyal Medya"
 msgid "Install App"
 msgstr "Uygulamayı Kur"
 
+#: src/menus.py:44
+msgid "Developed by"
+msgstr "Geliştiren"
+
 #: src/templates/includes/modal.html:6 src/templates/includes/modal.html:14
 #: src/templates/includes/navbar.html:32
 msgid "Search"
