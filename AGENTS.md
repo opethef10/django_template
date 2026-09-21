@@ -83,7 +83,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 - `SECRET_KEY` from environment
 - `ALLOWED_HOSTS` from environment (comma-separated)
 - File-based logging to `var/proj.log` (under `BASE_DIR`)
-- Real SMTP email (only if `EMAIL_ENABLED=True`)
+- Real email when `DJANGO_EMAIL_ENABLED=True`: Gmail SMTP by default, or Anymail ESP when `DJANGO_MAIL_BACKEND=anymail`
 - Static/media files served from `var/` (under `BASE_DIR`)
 
 ### Test Settings (`src.settings.tests`)
@@ -104,7 +104,7 @@ All configuration via `.env` file. See `.env.example` for required variables.
 
 **Required for PythonAnywhere:**
 - `DJANGO_ALLOWED_HOSTS` (comma-separated domain list)
-- `DJANGO_EMAIL_*` and `PROJECT_ADMIN_EMAILS` if `DJANGO_EMAIL_ENABLED=True`
+- `DJANGO_EMAIL_ENABLED=True` plus either Gmail SMTP (`DJANGO_MAIL_BACKEND=smtp`, `DJANGO_EMAIL_HOST_USER`, `DJANGO_EMAIL_HOST_PASSWORD`, `DJANGO_SERVER_EMAIL`) or Anymail (`DJANGO_MAIL_BACKEND=anymail`, `ANYMAIL_PROVIDER`, `ANYMAIL_OPTIONS`), and `PROJECT_ADMIN_EMAILS`, to enable real mail
 
 ## Dependencies
 
@@ -114,8 +114,8 @@ Dependencies are defined in `pyproject.toml` (PEP 621) and installed with pip us
 |-------|----------|----------|
 | `base` | All environments | Core Django, allauth, PWA, recaptcha, etc. |
 | `development` | Local development | base + django-debug-toolbar |
-| `pa` | PythonAnywhere deployment | base + pythonanywhere-core |
-| `production` | Docker deployment | base + gunicorn + whitenoise |
+| `pa` | PythonAnywhere deployment | base + pythonanywhere-core + django-anymail |
+| `production` | Docker deployment | base + gunicorn + whitenoise + django-anymail |
 
 **Install for development:**
 ```bash
@@ -140,8 +140,9 @@ Note: `pip install --group <name>` installs only that group's packages (requires
 
 ### Email
 - Disabled by default, enable via `DJANGO_EMAIL_ENABLED=True`
-- Gmail SMTP configuration on PythonAnywhere
+- Backend selected via `DJANGO_MAIL_BACKEND`: `smtp` (Gmail, default) or `anymail` (any Anymail ESP via `ANYMAIL_PROVIDER` + `ANYMAIL_OPTIONS`)
 - Console backend in development (safe, no accidental sends)
+- Invalid `DJANGO_MAIL_BACKEND` values fail fast with `ImproperlyConfigured` (no silent console fallback in production)
 
 ### Static/Media Files
 - Development: served from `src/static/` and `src/media/`

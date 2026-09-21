@@ -15,6 +15,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.16.0 - 2026-09-21
+
+### Added
+
+- Anymail support: `DJANGO_MAIL_BACKEND=anymail` with `ANYMAIL_PROVIDER` and `ANYMAIL_OPTIONS`; `django-anymail` added to `pa` and `production` dependency groups
+- Anymail docs in AGENTS.md and `.production.env.example`
+
+### Changed
+
+- Email backend selected via `DJANGO_MAIL_BACKEND` (`smtp` or `anymail`); invalid values fail fast with `ImproperlyConfigured`
+- PWA install button moved from footer to navbar
+
+### Fixed
+
+- PWA install button visible even when hidden: Bootstrap `d-flex` on the button overrode the `hidden` attribute; flex layout moved to an inner `<span>`
+
 ## 0.15.2 - 2026-09-09
 
 ### Changed

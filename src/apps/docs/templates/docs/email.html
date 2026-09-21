@@ -17,6 +17,7 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><a href="#overview">{% translate "Overview" %}</a></li>
                 <li class="list-group-item"><a href="#gmail-setup">{% translate "Gmail Setup" %}</a></li>
+                <li class="list-group-item"><a href="#anymail-setup">{% translate "Anymail Setup" %}</a></li>
                 <li class="list-group-item"><a href="#project-settings">{% translate "Project Settings" %}</a></li>
                 <li class="list-group-item"><a href="#testing">{% translate "Testing" %}</a></li>
             </ul>
@@ -33,6 +34,13 @@
         <p>{% translate "This guide is for setting up email in production. In development, emails are printed to the console - no configuration needed." %}</p>
         <p>{% translate "This template supports email functionality for features like contact forms, password resets, and user notifications. Email is disabled by default to prevent accidental sending during development." %}</p>
 
+        <p>{% translate "Two email backends are supported, selected with the" %} <code>DJANGO_MAIL_BACKEND</code> {% translate "variable:" %}</p>
+        <ul>
+            <li><code>smtp</code> <span class="text-muted">{% translate "(default)" %}</span> — {% translate "Gmail SMTP via an App Password (see below)" %}</li>
+            <li><code>anymail</code> — {% translate "any Anymail email service provider, e.g. Mailjet, Mailgun, SendGrid, Postmark, Resend, Amazon SES, Brevo" %}</li>
+        </ul>
+        <p>{% translate "An invalid" %} <code>DJANGO_MAIL_BACKEND</code> {% translate "value stops startup with an" %} <code>ImproperlyConfigured</code> {% translate "error instead of silently falling back to another backend." %}</p>
+
         <div class="alert alert-info">
             <i class="fa-solid fa-circle-info"></i>
             <strong>{% translate "Why Use Email?" %}</strong>
@@ -41,8 +49,8 @@
 
         <hr class="my-5">
 
-        <h2 id="gmail-setup" class="mb-3">{% translate "Gmail Setup" %}</h2>
-        <p>{% translate "This template uses Gmail SMTP. To send emails from your Gmail account, you need to create an App Password." %}</p>
+        <h2 id="gmail-setup" class="mb-3">{% translate "Gmail Setup (SMTP)" %}</h2>
+        <p>{% translate "The default" %} <code>smtp</code> {% translate "backend sends mail through Gmail. To send emails from your Gmail account, you need to create an App Password." %}</p>
 
         <div class="alert alert-warning">
             <i class="fa-solid fa-triangle-exclamation"></i>
@@ -76,22 +84,60 @@
 
         <hr class="my-5">
 
+        <h2 id="anymail-setup" class="mb-3">{% translate "Anymail Setup" %}</h2>
+        <p>{% translate "Anymail is a backend that lets you send email through third-party email service providers (ESPs) such as Mailjet, Mailgun, SendGrid, Postmark, Resend, Amazon SES, and Brevo." %}</p>
+        <p>{% translate "To enable it, set" %} <code>DJANGO_MAIL_BACKEND=anymail</code> {% translate "and configure your provider with two variables:" %}</p>
+
+        <h4 class="mt-4">{% translate "Step 1: Choose a Provider" %}</h4>
+        <p>{% translate "Set" %} <code>ANYMAIL_PROVIDER</code> {% translate "to your ESP's slug (e.g." %} <code>mailjet</code>, <code>mailgun</code>, <code>sendgrid</code>). {% translate "See the" %} <a href="https://anymail.dev/en/stable/esps/" target="_blank">{% translate "full provider list on anymail.dev" %}</a>{% translate "." %}</p>
+
+        <h4 class="mt-4">{% translate "Step 2: Add API Credentials" %}</h4>
+        <p>{% translate "Set" %} <code>ANYMAIL_OPTIONS</code> {% translate "to a JSON object with the keys your provider expects. The keys come from your provider's dashboard — for example, Mailjet uses" %} <code>api_key</code> {% translate "and" %} <code>secret_key</code>{% translate ":" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code># Backend switch (overrides the default "smtp")
+DJANGO_MAIL_BACKEND=anymail
+
+# AnyMail provider slug
+ANYMAIL_PROVIDER=mailjet
+
+# JSON object passed as MAILERS default OPTIONS to the Anymail backend
+ANYMAIL_OPTIONS={"api_key":"YOUR_KEY","secret_key":"YOUR_SECRET_KEY"}</code></pre>
+
+        <div class="alert alert-info">
+            <i class="fa-solid fa-circle-info"></i>
+            <strong>{% translate "Why Anymail?" %}</strong>
+            <p class="mb-0">{% translate "ESPs offer higher sending limits, better deliverability, analytics, and template support compared with free Gmail SMTP. Limits and pricing differ per provider — check your provider's plan." %}</p>
+        </div>
+
+        <hr class="my-5">
+
         <h2 id="project-settings" class="mb-3">{% translate "Project Settings" %}</h2>
-        <p>{% translate "Add the following to your .env file in production:" %}</p>
+        <p>{% translate "Add the following to your .env file in production. The variables common to both backends are:" %}</p>
         <pre class="bg-dark text-light p-3 rounded"><code># Enable email functionality
 DJANGO_EMAIL_ENABLED=True
 
-# Your Gmail address
-DJANGO_EMAIL_HOST_USER=your-email@gmail.com
-
-# The App Password you generated (no spaces!)
-DJANGO_EMAIL_HOST_PASSWORD=xxxxxxxxxxxxxxxx
+# Backend: "smtp" (Gmail, default) or "anymail"
+DJANGO_MAIL_BACKEND=smtp
 
 # Email address messages appear to come from
 DJANGO_SERVER_EMAIL=noreply@yourdomain.com
+# Default FROM address, falls back to DJANGO_SERVER_EMAIL if unset
+DJANGO_DEFAULT_FROM_EMAIL=noreply@yourdomain.com
 
-# Your email address (for receiving contact form messages)
+# Your email address (for receiving contact form messages and admin errors)
 PROJECT_ADMIN_EMAILS=admin@yourdomain.com</code></pre>
+
+        <h4 class="mt-4">{% translate "SMTP (Gmail) variables" %}</h4>
+        <p>{% translate "If you chose" %} <code>DJANGO_MAIL_BACKEND=smtp</code>, {% translate "add:" %}</p>
+        <pre class="bg-dark text-light p-3 rounded"><code>DJANGO_EMAIL_HOST=smtp.gmail.com
+DJANGO_EMAIL_PORT=587
+# Your Gmail address
+DJANGO_EMAIL_HOST_USER=your-email@gmail.com
+# The App Password you generated (no spaces!)
+DJANGO_EMAIL_HOST_PASSWORD=xxxxxxxxxxxxxxxx
+DJANGO_EMAIL_USE_TLS=True</code></pre>
+
+        <h4 class="mt-4">{% translate "Anymail variables" %}</h4>
+        <p>{% translate "If you chose" %} <code>DJANGO_MAIL_BACKEND=anymail</code>, {% translate "add the provider configuration shown in the Anymail Setup section above." %}</p>
 
         <h4 class="mt-4">{% translate "For Development" %}</h4>
         <p>{% translate "In development, emails are printed to the console instead of being sent. Simply leave" %} <code>DJANGO_EMAIL_ENABLED=False</code> {% translate "(or remove it) to use console email backend." %}</p>
@@ -121,6 +167,8 @@ send_mail(
                 <li>{% translate "Double-check you're using the App Password, not your regular Gmail password" %}</li>
                 <li>{% translate "Verify the App Password was generated for 'Mail' app, not other apps" %}</li>
                 <li>{% translate "Check your Gmail inbox for security alerts about the new sign-in" %}</li>
+                <li>{% translate "Verify" %} <code>DJANGO_MAIL_BACKEND</code> {% translate "is exactly" %} <code>smtp</code> {% translate "or" %} <code>anymail</code> {% translate "- any other value stops startup with" %} <code>ImproperlyConfigured</code></li>
+                <li>{% translate "For Anymail, double-check" %} <code>ANYMAIL_PROVIDER</code> {% translate "and the JSON keys in" %} <code>ANYMAIL_OPTIONS</code> {% translate "against your provider's docs" %}</li>
             </ul>
         </div>
     </div>
