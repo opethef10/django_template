@@ -102,6 +102,9 @@ All configuration via `.env` file. See `.env.example` for required variables.
 - `PROJECT_SLUG`, `PROJECT_NAME`, `PROJECT_DESCRIPTION`, `PROJECT_DOMAIN`
 - `DJANGO_SECRET_KEY`
 
+**Optional for Docker (read by `scripts/entrypoint.sh`):**
+- `GUNICORN_WORKERS` (default `2`) and `GUNICORN_THREADS` (default `1`); threads > 1 switches gunicorn to the gthread worker class
+
 **Required for PythonAnywhere:**
 - `DJANGO_ALLOWED_HOSTS` (comma-separated domain list)
 - `DJANGO_EMAIL_ENABLED=True` plus either Gmail SMTP (`DJANGO_MAIL_BACKEND=smtp`, `DJANGO_EMAIL_HOST_USER`, `DJANGO_EMAIL_HOST_PASSWORD`, `DJANGO_SERVER_EMAIL`) or Anymail (`DJANGO_MAIL_BACKEND=anymail`, `ANYMAIL_PROVIDER`, `ANYMAIL_OPTIONS`), and `PROJECT_ADMIN_EMAILS`, to enable real mail
