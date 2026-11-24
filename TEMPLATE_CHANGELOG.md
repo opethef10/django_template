@@ -15,6 +15,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.16.1 - 2026-11-24
+
+### Added
+
+- Gunicorn workers and threads configurable via `GUNICORN_WORKERS` (default 2) and `GUNICORN_THREADS` (default 1) in `scripts/entrypoint.sh`
+
 ## 0.16.0 - 2026-09-21
 
 ### Added
