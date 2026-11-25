@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
+- AGENTS.md: run commands with `uv run` (never bare `python` or `manage.py`), and finish release/hotfix branches with `uv run scripts/push`
 - `scripts/backupdb_docker.sh` keeps only the newest 3 snapshots in `/app/backups` (configurable with `BACKUP_KEEP`)
 
 ### Fixed

@@ -6,6 +6,11 @@ Guidelines for AI agents working with this Django template.
 
 This is a **reusable Django template** designed for users to bootstrap new projects. When someone uses this template, they should be able to quickly set up a production-ready Django application with authentication, PWA support, internationalization, and PythonAnywhere deployment compatibility.
 
+## Running Commands
+
+- **Use `uv run` whenever possible.** Don't run `python` or `manage.py` on their own: use `uv run manage.py <command>`, `uv run python <script>` and `uv run scripts/test`, so commands use the project's virtual environment and locked dependencies.
+- **To finish a release or hotfix branch and push, use `uv run scripts/push`.** It runs the tests, finishes the branch with git flow (merging into `main` and the develop branch and tagging it) and pushes both branches and the tag. Don't run `git flow ... finish` or `git push` by hand for this.
+
 ## Project Structure
 
 This is **not** a traditional Django project. Key differences:
@@ -27,7 +32,7 @@ The `scripts/` folder contains deployment scripts optimized for **PythonAnywhere
 | `scripts/update.sh` | Full deployment update (backup, pull, install, migrate, collectstatic, reload) |
 | `scripts/reload.sh` | Touch WSGI file to reload server |
 | `scripts/backupdb.sh` | Database backup |
-| `scripts/push` | Push to remote with submodule updates |
+| `scripts/push` | Run the tests, then finish the current `hotfix/*` or `release/*` branch with git flow and push `main`, `develop` and the tag |
 | `scripts/setup_pythonanywhere.py` | Full PythonAnywhere setup from scratch (webapp, HTTPS, static mappings, .env, migrate, collectstatic, superuser, WSGI) |
 
 ## Git Workflow
@@ -39,6 +44,8 @@ This template uses **git flow** branching strategy:
 - `feature/*` - new features
 - `hotfix/*` - urgent production fixes
 - `release/*` - release preparation
+
+Finish `hotfix/*` and `release/*` branches with `uv run scripts/push` (see [Running Commands](#running-commands)).
 
 ## Changelog Strategy
 
@@ -269,7 +276,7 @@ Place custom commands in `<app>/management/commands/`.
 
 **Use test settings for faster execution:**
 ```bash
-python manage.py test --settings=src.settings.tests
+uv run manage.py test --settings=src.settings.tests
 ```
 
 Or use the script:
