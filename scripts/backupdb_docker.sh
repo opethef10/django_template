@@ -9,6 +9,7 @@ if [[ -z "${PROJECT_SLUG:-}" ]]; then
 fi
 
 BACKUP_FOLDER="/app/backups"
+BACKUP_KEEP="${BACKUP_KEEP:-3}"   # number of newest snapshots to keep
 mkdir -p "$BACKUP_FOLDER"
 
 DB_FILE="/app/var/$PROJECT_SLUG.sqlite3"
@@ -64,4 +65,18 @@ if $should_copy; then
     echo "[INFO] Backup successfully created and compressed."
 else
     echo "[INFO] No new backup needed - database not modified since last backup."
+fi
+
+# --- CLEANUP -------------------------------------------------------------------
+
+old_backups=$(ls -1t "$BACKUP_FOLDER" \
+    | grep "^${BACKUP_FILE_PREFIX}.*\.gz$" \
+    | tail -n +"$((BACKUP_KEEP + 1))" || true)
+
+if [[ -n "$old_backups" ]]; then
+    echo "[INFO] Removing backups beyond the newest $BACKUP_KEEP:"
+    while IFS= read -r f; do
+        echo "[INFO]   $f"
+        rm -f -- "$BACKUP_FOLDER/$f"
+    done <<< "$old_backups"
 fi

@@ -15,6 +15,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Security
 -->
 
+## 0.16.2 - 2026-11-25
+
+### Changed
+
+- AGENTS.md: run commands with `uv run` (never bare `python` or `manage.py`), and finish release/hotfix branches with `uv run scripts/push`
+- `scripts/backupdb_docker.sh` keeps only the newest 3 snapshots in `/app/backups` (configurable with `BACKUP_KEEP`)
+
+### Fixed
+
+- `/app/backups` created in `Dockerfile.prod` and owned by `appuser`; a new `backup_data` volume was owned by root, so `backupdb_docker.sh` failed with `SQLITE_CANTOPEN`
+
 ## 0.16.1 - 2026-11-24
 
 ### Added
